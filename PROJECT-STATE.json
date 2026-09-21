@@ -3,12 +3,12 @@
   "project": "Ecom Growth Autopilot",
   "version": "0.9.3",
   "baseOfRecord": "v0.9.3",
-  "currentPhase": "Technical portfolio proof complete on Windows; GitHub publication and final presentation assets remain.",
+  "currentPhase": "Technical portfolio proof complete on Windows; GitHub source repository published; final presentation assets remain.",
   "verification": {
     "deterministicCommand": "npm run verify",
     "deterministicStatus": "passed",
-    "deterministicTestCount": 65,
-    "verifiedOn": "2026-09-21",
+    "deterministicTestCount": 66,
+    "verifiedOn": "2026-09-22",
     "windowsLiveLastPassedVersion": "0.8.0",
     "windowsLiveModel": "qwen3-vl:4b",
     "currentVersionNeedsWindowsLiveRecheck": false,
@@ -105,7 +105,6 @@
     "AGENTS.md"
   ],
   "next": [
-    "Publish v0.9.3 to GitHub as the source-of-truth repository; do not redo verified engineering phases.",
     "Capture final dashboard, n8n canvas, and verification screenshots using open-dashboard-safe-windows.cmd and docs/DEMO-SCRIPT.md.",
     "Add screenshots to README/case study and publish the portfolio entry."
   ]

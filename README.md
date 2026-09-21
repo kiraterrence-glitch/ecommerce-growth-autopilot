@@ -302,6 +302,6 @@ This is a portfolio engineering system, not a production ad-buying platform. Rea
 
 ## Current release gate
 
-The machine-specific proof is complete: v0.9.3 executed successfully through local n8n Community Edition 2.39.8 on Windows, and `release:preflight` validated the resulting runtime receipt. Remaining work is presentation-only: capture dashboard/n8n/verification screenshots and publish using `docs/GITHUB-PUBLISH.md`.
+The machine-specific proof is complete: v0.9.3 executed successfully through local n8n Community Edition 2.39.8 on Windows, and `release:preflight` validated the resulting runtime receipt. The GitHub source repository is published. Remaining work is presentation-only: capture dashboard/n8n/verification screenshots and follow `docs/GITHUB-PUBLISH.md` for future release updates.
 
 For continuity, future coding agents should read `PROJECT-STATE.json` and `CONTINUE-LATER.md` first and **must not redo verified phases**.

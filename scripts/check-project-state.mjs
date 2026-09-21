@@ -28,7 +28,8 @@ for (const dir of testDirs) {
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.endsWith(".test.mjs")) continue;
     const text = await readFile(`${dir}/${entry.name}`, "utf8");
-    testCount += (text.match(/\btest\s*\(/g) || []).length;
+    // Count declarations, not calls such as regularExpression.test(value) inside a test.
+    testCount += (text.match(/^\s*test\s*\(/gm) || []).length;
   }
 }
 if (testCount !== state.verification?.deterministicTestCount) {
