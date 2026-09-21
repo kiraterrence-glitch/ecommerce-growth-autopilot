@@ -1,0 +1,41 @@
+{
+  "audiences": ["Travelers", "Office workers", "Campers"],
+  "painPoints": [
+    "Difficulty making espresso while traveling",
+    "High cost of cafe espresso",
+    "Limited coffee options away from home"
+  ],
+  "benefits": [
+    "Make espresso anywhere",
+    "Reduce cafe spending",
+    "Easy to clean"
+  ],
+  "objections": [
+    "Cleaning effort",
+    "Whether manual preparation fits the buyer's routine",
+    "Whether the portable format suits the buyer's use case"
+  ],
+  "buyingTriggers": [
+    "Upcoming travel",
+    "Frequent office coffee runs",
+    "Need for a portable coffee option"
+  ],
+  "angles": [
+    {
+      "name": "Travel-Friendly",
+      "hook": "Make espresso wherever the day takes you",
+      "reason": "Connects the portable design with travel use"
+    },
+    {
+      "name": "Cost-Saving",
+      "hook": "Bring more of your coffee routine with you",
+      "reason": "Connects at-home preparation with fewer cafe stops"
+    },
+    {
+      "name": "No-Outlet Routine",
+      "hook": "A coffee routine that does not need an outlet",
+      "reason": "Uses the listed no-electricity feature as the core differentiator"
+    }
+  ],
+  "offerPositioning": "Current offer: 20% off the product price"
+}

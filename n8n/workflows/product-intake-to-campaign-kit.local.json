@@ -1,0 +1,100 @@
+{
+  "id": "EcomCampDemo0901",
+  "name": "Ecom Product Intake to Full Campaign Kit - Local",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecom-campaign-kit",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a507f635-2364-4ef1-963c-aa0d4726f615",
+      "name": "Campaign Kit Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        0
+      ],
+      "webhookId": "ecom-campaign-kit-local"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/campaign-kit",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body ?? $json) }}",
+        "options": {}
+      },
+      "id": "1cf06ce5-2b94-4b2f-bf09-68ff0a1c1ce5",
+      "name": "Generate Full Campaign Kit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "37d78f83-0d67-41f7-a736-7f642bd0b44a",
+      "name": "Return Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        180,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Campaign Kit Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate Full Campaign Kit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Full Campaign Kit": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8f4d331d-6947-44cb-94de-db25b95175f5",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

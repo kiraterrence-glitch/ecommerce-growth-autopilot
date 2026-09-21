@@ -1,0 +1,15 @@
+{
+  "sku": "",
+  "title": "Portable Espresso Maker",
+  "description": "A compact manual espresso maker.",
+  "price": "cheap",
+  "currency": "XYZ",
+  "cost": -1,
+  "inventory": 3.5,
+  "features": "Portable",
+  "benefits": [],
+  "audiences": [],
+  "imageUrls": [],
+  "offer": { "type": "percentage", "value": 120 },
+  "channels": { "shopify": "yes", "amazon": true }
+}

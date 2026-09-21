@@ -1,0 +1,410 @@
+{
+  "projectId": "research-espresso-001",
+  "query": "portable espresso maker",
+  "targetMarketplace": "amazon_us",
+  "currency": "USD",
+  "competitorCount": 4,
+  "reviewCount": 8,
+  "price": {
+    "sampleSize": 4,
+    "min": 69.99,
+    "median": 76.75,
+    "max": 89,
+    "average": 78.12
+  },
+  "features": [
+    {
+      "feature": "Portable",
+      "count": 4,
+      "share": 1,
+      "competitorIds": [
+        "comp-1",
+        "comp-2",
+        "comp-3",
+        "comp-4"
+      ]
+    },
+    {
+      "feature": "Manual pressure",
+      "count": 3,
+      "share": 0.75,
+      "competitorIds": [
+        "comp-1",
+        "comp-2",
+        "comp-4"
+      ]
+    },
+    {
+      "feature": "Compact",
+      "count": 2,
+      "share": 0.5,
+      "competitorIds": [
+        "comp-2",
+        "comp-3"
+      ]
+    },
+    {
+      "feature": "Travel case",
+      "count": 2,
+      "share": 0.5,
+      "competitorIds": [
+        "comp-1",
+        "comp-3"
+      ]
+    },
+    {
+      "feature": "Easy clean",
+      "count": 1,
+      "share": 0.25,
+      "competitorIds": [
+        "comp-4"
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "offer": "10% coupon",
+      "count": 2,
+      "competitorIds": [
+        "comp-1",
+        "comp-4"
+      ]
+    },
+    {
+      "offer": "15% coupon",
+      "count": 1,
+      "competitorIds": [
+        "comp-3"
+      ]
+    }
+  ],
+  "reviewIntelligence": {
+    "themes": [
+      {
+        "label": "Portable use",
+        "category": "desired_outcome",
+        "evidenceIds": [
+          "review-1",
+          "review-2",
+          "review-4",
+          "review-6",
+          "review-8"
+        ],
+        "mentionCount": 5,
+        "confidence": "high"
+      },
+      {
+        "label": "Easy operation",
+        "category": "desired_outcome",
+        "evidenceIds": [
+          "review-2",
+          "review-4",
+          "review-6",
+          "review-8"
+        ],
+        "mentionCount": 4,
+        "confidence": "medium"
+      },
+      {
+        "label": "Cleaning difficulty",
+        "category": "pain_point",
+        "evidenceIds": [
+          "review-1",
+          "review-2",
+          "review-7"
+        ],
+        "mentionCount": 3,
+        "confidence": "medium"
+      },
+      {
+        "label": "Leaks",
+        "category": "pain_point",
+        "evidenceIds": [
+          "review-3",
+          "review-7"
+        ],
+        "mentionCount": 2,
+        "confidence": "medium"
+      },
+      {
+        "label": "Better espresso quality",
+        "category": "desired_outcome",
+        "evidenceIds": [
+          "review-5"
+        ],
+        "mentionCount": 1,
+        "confidence": "low"
+      },
+      {
+        "label": "Price concern",
+        "category": "objection",
+        "evidenceIds": [
+          "review-5"
+        ],
+        "mentionCount": 1,
+        "confidence": "low"
+      },
+      {
+        "label": "Travel case",
+        "category": "feature_request",
+        "evidenceIds": [
+          "review-6"
+        ],
+        "mentionCount": 1,
+        "confidence": "low"
+      }
+    ]
+  },
+  "economics": {
+    "sellingPrice": 79,
+    "revenueAfterDiscount": 79,
+    "cogs": 28,
+    "shippingCost": 7,
+    "marketplaceFees": 12,
+    "paymentFees": 2.5,
+    "contributionBeforeAds": 29.5,
+    "adAllowance": 10,
+    "contributionAfterAds": 19.5,
+    "contributionMarginPercent": 24.7,
+    "breakEvenCpa": 29.5
+  },
+  "findings": [
+    {
+      "id": "finding-price-band",
+      "category": "price_signal",
+      "statement": "Observed competitor prices range from USD 69.99 to USD 89.00, with a median of USD 76.75 across 4 sampled competitors.",
+      "confidence": "medium",
+      "evidenceIds": [
+        "comp-1",
+        "comp-2",
+        "comp-3",
+        "comp-4"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 4
+    },
+    {
+      "id": "finding-feature-1",
+      "category": "feature_signal",
+      "statement": "Portable appears in 4 of 4 sampled competitor records.",
+      "confidence": "medium",
+      "evidenceIds": [
+        "comp-1",
+        "comp-2",
+        "comp-3",
+        "comp-4"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 4
+    },
+    {
+      "id": "finding-feature-2",
+      "category": "feature_signal",
+      "statement": "Manual pressure appears in 3 of 4 sampled competitor records.",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-1",
+        "comp-2",
+        "comp-4"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 3
+    },
+    {
+      "id": "finding-feature-3",
+      "category": "feature_signal",
+      "statement": "Compact appears in 2 of 4 sampled competitor records.",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-2",
+        "comp-3"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 2
+    },
+    {
+      "id": "finding-feature-4",
+      "category": "feature_signal",
+      "statement": "Travel case appears in 2 of 4 sampled competitor records.",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-1",
+        "comp-3"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 2
+    },
+    {
+      "id": "finding-feature-5",
+      "category": "feature_signal",
+      "statement": "Easy clean appears in 1 of 4 sampled competitor records.",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-4"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 1
+    },
+    {
+      "id": "finding-offer-1",
+      "category": "offer_pattern",
+      "statement": "Observed offer pattern: 10% coupon (2 sampled competitors).",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-1",
+        "comp-4"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 2
+    },
+    {
+      "id": "finding-offer-2",
+      "category": "offer_pattern",
+      "statement": "Observed offer pattern: 15% coupon (1 sampled competitor).",
+      "confidence": "low",
+      "evidenceIds": [
+        "comp-3"
+      ],
+      "sourceIds": [
+        "source-competitors"
+      ],
+      "evidenceCount": 1
+    },
+    {
+      "id": "finding-review-1",
+      "category": "desired_outcome",
+      "statement": "Portable use is supported by 5 imported reviews.",
+      "confidence": "high",
+      "evidenceIds": [
+        "review-1",
+        "review-2",
+        "review-4",
+        "review-6",
+        "review-8"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 5
+    },
+    {
+      "id": "finding-review-2",
+      "category": "desired_outcome",
+      "statement": "Easy operation is supported by 4 imported reviews.",
+      "confidence": "medium",
+      "evidenceIds": [
+        "review-2",
+        "review-4",
+        "review-6",
+        "review-8"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 4
+    },
+    {
+      "id": "finding-review-3",
+      "category": "pain_point",
+      "statement": "Cleaning difficulty is supported by 3 imported reviews.",
+      "confidence": "medium",
+      "evidenceIds": [
+        "review-1",
+        "review-2",
+        "review-7"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 3
+    },
+    {
+      "id": "finding-review-4",
+      "category": "pain_point",
+      "statement": "Leaks is supported by 2 imported reviews.",
+      "confidence": "medium",
+      "evidenceIds": [
+        "review-3",
+        "review-7"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 2
+    },
+    {
+      "id": "finding-review-5",
+      "category": "desired_outcome",
+      "statement": "Better espresso quality is supported by 1 imported review.",
+      "confidence": "low",
+      "evidenceIds": [
+        "review-5"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 1
+    },
+    {
+      "id": "finding-review-6",
+      "category": "objection",
+      "statement": "Price concern is supported by 1 imported review.",
+      "confidence": "low",
+      "evidenceIds": [
+        "review-5"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 1
+    },
+    {
+      "id": "finding-review-7",
+      "category": "feature_request",
+      "statement": "Travel case is supported by 1 imported review.",
+      "confidence": "low",
+      "evidenceIds": [
+        "review-6"
+      ],
+      "sourceIds": [
+        "source-reviews"
+      ],
+      "evidenceCount": 1
+    },
+    {
+      "id": "finding-economics",
+      "category": "economics",
+      "statement": "Unit economics are calculated from seller-supplied inputs and should be treated as a scenario, not a market forecast.",
+      "confidence": "high",
+      "evidenceIds": [
+        "seller-economics-input"
+      ],
+      "sourceIds": [
+        "source-economics"
+      ],
+      "evidenceCount": 1
+    }
+  ],
+  "dataConfidence": "high",
+  "limitations": [
+    "This report analyzes only the supplied evidence and does not estimate sales or market demand.",
+    "Competitor price, reviews, and offers are point-in-time observations and may change.",
+    "No independent demand-data source was supplied; demand strength is not assessed.",
+    "Competitor sample is small; price and feature patterns are directional only.",
+    "Review sample is small; customer themes are directional only."
+  ]
+}

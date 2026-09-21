@@ -1,0 +1,100 @@
+{
+  "id": "EcomRschDemo0901",
+  "name": "Ecom Research Intake to Evidence Analysis - Local",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecom-research-analyze",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "6e34bb6c-3a49-4cc4-bcc8-6e3a0e4f1231",
+      "name": "Research Intake Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        0
+      ],
+      "webhookId": "ecom-research-analyze-local"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/research/analyze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body ?? $json) }}",
+        "options": {}
+      },
+      "id": "2f12900d-dd8d-4c65-a63b-a064dbf605ec",
+      "name": "Analyze Research Evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "449aef7d-b77b-4fbf-903a-6575a94f33f5",
+      "name": "Return Research Analysis",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        180,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Research Intake Webhook": {
+      "main": [
+        [
+          {
+            "node": "Analyze Research Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Research Evidence": {
+      "main": [
+        [
+          {
+            "node": "Return Research Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8f12e1e6-c979-4617-9a67-72ba8193ca80",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

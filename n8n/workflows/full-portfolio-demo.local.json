@@ -1,0 +1,165 @@
+{
+  "id": "EcomFullDemo0901",
+  "name": "Ecom Full Portfolio Demo - Local",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecom-full-demo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0011",
+      "name": "Full Demo Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        0
+      ],
+      "webhookId": "ecom-full-demo-local"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/research/analyze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($node[\"Full Demo Webhook\"].json.body.research) }}",
+        "options": {}
+      },
+      "id": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0022",
+      "name": "Verify Research Evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -360,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/campaign-kit",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($node[\"Full Demo Webhook\"].json.body) }}",
+        "options": {}
+      },
+      "id": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0033",
+      "name": "Generate Verified Campaign",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=http://127.0.0.1:3001/demo/status?campaignId={{ $json.campaignId }}",
+        "options": {}
+      },
+      "id": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0044",
+      "name": "Read Demo Timeline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0055",
+      "name": "Return Portfolio Proof",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        470,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Full Demo Webhook": {
+      "main": [
+        [
+          {
+            "node": "Verify Research Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Research Evidence": {
+      "main": [
+        [
+          {
+            "node": "Generate Verified Campaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Verified Campaign": {
+      "main": [
+        [
+          {
+            "node": "Read Demo Timeline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Demo Timeline": {
+      "main": [
+        [
+          {
+            "node": "Return Portfolio Proof",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0cb19f9a-f5cb-4fa0-b0ee-1c02beaa0066",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

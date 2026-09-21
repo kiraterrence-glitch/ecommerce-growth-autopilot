@@ -1,0 +1,52 @@
+{
+  "name": "ecommerce-growth-autopilot",
+  "version": "0.9.3",
+  "private": true,
+  "description": "Portfolio-grade eCommerce growth automation system with local-first verification and n8n orchestration.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "format:check": "node scripts/check-format.mjs",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "test": "node --test tests/unit/*.test.mjs tests/integration/*.test.mjs",
+    "validate:n8n": "node scripts/check-n8n.mjs",
+    "secrets:check": "node scripts/check-secrets.mjs",
+    "ollama:check": "node scripts/check-ollama.mjs",
+    "ollama:smoke": "npm run build && node scripts/ollama-smoke.mjs",
+    "dev:api": "npm run build && node scripts/local-api.mjs",
+    "verify": "node scripts/verify.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "doctor:ollama": "node scripts/doctor.mjs --require-ollama",
+    "validate:postman": "node scripts/check-postman.mjs",
+    "dev:ollama": "npm run build && node scripts/dev-ollama.mjs",
+    "deps:check": "node scripts/check-dependencies.mjs",
+    "setup": "node scripts/setup.mjs",
+    "diagnose:windows": "node scripts/diagnose-windows.mjs",
+    "demo:generate": "npm run build && node scripts/generate-demo.mjs",
+    "package:check": "node scripts/check-package-safety.mjs",
+    "marketing:check": "npm run build && node scripts/check-marketing-quality.mjs",
+    "demo:generate:ollama": "npm run build && node scripts/generate-live-demo.mjs",
+    "media:doctor": "node scripts/media-doctor.mjs",
+    "demo:render-media": "npm run build && node scripts/render-demo-media.mjs",
+    "demo:render-media:ollama": "npm run build && node scripts/render-demo-media.mjs --live",
+    "demo:full": "npm run demo:generate && npm run demo:render-media",
+    "demo:full:ollama": "npm run demo:generate:ollama && npm run demo:render-media:ollama",
+    "research:check": "npm run build && node scripts/check-research-quality.mjs",
+    "research:demo": "npm run build && node scripts/generate-research-demo.mjs",
+    "handoff:check": "node scripts/check-project-state.mjs",
+    "n8n:local-proof": "npm run build && node scripts/local-n8n-proof.mjs",
+    "n8n:contract": "npm run build && node scripts/n8n-workflow-contract.mjs",
+    "n8n:runtime-check": "node scripts/check-local-n8n-runtime.mjs",
+    "n8n:engine-proof:receipt": "node scripts/capture-n8n-engine-proof.mjs",
+    "release:preflight": "node scripts/release-preflight.mjs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}

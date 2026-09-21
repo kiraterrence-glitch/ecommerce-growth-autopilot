@@ -1,0 +1,887 @@
+{
+  "metadata": {
+    "mode": "deterministic_demo",
+    "aiProvider": "fixture",
+    "model": null,
+    "validation": "PASS",
+    "grounding": "PASS",
+    "research": "PASS"
+  },
+  "product": {
+    "sku": "ESP-001",
+    "title": "Portable Espresso Maker",
+    "description": "A compact manual espresso maker for travel and work.",
+    "price": 79,
+    "currency": "USD",
+    "cost": 31,
+    "inventory": 150,
+    "features": [
+      "Portable",
+      "No electricity required",
+      "Easy to clean"
+    ],
+    "benefits": [
+      "Make espresso anywhere",
+      "Reduce cafe spending"
+    ],
+    "audiences": [
+      "Travelers",
+      "Office workers",
+      "Campers"
+    ],
+    "imageUrls": [
+      "https://example.invalid/espresso-1.jpg"
+    ],
+    "offer": {
+      "type": "percentage",
+      "value": 20
+    },
+    "channels": {
+      "shopify": true,
+      "amazon": true
+    }
+  },
+  "brain": {
+    "audiences": [
+      "Travelers",
+      "Office workers",
+      "Campers"
+    ],
+    "painPoints": [
+      "Difficulty making espresso while traveling",
+      "High cost of cafe espresso",
+      "Limited coffee options away from home"
+    ],
+    "benefits": [
+      "Make espresso anywhere",
+      "Reduce cafe spending",
+      "Easy to clean"
+    ],
+    "objections": [
+      "Cleaning effort",
+      "Whether manual preparation fits the buyer's routine",
+      "Whether the portable format suits the buyer's use case"
+    ],
+    "buyingTriggers": [
+      "Upcoming travel",
+      "Frequent office coffee runs",
+      "Need for a portable coffee option"
+    ],
+    "angles": [
+      {
+        "name": "Travel-Friendly",
+        "hook": "Make espresso wherever the day takes you",
+        "reason": "Connects the portable design with travel use"
+      },
+      {
+        "name": "Cost-Saving",
+        "hook": "Bring more of your coffee routine with you",
+        "reason": "Connects at-home preparation with fewer cafe stops"
+      },
+      {
+        "name": "No-Outlet Routine",
+        "hook": "A coffee routine that does not need an outlet",
+        "reason": "Uses the listed no-electricity feature as the core differentiator"
+      }
+    ],
+    "offerPositioning": "Current offer: 20% off the product price"
+  },
+  "research": {
+    "projectId": "research-espresso-001",
+    "query": "portable espresso maker",
+    "targetMarketplace": "amazon_us",
+    "currency": "USD",
+    "competitorCount": 4,
+    "reviewCount": 8,
+    "price": {
+      "sampleSize": 4,
+      "min": 69.99,
+      "median": 76.75,
+      "max": 89,
+      "average": 78.12
+    },
+    "features": [
+      {
+        "feature": "Portable",
+        "count": 4,
+        "share": 1,
+        "competitorIds": [
+          "comp-1",
+          "comp-2",
+          "comp-3",
+          "comp-4"
+        ]
+      },
+      {
+        "feature": "Manual pressure",
+        "count": 3,
+        "share": 0.75,
+        "competitorIds": [
+          "comp-1",
+          "comp-2",
+          "comp-4"
+        ]
+      },
+      {
+        "feature": "Compact",
+        "count": 2,
+        "share": 0.5,
+        "competitorIds": [
+          "comp-2",
+          "comp-3"
+        ]
+      },
+      {
+        "feature": "Travel case",
+        "count": 2,
+        "share": 0.5,
+        "competitorIds": [
+          "comp-1",
+          "comp-3"
+        ]
+      },
+      {
+        "feature": "Easy clean",
+        "count": 1,
+        "share": 0.25,
+        "competitorIds": [
+          "comp-4"
+        ]
+      }
+    ],
+    "offers": [
+      {
+        "offer": "10% coupon",
+        "count": 2,
+        "competitorIds": [
+          "comp-1",
+          "comp-4"
+        ]
+      },
+      {
+        "offer": "15% coupon",
+        "count": 1,
+        "competitorIds": [
+          "comp-3"
+        ]
+      }
+    ],
+    "reviewIntelligence": {
+      "themes": [
+        {
+          "label": "Portable use",
+          "category": "desired_outcome",
+          "evidenceIds": [
+            "review-1",
+            "review-2",
+            "review-4",
+            "review-6",
+            "review-8"
+          ],
+          "mentionCount": 5,
+          "confidence": "high"
+        },
+        {
+          "label": "Easy operation",
+          "category": "desired_outcome",
+          "evidenceIds": [
+            "review-2",
+            "review-4",
+            "review-6",
+            "review-8"
+          ],
+          "mentionCount": 4,
+          "confidence": "medium"
+        },
+        {
+          "label": "Cleaning difficulty",
+          "category": "pain_point",
+          "evidenceIds": [
+            "review-1",
+            "review-2",
+            "review-7"
+          ],
+          "mentionCount": 3,
+          "confidence": "medium"
+        },
+        {
+          "label": "Leaks",
+          "category": "pain_point",
+          "evidenceIds": [
+            "review-3",
+            "review-7"
+          ],
+          "mentionCount": 2,
+          "confidence": "medium"
+        },
+        {
+          "label": "Better espresso quality",
+          "category": "desired_outcome",
+          "evidenceIds": [
+            "review-5"
+          ],
+          "mentionCount": 1,
+          "confidence": "low"
+        },
+        {
+          "label": "Price concern",
+          "category": "objection",
+          "evidenceIds": [
+            "review-5"
+          ],
+          "mentionCount": 1,
+          "confidence": "low"
+        },
+        {
+          "label": "Travel case",
+          "category": "feature_request",
+          "evidenceIds": [
+            "review-6"
+          ],
+          "mentionCount": 1,
+          "confidence": "low"
+        }
+      ]
+    },
+    "economics": {
+      "sellingPrice": 79,
+      "revenueAfterDiscount": 79,
+      "cogs": 28,
+      "shippingCost": 7,
+      "marketplaceFees": 12,
+      "paymentFees": 2.5,
+      "contributionBeforeAds": 29.5,
+      "adAllowance": 10,
+      "contributionAfterAds": 19.5,
+      "contributionMarginPercent": 24.7,
+      "breakEvenCpa": 29.5
+    },
+    "findings": [
+      {
+        "id": "finding-price-band",
+        "category": "price_signal",
+        "statement": "Observed competitor prices range from USD 69.99 to USD 89.00, with a median of USD 76.75 across 4 sampled competitors.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "comp-1",
+          "comp-2",
+          "comp-3",
+          "comp-4"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 4
+      },
+      {
+        "id": "finding-feature-1",
+        "category": "feature_signal",
+        "statement": "Portable appears in 4 of 4 sampled competitor records.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "comp-1",
+          "comp-2",
+          "comp-3",
+          "comp-4"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 4
+      },
+      {
+        "id": "finding-feature-2",
+        "category": "feature_signal",
+        "statement": "Manual pressure appears in 3 of 4 sampled competitor records.",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-1",
+          "comp-2",
+          "comp-4"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 3
+      },
+      {
+        "id": "finding-feature-3",
+        "category": "feature_signal",
+        "statement": "Compact appears in 2 of 4 sampled competitor records.",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-2",
+          "comp-3"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 2
+      },
+      {
+        "id": "finding-feature-4",
+        "category": "feature_signal",
+        "statement": "Travel case appears in 2 of 4 sampled competitor records.",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-1",
+          "comp-3"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 2
+      },
+      {
+        "id": "finding-feature-5",
+        "category": "feature_signal",
+        "statement": "Easy clean appears in 1 of 4 sampled competitor records.",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-4"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 1
+      },
+      {
+        "id": "finding-offer-1",
+        "category": "offer_pattern",
+        "statement": "Observed offer pattern: 10% coupon (2 sampled competitors).",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-1",
+          "comp-4"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 2
+      },
+      {
+        "id": "finding-offer-2",
+        "category": "offer_pattern",
+        "statement": "Observed offer pattern: 15% coupon (1 sampled competitor).",
+        "confidence": "low",
+        "evidenceIds": [
+          "comp-3"
+        ],
+        "sourceIds": [
+          "source-competitors"
+        ],
+        "evidenceCount": 1
+      },
+      {
+        "id": "finding-review-1",
+        "category": "desired_outcome",
+        "statement": "Portable use is supported by 5 imported reviews.",
+        "confidence": "high",
+        "evidenceIds": [
+          "review-1",
+          "review-2",
+          "review-4",
+          "review-6",
+          "review-8"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 5
+      },
+      {
+        "id": "finding-review-2",
+        "category": "desired_outcome",
+        "statement": "Easy operation is supported by 4 imported reviews.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "review-2",
+          "review-4",
+          "review-6",
+          "review-8"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 4
+      },
+      {
+        "id": "finding-review-3",
+        "category": "pain_point",
+        "statement": "Cleaning difficulty is supported by 3 imported reviews.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "review-1",
+          "review-2",
+          "review-7"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 3
+      },
+      {
+        "id": "finding-review-4",
+        "category": "pain_point",
+        "statement": "Leaks is supported by 2 imported reviews.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "review-3",
+          "review-7"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 2
+      },
+      {
+        "id": "finding-review-5",
+        "category": "desired_outcome",
+        "statement": "Better espresso quality is supported by 1 imported review.",
+        "confidence": "low",
+        "evidenceIds": [
+          "review-5"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 1
+      },
+      {
+        "id": "finding-review-6",
+        "category": "objection",
+        "statement": "Price concern is supported by 1 imported review.",
+        "confidence": "low",
+        "evidenceIds": [
+          "review-5"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 1
+      },
+      {
+        "id": "finding-review-7",
+        "category": "feature_request",
+        "statement": "Travel case is supported by 1 imported review.",
+        "confidence": "low",
+        "evidenceIds": [
+          "review-6"
+        ],
+        "sourceIds": [
+          "source-reviews"
+        ],
+        "evidenceCount": 1
+      },
+      {
+        "id": "finding-economics",
+        "category": "economics",
+        "statement": "Unit economics are calculated from seller-supplied inputs and should be treated as a scenario, not a market forecast.",
+        "confidence": "high",
+        "evidenceIds": [
+          "seller-economics-input"
+        ],
+        "sourceIds": [
+          "source-economics"
+        ],
+        "evidenceCount": 1
+      }
+    ],
+    "dataConfidence": "high",
+    "limitations": [
+      "This report analyzes only the supplied evidence and does not estimate sales or market demand.",
+      "Competitor price, reviews, and offers are point-in-time observations and may change.",
+      "No independent demand-data source was supplied; demand strength is not assessed.",
+      "Competitor sample is small; price and feature patterns are directional only.",
+      "Review sample is small; customer themes are directional only."
+    ]
+  },
+  "meta": {
+    "channel": "meta",
+    "status": "DRAFT",
+    "objective": "SALES",
+    "campaignName": "ESP-001 - Portable Espresso Maker - Draft",
+    "ads": [
+      {
+        "angleName": "Travel-Friendly",
+        "variant": "A",
+        "primaryText": "Make espresso wherever the day takes you. Make espresso anywhere. Save 20% on the current offer.",
+        "headline": "Travel-Friendly: Portable",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Travelers",
+        "creativeBrief": "Use a product-led scene relevant to Travelers. Visualize the travel-friendly angle without adding unsupported claims."
+      },
+      {
+        "angleName": "Travel-Friendly",
+        "variant": "B",
+        "primaryText": "For Office workers: Portable Espresso Maker — portable. Reduce cafe spending. Save 20% on the current offer.",
+        "headline": "Portable Espresso Maker for Office",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Office workers",
+        "creativeBrief": "Create a contrasting concept for Office workers. Keep product facts literal and make the offer secondary to the use case."
+      },
+      {
+        "angleName": "Cost-Saving",
+        "variant": "A",
+        "primaryText": "Bring more of your coffee routine with you. Make espresso anywhere. Save 20% on the current offer.",
+        "headline": "Cost-Saving: No electricity required",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Office workers",
+        "creativeBrief": "Use a product-led scene relevant to Office workers. Visualize the cost-saving angle without adding unsupported claims."
+      },
+      {
+        "angleName": "Cost-Saving",
+        "variant": "B",
+        "primaryText": "For Campers: Portable Espresso Maker — no electricity required. Easy to clean. Save 20% on the current offer.",
+        "headline": "Portable Espresso Maker for Campers",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Campers",
+        "creativeBrief": "Create a contrasting concept for Campers. Keep product facts literal and make the offer secondary to the use case."
+      },
+      {
+        "angleName": "No-Outlet Routine",
+        "variant": "A",
+        "primaryText": "A coffee routine that does not need an outlet. Make espresso anywhere. Save 20% on the current offer.",
+        "headline": "No-Outlet Routine: Easy to clean",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Campers",
+        "creativeBrief": "Use a product-led scene relevant to Campers. Visualize the no-outlet routine angle without adding unsupported claims."
+      },
+      {
+        "angleName": "No-Outlet Routine",
+        "variant": "B",
+        "primaryText": "For Travelers: Portable Espresso Maker — easy to clean. Make espresso anywhere. Save 20% on the current offer.",
+        "headline": "Portable Espresso Maker for Travelers",
+        "cta": "SHOP_NOW",
+        "audienceHypothesis": "Travelers",
+        "creativeBrief": "Create a contrasting concept for Travelers. Keep product facts literal and make the offer secondary to the use case."
+      }
+    ]
+  },
+  "email": {
+    "channel": "email",
+    "status": "DRAFT",
+    "emails": [
+      {
+        "sequence": "launch",
+        "step": 1,
+        "status": "DRAFT",
+        "subject": "Meet Portable Espresso Maker",
+        "previewText": "Make espresso anywhere",
+        "body": "Meet Portable Espresso Maker. Make espresso anywhere. Explore the product details and decide whether it fits your routine.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View product"
+      },
+      {
+        "sequence": "launch",
+        "step": 2,
+        "status": "DRAFT",
+        "subject": "Portable Espresso Maker for Travelers",
+        "previewText": "Make espresso wherever the day takes you",
+        "body": "Connects the portable design with travel use. Reduce cafe spending.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View product"
+      },
+      {
+        "sequence": "launch",
+        "step": 3,
+        "status": "DRAFT",
+        "subject": "20% off on Portable Espresso Maker",
+        "previewText": "Current offer: 20% off",
+        "body": "Portable Espresso Maker is currently available with 20% off. Compare the features, price, and fit before purchasing.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "Shop now"
+      },
+      {
+        "sequence": "abandoned_cart",
+        "step": 1,
+        "status": "DRAFT",
+        "subject": "Still considering Portable Espresso Maker?",
+        "previewText": "Make espresso anywhere",
+        "body": "You left Portable Espresso Maker in your cart. If make espresso anywhere matters to you, your cart is ready when you are.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "Return to cart"
+      },
+      {
+        "sequence": "abandoned_cart",
+        "step": 2,
+        "status": "DRAFT",
+        "subject": "A closer look at Portable Espresso Maker",
+        "previewText": "Cleaning effort",
+        "body": "Still deciding? Consider cleaning effort alongside the product features and your own use case.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View product"
+      },
+      {
+        "sequence": "abandoned_cart",
+        "step": 3,
+        "status": "DRAFT",
+        "subject": "Your Portable Espresso Maker cart reminder",
+        "previewText": "Current offer: 20% off",
+        "body": "Your cart reminder for Portable Espresso Maker. The current product offer is 20% off; no extra urgency or discount has been added.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "Return to cart"
+      },
+      {
+        "sequence": "post_purchase",
+        "step": 1,
+        "status": "DRAFT",
+        "subject": "Your Portable Espresso Maker order",
+        "previewText": "Thanks for your purchase",
+        "body": "Thanks for choosing Portable Espresso Maker. Keep your order confirmation for shipping and support details.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View order"
+      },
+      {
+        "sequence": "post_purchase",
+        "step": 2,
+        "status": "DRAFT",
+        "subject": "Getting started with Portable Espresso Maker",
+        "previewText": "Reduce cafe spending",
+        "body": "Before first use, review the merchant's product guide and care instructions for Portable Espresso Maker.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "Read product guide"
+      },
+      {
+        "sequence": "post_purchase",
+        "step": 3,
+        "status": "DRAFT",
+        "subject": "How is Portable Espresso Maker working for you?",
+        "previewText": "Share your experience",
+        "body": "Once you have had time to use Portable Espresso Maker, share honest feedback about your experience.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "Share feedback"
+      },
+      {
+        "sequence": "win_back",
+        "step": 1,
+        "status": "DRAFT",
+        "subject": "Revisit Portable Espresso Maker",
+        "previewText": "Make espresso anywhere",
+        "body": "Portable Espresso Maker may be worth another look if you still need make espresso anywhere.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View product"
+      },
+      {
+        "sequence": "win_back",
+        "step": 2,
+        "status": "DRAFT",
+        "subject": "Portable Espresso Maker for Travelers",
+        "previewText": "Bring more of your coffee routine with you",
+        "body": "Connects at-home preparation with fewer cafe stops. Compare the features with what you need now.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "View product"
+      },
+      {
+        "sequence": "win_back",
+        "step": 3,
+        "status": "DRAFT",
+        "subject": "Current Portable Espresso Maker offer",
+        "previewText": "20% off",
+        "body": "If the timing is better now, the current offer for Portable Espresso Maker is 20% off.\n\nManage preferences or unsubscribe: [UNSUBSCRIBE_URL]",
+        "ctaText": "See current offer"
+      }
+    ]
+  },
+  "shopify": {
+    "channel": "shopify",
+    "status": "DRAFT",
+    "slug": "portable-espresso-maker",
+    "title": "Portable Espresso Maker",
+    "sections": [
+      {
+        "type": "hero",
+        "heading": "Portable Espresso Maker",
+        "body": "Make espresso wherever the day takes you. Make espresso anywhere."
+      },
+      {
+        "type": "problem",
+        "heading": "Built around real use cases",
+        "body": "Difficulty making espresso while traveling • High cost of cafe espresso • Limited coffee options away from home"
+      },
+      {
+        "type": "benefits",
+        "heading": "Why it may fit your routine",
+        "body": "Make espresso anywhere • Reduce cafe spending • Easy to clean"
+      },
+      {
+        "type": "features",
+        "heading": "Product details",
+        "body": "Portable • No electricity required • Easy to clean"
+      },
+      {
+        "type": "how_it_works",
+        "heading": "Before you use it",
+        "body": "Review the product instructions, use Portable Espresso Maker as directed, and follow the merchant's care guidance."
+      },
+      {
+        "type": "social_proof",
+        "heading": "Customer proof policy",
+        "body": "This demo does not fabricate reviews. Verified customer reviews can be connected before publication."
+      },
+      {
+        "type": "offer",
+        "heading": "Current offer",
+        "body": "20% off the current product price"
+      },
+      {
+        "type": "faq",
+        "heading": "Questions before buying",
+        "body": "Q: Who is Portable Espresso Maker designed for? A: The current product profile targets Travelers, Office workers, Campers. • Q: What product details should I compare? A: Key listed features are Portable, No electricity required, Easy to clean. • Q: What should I consider before buying? A: Consider cleaning effort and compare it with your own needs."
+      },
+      {
+        "type": "shipping_returns",
+        "heading": "Shipping and returns",
+        "body": "Shipping and return terms are merchant-specific and should be connected from the live store before publication."
+      },
+      {
+        "type": "cta",
+        "heading": "Explore Portable Espresso Maker",
+        "body": "View the current Portable Espresso Maker product page and compare the details with your needs."
+      }
+    ],
+    "html": "<section data-type=\"hero\"><h2>Portable Espresso Maker</h2><p>Make espresso wherever the day takes you. Make espresso anywhere.</p></section>\n<section data-type=\"problem\"><h2>Built around real use cases</h2><p>Difficulty making espresso while traveling • High cost of cafe espresso • Limited coffee options away from home</p></section>\n<section data-type=\"benefits\"><h2>Why it may fit your routine</h2><p>Make espresso anywhere • Reduce cafe spending • Easy to clean</p></section>\n<section data-type=\"features\"><h2>Product details</h2><p>Portable • No electricity required • Easy to clean</p></section>\n<section data-type=\"how_it_works\"><h2>Before you use it</h2><p>Review the product instructions, use Portable Espresso Maker as directed, and follow the merchant's care guidance.</p></section>\n<section data-type=\"social_proof\"><h2>Customer proof policy</h2><p>This demo does not fabricate reviews. Verified customer reviews can be connected before publication.</p></section>\n<section data-type=\"offer\"><h2>Current offer</h2><p>20% off the current product price</p></section>\n<section data-type=\"faq\"><h2>Questions before buying</h2><p>Q: Who is Portable Espresso Maker designed for? A: The current product profile targets Travelers, Office workers, Campers. • Q: What product details should I compare? A: Key listed features are Portable, No electricity required, Easy to clean. • Q: What should I consider before buying? A: Consider cleaning effort and compare it with your own needs.</p></section>\n<section data-type=\"shipping_returns\"><h2>Shipping and returns</h2><p>Shipping and return terms are merchant-specific and should be connected from the live store before publication.</p></section>\n<section data-type=\"cta\"><h2>Explore Portable Espresso Maker</h2><p>View the current Portable Espresso Maker product page and compare the details with your needs.</p></section>"
+  },
+  "googleAds": {
+    "channel": "google_ads",
+    "status": "DRAFT",
+    "objective": "SALES",
+    "adGroups": [
+      {
+        "angleName": "Travel-Friendly",
+        "headlines": [
+          "Portable Espresso Maker",
+          "Travel-Friendly",
+          "Portable"
+        ],
+        "descriptions": [
+          "Make espresso wherever the day takes you. Make espresso anywhere.",
+          "Portable Espresso Maker: Portable. Current offer: 20% off."
+        ]
+      },
+      {
+        "angleName": "Cost-Saving",
+        "headlines": [
+          "Portable Espresso Maker",
+          "Cost-Saving",
+          "No electricity required"
+        ],
+        "descriptions": [
+          "Bring more of your coffee routine with you. Reduce cafe spending.",
+          "Portable Espresso Maker: No electricity required. Current offer: 20% off."
+        ]
+      },
+      {
+        "angleName": "No-Outlet Routine",
+        "headlines": [
+          "Portable Espresso Maker",
+          "No-Outlet Routine",
+          "Easy to clean"
+        ],
+        "descriptions": [
+          "A coffee routine that does not need an outlet. Easy to clean.",
+          "Portable Espresso Maker: Easy to clean. Current offer: 20% off."
+        ]
+      }
+    ]
+  },
+  "amazon": {
+    "channel": "amazon",
+    "status": "DRAFT",
+    "title": "Portable Espresso Maker - Portable, No electricity required",
+    "bullets": [
+      "USE CASE: Make espresso anywhere",
+      "BENEFIT: Reduce cafe spending",
+      "FEATURE: Easy to clean",
+      "ROUTINE: Portable",
+      "BUYING FIT: No electricity required"
+    ],
+    "description": "A compact manual espresso maker for travel and work. Key listed features: Portable, No electricity required, Easy to clean.",
+    "searchTerms": [
+      "travelers",
+      "office workers",
+      "campers",
+      "portable",
+      "no electricity required",
+      "easy to clean",
+      "upcoming travel",
+      "frequent office coffee runs",
+      "need for a portable coffee option"
+    ]
+  },
+  "creatives": [
+    {
+      "id": "ESP-001-meta_square",
+      "status": "DRAFT",
+      "format": "meta_square",
+      "width": 1080,
+      "height": 1080,
+      "headline": "Portable Espresso Maker",
+      "subheadline": "Make espresso wherever the day takes you",
+      "cta": "SHOP NOW",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1080\" height=\"1080\" viewBox=\"0 0 1080 1080\" role=\"img\" aria-label=\"Portable Espresso Maker ad draft\">\n  <rect width=\"100%\" height=\"100%\" fill=\"#f7f7f7\"/>\n  <rect x=\"6%\" y=\"7%\" width=\"88%\" height=\"49%\" rx=\"28\" fill=\"#e9e9e9\"/>\n  <circle cx=\"50%\" cy=\"31%\" r=\"12%\" fill=\"#111\"/>\n  <text x=\"50%\" y=\"34%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"92\" fill=\"#fff\">PEM</text>\n  <text x=\"50%\" y=\"50%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"26\" fill=\"#555\">DEMO PRODUCT VISUAL</text>\n  <text x=\"8%\" y=\"66%\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"56\" fill=\"#111\">Portable Espresso Maker</text>\n  <text x=\"8%\" y=\"74%\" font-family=\"Arial, sans-serif\" font-size=\"35\" fill=\"#333\">Make espresso wherever the day takes you</text>\n  <rect x=\"8%\" y=\"80%\" width=\"32%\" height=\"8%\" rx=\"18\" fill=\"#111\"/>\n  <text x=\"24%\" y=\"85.2%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"29\" fill=\"#fff\">SHOP NOW</text>\n  <text x=\"92%\" y=\"85%\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#111\">20% OFF</text>\n</svg>"
+    },
+    {
+      "id": "ESP-001-meta_story",
+      "status": "DRAFT",
+      "format": "meta_story",
+      "width": 1080,
+      "height": 1920,
+      "headline": "Portable Espresso Maker",
+      "subheadline": "Make espresso wherever the day takes you",
+      "cta": "SHOP NOW",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1080\" height=\"1920\" viewBox=\"0 0 1080 1920\" role=\"img\" aria-label=\"Portable Espresso Maker ad draft\">\n  <rect width=\"100%\" height=\"100%\" fill=\"#f7f7f7\"/>\n  <rect x=\"6%\" y=\"7%\" width=\"88%\" height=\"49%\" rx=\"28\" fill=\"#e9e9e9\"/>\n  <circle cx=\"50%\" cy=\"31%\" r=\"12%\" fill=\"#111\"/>\n  <text x=\"50%\" y=\"34%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"92\" fill=\"#fff\">PEM</text>\n  <text x=\"50%\" y=\"50%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"26\" fill=\"#555\">DEMO PRODUCT VISUAL</text>\n  <text x=\"8%\" y=\"66%\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"56\" fill=\"#111\">Portable Espresso Maker</text>\n  <text x=\"8%\" y=\"74%\" font-family=\"Arial, sans-serif\" font-size=\"35\" fill=\"#333\">Make espresso wherever the day takes you</text>\n  <rect x=\"8%\" y=\"80%\" width=\"32%\" height=\"8%\" rx=\"18\" fill=\"#111\"/>\n  <text x=\"24%\" y=\"85.2%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"29\" fill=\"#fff\">SHOP NOW</text>\n  <text x=\"92%\" y=\"85%\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#111\">20% OFF</text>\n</svg>"
+    },
+    {
+      "id": "ESP-001-display_landscape",
+      "status": "DRAFT",
+      "format": "display_landscape",
+      "width": 1200,
+      "height": 628,
+      "headline": "Portable Espresso Maker",
+      "subheadline": "Make espresso wherever the day takes you",
+      "cta": "SHOP NOW",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1200\" height=\"628\" viewBox=\"0 0 1200 628\" role=\"img\" aria-label=\"Portable Espresso Maker ad draft\">\n  <rect width=\"100%\" height=\"100%\" fill=\"#f7f7f7\"/>\n  <rect x=\"6%\" y=\"7%\" width=\"88%\" height=\"49%\" rx=\"28\" fill=\"#e9e9e9\"/>\n  <circle cx=\"50%\" cy=\"31%\" r=\"12%\" fill=\"#111\"/>\n  <text x=\"50%\" y=\"34%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"53\" fill=\"#fff\">PEM</text>\n  <text x=\"50%\" y=\"50%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#555\">DEMO PRODUCT VISUAL</text>\n  <text x=\"8%\" y=\"66%\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"33\" fill=\"#111\">Portable Espresso Maker</text>\n  <text x=\"8%\" y=\"74%\" font-family=\"Arial, sans-serif\" font-size=\"20\" fill=\"#333\">Make espresso wherever the day takes you</text>\n  <rect x=\"8%\" y=\"80%\" width=\"32%\" height=\"8%\" rx=\"18\" fill=\"#111\"/>\n  <text x=\"24%\" y=\"85.2%\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"17\" fill=\"#fff\">SHOP NOW</text>\n  <text x=\"92%\" y=\"85%\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-weight=\"700\" font-size=\"15\" fill=\"#111\">20% OFF</text>\n</svg>"
+    }
+  ],
+  "videoStoryboard": {
+    "status": "DRAFT",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "totalDurationMs": 20000,
+    "scenes": [
+      {
+        "scene": 1,
+        "durationMs": 3000,
+        "purpose": "hook",
+        "onScreenText": "Make espresso wherever the day takes you",
+        "assetHint": "Fast product reveal or contextual lifestyle shot"
+      },
+      {
+        "scene": 2,
+        "durationMs": 3000,
+        "purpose": "problem",
+        "onScreenText": "Difficulty making espresso while traveling",
+        "assetHint": "Show the customer problem without exaggeration"
+      },
+      {
+        "scene": 3,
+        "durationMs": 4000,
+        "purpose": "product",
+        "onScreenText": "Portable Espresso Maker",
+        "assetHint": "Clean product close-up using supplied product imagery"
+      },
+      {
+        "scene": 4,
+        "durationMs": 4000,
+        "purpose": "benefit",
+        "onScreenText": "Make espresso anywhere",
+        "assetHint": "Demonstrate or visualize only supplied product benefits"
+      },
+      {
+        "scene": 5,
+        "durationMs": 3000,
+        "purpose": "offer",
+        "onScreenText": "20% off",
+        "assetHint": "Simple offer card; no invented scarcity or countdown"
+      },
+      {
+        "scene": 6,
+        "durationMs": 3000,
+        "purpose": "cta",
+        "onScreenText": "Shop now",
+        "assetHint": "Product plus clear CTA"
+      }
+    ]
+  }
+}

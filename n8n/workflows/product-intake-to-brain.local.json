@@ -1,0 +1,100 @@
+{
+  "id": "EcomBrainDemo901",
+  "name": "Ecom Product Intake to Product Brain - Local",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecom-product-intake",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a507f635-2364-4ef1-963c-aa0d4726f615",
+      "name": "Product Intake Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        0
+      ],
+      "webhookId": "ecom-product-intake-local"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/product-brain",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body ?? $json) }}",
+        "options": {}
+      },
+      "id": "1cf06ce5-2b94-4b2f-bf09-68ff0a1c1ce5",
+      "name": "Generate Product Brain",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "37d78f83-0d67-41f7-a736-7f642bd0b44a",
+      "name": "Return Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        180,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Product Intake Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate Product Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Product Brain": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4487936d-7664-477a-8b59-94ae8ce1e84b",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

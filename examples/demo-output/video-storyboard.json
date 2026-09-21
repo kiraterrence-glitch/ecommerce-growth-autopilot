@@ -1,0 +1,51 @@
+{
+  "status": "DRAFT",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "totalDurationMs": 20000,
+  "scenes": [
+    {
+      "scene": 1,
+      "durationMs": 3000,
+      "purpose": "hook",
+      "onScreenText": "Make espresso wherever the day takes you",
+      "assetHint": "Fast product reveal or contextual lifestyle shot"
+    },
+    {
+      "scene": 2,
+      "durationMs": 3000,
+      "purpose": "problem",
+      "onScreenText": "Difficulty making espresso while traveling",
+      "assetHint": "Show the customer problem without exaggeration"
+    },
+    {
+      "scene": 3,
+      "durationMs": 4000,
+      "purpose": "product",
+      "onScreenText": "Portable Espresso Maker",
+      "assetHint": "Clean product close-up using supplied product imagery"
+    },
+    {
+      "scene": 4,
+      "durationMs": 4000,
+      "purpose": "benefit",
+      "onScreenText": "Make espresso anywhere",
+      "assetHint": "Demonstrate or visualize only supplied product benefits"
+    },
+    {
+      "scene": 5,
+      "durationMs": 3000,
+      "purpose": "offer",
+      "onScreenText": "20% off",
+      "assetHint": "Simple offer card; no invented scarcity or countdown"
+    },
+    {
+      "scene": 6,
+      "durationMs": 3000,
+      "purpose": "cta",
+      "onScreenText": "Shop now",
+      "assetHint": "Product plus clear CTA"
+    }
+  ]
+}

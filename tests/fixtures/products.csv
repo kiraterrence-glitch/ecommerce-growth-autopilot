@@ -1,0 +1,3 @@
+sku,title,description,price,currency,cost,inventory,features,benefits,audiences,imageUrls,offerType,offerValue,shopify,amazon
+esp-001," Portable Espresso Maker ","Espresso maker for travel",79,USD,31,150,"Portable|No electricity|Portable","Coffee anywhere|Fast espresso","Travelers|Office workers",https://example.com/espresso.jpg,percentage,20,true,true
+bad-001,Broken Product,Bad data,0,ZZZ,nope,3.5,"Feature A",Benefit A,,https://example.com/bad.jpg,percentage,150,maybe,false

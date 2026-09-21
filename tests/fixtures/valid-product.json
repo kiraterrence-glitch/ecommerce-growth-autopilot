@@ -1,0 +1,15 @@
+{
+  "sku": "ESP-001",
+  "title": "Portable Espresso Maker",
+  "description": "A compact manual espresso maker for travel and work.",
+  "price": 79,
+  "currency": "USD",
+  "cost": 31,
+  "inventory": 150,
+  "features": ["Portable", "No electricity required", "Easy to clean"],
+  "benefits": ["Make espresso anywhere", "Reduce cafe spending"],
+  "audiences": ["Travelers", "Office workers", "Campers"],
+  "imageUrls": ["https://example.invalid/espresso-1.jpg"],
+  "offer": { "type": "percentage", "value": 20 },
+  "channels": { "shopify": true, "amazon": true }
+}

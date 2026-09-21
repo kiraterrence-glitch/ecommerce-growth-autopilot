@@ -1,0 +1,451 @@
+{
+  "info": {
+    "name": "Ecom Growth Autopilot",
+    "description": "Local verification and debugging collection. No credentials are stored in this collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ollama Models",
+      "request": {
+        "method": "GET",
+        "url": "{{ollamaUrl}}/api/tags"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Ollama responds', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('configured model is installed', () => pm.expect((body.models || []).map(m => m.name)).to.include(pm.environment.get('ollamaModel')));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ollama JSON Smoke",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"{{ollamaModel}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Return a JSON object with exactly two keys: ok=true and message=ollama-ready.\"\n    }\n  ],\n  \"format\": \"json\",\n  \"stream\": false,\n  \"think\": false\n}"
+        },
+        "url": "{{ollamaUrl}}/api/chat"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Ollama generation responds', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "const primary = body.message && typeof body.message.content === 'string' ? body.message.content.trim() : '';",
+              "const fallback = body.message && typeof body.message.thinking === 'string' ? body.message.thinking.trim() : '';",
+              "const candidate = primary || fallback;",
+              "pm.test('content or guarded thinking fallback exists', () => pm.expect(candidate).to.be.a('string').and.not.empty);",
+              "pm.test('candidate is JSON', () => pm.expect(() => JSON.parse(candidate)).to.not.throw());"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('health returns 200', () => pm.response.to.have.status(200));",
+              "pm.test('response has request id', () => pm.expect(pm.response.headers.get('x-request-id')).to.be.ok);",
+              "pm.test('service reports ok', () => pm.expect(pm.response.json().ok).to.eql(true));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Readiness",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/ready"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('readiness returns 200 when local stack is ready', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('readiness exposes provider', () => pm.expect(body).to.have.property('aiProvider'));",
+              "pm.test('readiness is true', () => pm.expect(body.ready).to.eql(true));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generate Product Brain",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"ESP-001\",\n  \"title\": \"Portable Espresso Maker\",\n  \"description\": \"Manual portable espresso maker for travel and office use.\",\n  \"price\": 79,\n  \"currency\": \"USD\",\n  \"cost\": 31,\n  \"inventory\": 150,\n  \"features\": [\"Portable\", \"Manual operation\", \"Compact\"],\n  \"benefits\": [\"Make espresso away from home\"],\n  \"audiences\": [\"Travelers\", \"Office workers\"],\n  \"images\": [\"https://example.invalid/espresso.jpg\"],\n  \"offer\": {\"type\": \"percentage\", \"value\": 20},\n  \"channels\": {\"shopify\": true, \"amazon\": true}\n}"
+        },
+        "url": "{{baseUrl}}/product-brain"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('product brain returns 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('brain is validated', () => pm.expect(body.ok).to.eql(true));",
+              "pm.test('three or more angles exist', () => pm.expect(body.brain.angles.length).to.be.at.least(3));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generate Full Campaign Kit",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"ESP-001\",\n  \"title\": \"Portable Espresso Maker\",\n  \"description\": \"Manual portable espresso maker for travel and office use.\",\n  \"price\": 79,\n  \"currency\": \"USD\",\n  \"cost\": 31,\n  \"inventory\": 150,\n  \"features\": [\"Portable\", \"Manual operation\", \"Compact\"],\n  \"benefits\": [\"Make espresso away from home\"],\n  \"audiences\": [\"Travelers\", \"Office workers\"],\n  \"imageUrls\": [\"https://example.invalid/espresso.jpg\"],\n  \"offer\": {\"type\": \"percentage\", \"value\": 20},\n  \"channels\": {\"shopify\": true, \"amazon\": true}\n}"
+        },
+        "url": "{{baseUrl}}/campaign-kit"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('campaign kit returns 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Meta has six drafts', () => pm.expect(body.kit.meta.ads.length).to.eql(6));",
+              "pm.test('Email has twelve drafts', () => pm.expect(body.kit.email.emails.length).to.eql(12));",
+              "pm.test('Shopify has ten sections', () => pm.expect(body.kit.shopify.sections.length).to.eql(10));",
+              "pm.test('Marketing quality gate passed', () => pm.expect(body.quality.passed).to.eql(true));",
+              "pm.test('campaign snapshot id returned', () => pm.expect(body.campaignId).to.be.a('string').and.not.empty);",
+              "pm.collectionVariables.set('campaignId', body.campaignId);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject Invalid Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"BAD-001\",\n  \"title\": \"\",\n  \"price\": -1\n}"
+        },
+        "url": "{{baseUrl}}/product-brain"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('invalid product is rejected', () => pm.response.to.have.status(400));",
+              "pm.test('stable error code is returned', () => pm.expect(pm.response.json().error).to.eql('invalid_product'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyze Product Research",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"research-espresso-001\",\n  \"query\": \"portable espresso maker\",\n  \"targetMarketplace\": \"amazon_us\",\n  \"currency\": \"USD\",\n  \"sources\": [\n    {\n      \"id\": \"source-competitors\",\n      \"type\": \"csv\",\n      \"label\": \"Competitor snapshot\",\n      \"capturedAt\": \"2026-09-20T12:00:00Z\",\n      \"sourceUrl\": null\n    },\n    {\n      \"id\": \"source-reviews\",\n      \"type\": \"review_import\",\n      \"label\": \"Imported review sample\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\",\n      \"sourceUrl\": null\n    },\n    {\n      \"id\": \"source-economics\",\n      \"type\": \"seller_input\",\n      \"label\": \"Seller economics assumptions\",\n      \"capturedAt\": \"2026-09-20T12:10:00Z\",\n      \"sourceUrl\": null\n    }\n  ],\n  \"competitors\": [\n    {\n      \"id\": \"comp-1\",\n      \"title\": \"Nomad Espresso Press\",\n      \"price\": 69.99,\n      \"currency\": \"USD\",\n      \"rating\": 4.2,\n      \"reviewCount\": 812,\n      \"features\": [\n        \"Portable\",\n        \"Manual pressure\",\n        \"Travel case\"\n      ],\n      \"offer\": \"10% coupon\",\n      \"sourceId\": \"source-competitors\",\n      \"capturedAt\": \"2026-09-20T12:00:00Z\"\n    },\n    {\n      \"id\": \"comp-2\",\n      \"title\": \"TrailShot Espresso Maker\",\n      \"price\": 79,\n      \"currency\": \"USD\",\n      \"rating\": 4.4,\n      \"reviewCount\": 1241,\n      \"features\": [\n        \"Portable\",\n        \"Manual pressure\",\n        \"Compact\"\n      ],\n      \"offer\": null,\n      \"sourceId\": \"source-competitors\",\n      \"capturedAt\": \"2026-09-20T12:00:00Z\"\n    },\n    {\n      \"id\": \"comp-3\",\n      \"title\": \"RoamBar Coffee Press\",\n      \"price\": 89,\n      \"currency\": \"USD\",\n      \"rating\": 4.1,\n      \"reviewCount\": 566,\n      \"features\": [\n        \"Portable\",\n        \"Travel case\",\n        \"Compact\"\n      ],\n      \"offer\": \"15% coupon\",\n      \"sourceId\": \"source-competitors\",\n      \"capturedAt\": \"2026-09-20T12:00:00Z\"\n    },\n    {\n      \"id\": \"comp-4\",\n      \"title\": \"OfficeGo Espresso Press\",\n      \"price\": 74.5,\n      \"currency\": \"USD\",\n      \"rating\": 4,\n      \"reviewCount\": 338,\n      \"features\": [\n        \"Portable\",\n        \"Manual pressure\",\n        \"Easy clean\"\n      ],\n      \"offer\": \"10% coupon\",\n      \"sourceId\": \"source-competitors\",\n      \"capturedAt\": \"2026-09-20T12:00:00Z\"\n    }\n  ],\n  \"reviews\": [\n    {\n      \"id\": \"review-1\",\n      \"competitorId\": \"comp-1\",\n      \"rating\": 2,\n      \"text\": \"Great for travel but it is hard to clean after each shot.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-2\",\n      \"competitorId\": \"comp-2\",\n      \"rating\": 3,\n      \"text\": \"Portable and simple, though cleaning takes longer than expected.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-3\",\n      \"competitorId\": \"comp-2\",\n      \"rating\": 2,\n      \"text\": \"The unit started leaking near the seal after a month.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-4\",\n      \"competitorId\": \"comp-3\",\n      \"rating\": 5,\n      \"text\": \"Compact enough for travel and easy to use at the office.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-5\",\n      \"competitorId\": \"comp-3\",\n      \"rating\": 3,\n      \"text\": \"I like the espresso quality but the price feels expensive.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-6\",\n      \"competitorId\": \"comp-4\",\n      \"rating\": 4,\n      \"text\": \"Easy to use and portable, but I wish it included a travel case.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-7\",\n      \"competitorId\": \"comp-1\",\n      \"rating\": 2,\n      \"text\": \"Messy cleaning and a small leak made this hard to use daily.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    },\n    {\n      \"id\": \"review-8\",\n      \"competitorId\": \"comp-4\",\n      \"rating\": 5,\n      \"text\": \"Simple operation and compact size make it useful on the go.\",\n      \"sourceId\": \"source-reviews\",\n      \"capturedAt\": \"2026-09-20T12:05:00Z\"\n    }\n  ],\n  \"economics\": {\n    \"sellingPrice\": 79,\n    \"cogs\": 28,\n    \"shippingCost\": 7,\n    \"marketplaceFees\": 12,\n    \"paymentFees\": 2.5,\n    \"discountAmount\": 0,\n    \"adAllowance\": 10\n  }\n}"
+        },
+        "url": "{{baseUrl}}/research/analyze"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('research analysis returns 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('research quality passed', () => pm.expect(body.quality.passed).to.eql(true));",
+              "pm.test('competitor count is evidence-backed', () => pm.expect(body.analysis.competitorCount).to.eql(4));",
+              "pm.test('demand is not inferred', () => pm.expect(body.analysis.limitations.join(' ')).to.include('demand'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generate Research-Aware Campaign Kit",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"product\": {\n    \"sku\": \"ESP-001\",\n    \"title\": \"Portable Espresso Maker\",\n    \"description\": \"A compact manual espresso maker for travel and work.\",\n    \"price\": 79,\n    \"currency\": \"USD\",\n    \"cost\": 31,\n    \"inventory\": 150,\n    \"features\": [\n      \"Portable\",\n      \"No electricity required\",\n      \"Easy to clean\"\n    ],\n    \"benefits\": [\n      \"Make espresso anywhere\",\n      \"Reduce cafe spending\"\n    ],\n    \"audiences\": [\n      \"Travelers\",\n      \"Office workers\",\n      \"Campers\"\n    ],\n    \"imageUrls\": [\n      \"https://example.invalid/espresso-1.jpg\"\n    ],\n    \"offer\": {\n      \"type\": \"percentage\",\n      \"value\": 20\n    },\n    \"channels\": {\n      \"shopify\": true,\n      \"amazon\": true\n    }\n  },\n  \"research\": {\n    \"id\": \"research-espresso-001\",\n    \"query\": \"portable espresso maker\",\n    \"targetMarketplace\": \"amazon_us\",\n    \"currency\": \"USD\",\n    \"sources\": [\n      {\n        \"id\": \"source-competitors\",\n        \"type\": \"csv\",\n        \"label\": \"Competitor snapshot\",\n        \"capturedAt\": \"2026-09-20T12:00:00Z\",\n        \"sourceUrl\": null\n      },\n      {\n        \"id\": \"source-reviews\",\n        \"type\": \"review_import\",\n        \"label\": \"Imported review sample\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\",\n        \"sourceUrl\": null\n      },\n      {\n        \"id\": \"source-economics\",\n        \"type\": \"seller_input\",\n        \"label\": \"Seller economics assumptions\",\n        \"capturedAt\": \"2026-09-20T12:10:00Z\",\n        \"sourceUrl\": null\n      }\n    ],\n    \"competitors\": [\n      {\n        \"id\": \"comp-1\",\n        \"title\": \"Nomad Espresso Press\",\n        \"price\": 69.99,\n        \"currency\": \"USD\",\n        \"rating\": 4.2,\n        \"reviewCount\": 812,\n        \"features\": [\n          \"Portable\",\n          \"Manual pressure\",\n          \"Travel case\"\n        ],\n        \"offer\": \"10% coupon\",\n        \"sourceId\": \"source-competitors\",\n        \"capturedAt\": \"2026-09-20T12:00:00Z\"\n      },\n      {\n        \"id\": \"comp-2\",\n        \"title\": \"TrailShot Espresso Maker\",\n        \"price\": 79,\n        \"currency\": \"USD\",\n        \"rating\": 4.4,\n        \"reviewCount\": 1241,\n        \"features\": [\n          \"Portable\",\n          \"Manual pressure\",\n          \"Compact\"\n        ],\n        \"offer\": null,\n        \"sourceId\": \"source-competitors\",\n        \"capturedAt\": \"2026-09-20T12:00:00Z\"\n      },\n      {\n        \"id\": \"comp-3\",\n        \"title\": \"RoamBar Coffee Press\",\n        \"price\": 89,\n        \"currency\": \"USD\",\n        \"rating\": 4.1,\n        \"reviewCount\": 566,\n        \"features\": [\n          \"Portable\",\n          \"Travel case\",\n          \"Compact\"\n        ],\n        \"offer\": \"15% coupon\",\n        \"sourceId\": \"source-competitors\",\n        \"capturedAt\": \"2026-09-20T12:00:00Z\"\n      },\n      {\n        \"id\": \"comp-4\",\n        \"title\": \"OfficeGo Espresso Press\",\n        \"price\": 74.5,\n        \"currency\": \"USD\",\n        \"rating\": 4,\n        \"reviewCount\": 338,\n        \"features\": [\n          \"Portable\",\n          \"Manual pressure\",\n          \"Easy clean\"\n        ],\n        \"offer\": \"10% coupon\",\n        \"sourceId\": \"source-competitors\",\n        \"capturedAt\": \"2026-09-20T12:00:00Z\"\n      }\n    ],\n    \"reviews\": [\n      {\n        \"id\": \"review-1\",\n        \"competitorId\": \"comp-1\",\n        \"rating\": 2,\n        \"text\": \"Great for travel but it is hard to clean after each shot.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-2\",\n        \"competitorId\": \"comp-2\",\n        \"rating\": 3,\n        \"text\": \"Portable and simple, though cleaning takes longer than expected.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-3\",\n        \"competitorId\": \"comp-2\",\n        \"rating\": 2,\n        \"text\": \"The unit started leaking near the seal after a month.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-4\",\n        \"competitorId\": \"comp-3\",\n        \"rating\": 5,\n        \"text\": \"Compact enough for travel and easy to use at the office.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-5\",\n        \"competitorId\": \"comp-3\",\n        \"rating\": 3,\n        \"text\": \"I like the espresso quality but the price feels expensive.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-6\",\n        \"competitorId\": \"comp-4\",\n        \"rating\": 4,\n        \"text\": \"Easy to use and portable, but I wish it included a travel case.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-7\",\n        \"competitorId\": \"comp-1\",\n        \"rating\": 2,\n        \"text\": \"Messy cleaning and a small leak made this hard to use daily.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      },\n      {\n        \"id\": \"review-8\",\n        \"competitorId\": \"comp-4\",\n        \"rating\": 5,\n        \"text\": \"Simple operation and compact size make it useful on the go.\",\n        \"sourceId\": \"source-reviews\",\n        \"capturedAt\": \"2026-09-20T12:05:00Z\"\n      }\n    ],\n    \"economics\": {\n      \"sellingPrice\": 79,\n      \"cogs\": 28,\n      \"shippingCost\": 7,\n      \"marketplaceFees\": 12,\n      \"paymentFees\": 2.5,\n      \"discountAmount\": 0,\n      \"adAllowance\": 10\n    }\n  }\n}"
+        },
+        "url": "{{baseUrl}}/campaign-kit"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('research-aware campaign returns 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('research is attached', () => pm.expect(body.research.projectId).to.eql('research-espresso-001'));",
+              "pm.test('research quality passed', () => pm.expect(body.researchQuality.passed).to.eql(true));",
+              "pm.test('marketing quality passed', () => pm.expect(body.quality.passed).to.eql(true));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery Capabilities",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/delivery/capabilities"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('capabilities return 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('live writes are disabled', () => pm.expect(body.liveSupported).to.eql(false));",
+              "pm.test('external writes are disabled', () => pm.expect(body.externalWritesEnabled).to.eql(false));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaign History",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/history/campaigns"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('history returns 200', () => pm.response.to.have.status(200));",
+              "pm.test('history is an array', () => pm.expect(pm.response.json().campaigns).to.be.an('array'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unapproved Delivery Is Blocked",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"campaignId\":\"{{campaignId}}\",\"channel\":\"google_ads\",\"mode\":\"draft\"}"
+        },
+        "url": "{{baseUrl}}/delivery/draft"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('delivery is blocked before approval', () => pm.response.to.have.status(409));",
+              "pm.test('approval_required is explicit', () => pm.expect(pm.response.json().error).to.eql('approval_required'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Demo Timeline",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/demo/status?campaignId={{campaignId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('demo timeline returns 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('timeline has visible gates', () => pm.expect(body.status.timeline.length).to.be.above(5));",
+              "pm.test('external writes stay disabled', () => pm.expect(body.status.safety.externalWrites).to.eql(false));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Live Delivery Mode Is Blocked",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"campaignId\":\"{{campaignId}}\",\"channel\":\"meta\",\"mode\":\"live\"}"
+        },
+        "url": "{{baseUrl}}/delivery/draft"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('live delivery mode is blocked', () => pm.response.to.have.status(400));",
+              "pm.test('unsupported_mode is explicit', () => pm.expect(pm.response.json().error).to.eql('unsupported_mode'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Latest Local n8n Engine Proof",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-request-id",
+            "value": "{{$guid}}"
+          }
+        ],
+        "url": "{{baseUrl}}/proof/latest"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('proof endpoint is available or not-yet-proven', () => pm.expect([200, 404]).to.include(pm.response.code));",
+              "if (pm.response.code === 200) {",
+              "  const body = pm.response.json();",
+              "  pm.test('proof is local n8n engine', () => pm.expect(body.proof.payload.proofType).to.eql('local_n8n_engine'));",
+              "  pm.test('proof keeps external writes disabled', () => pm.expect(body.proof.payload.externalWrites).to.eql(false));",
+              "  pm.test('proof keeps live publishing disabled', () => pm.expect(body.proof.payload.livePublishing).to.eql(false));",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

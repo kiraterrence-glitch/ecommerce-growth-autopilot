@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "errors": 0,
+  "warnings": 0,
+  "checks": [
+    "internal prompt leakage",
+    "Meta audience and variant diversity",
+    "email lifecycle CTA correctness",
+    "Shopify FAQ and placeholder completeness",
+    "Google copy fit and uniqueness",
+    "Amazon listing completeness",
+    "creative placeholder leakage",
+    "video customer-facing copy safety"
+  ],
+  "issues": []
+}

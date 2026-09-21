@@ -1,0 +1,154 @@
+{
+  "id": "research-espresso-001",
+  "query": "portable espresso maker",
+  "targetMarketplace": "amazon_us",
+  "currency": "USD",
+  "sources": [
+    {
+      "id": "source-competitors",
+      "type": "csv",
+      "label": "Competitor snapshot",
+      "capturedAt": "2026-09-20T12:00:00Z",
+      "sourceUrl": null
+    },
+    {
+      "id": "source-reviews",
+      "type": "review_import",
+      "label": "Imported review sample",
+      "capturedAt": "2026-09-20T12:05:00Z",
+      "sourceUrl": null
+    },
+    {
+      "id": "source-economics",
+      "type": "seller_input",
+      "label": "Seller economics assumptions",
+      "capturedAt": "2026-09-20T12:10:00Z",
+      "sourceUrl": null
+    }
+  ],
+  "competitors": [
+    {
+      "id": "comp-1",
+      "title": "Nomad Espresso Press",
+      "price": 69.99,
+      "currency": "USD",
+      "rating": 4.2,
+      "reviewCount": 812,
+      "features": ["Portable", "Manual pressure", "Travel case"],
+      "offer": "10% coupon",
+      "sourceId": "source-competitors",
+      "capturedAt": "2026-09-20T12:00:00Z"
+    },
+    {
+      "id": "comp-2",
+      "title": "TrailShot Espresso Maker",
+      "price": 79,
+      "currency": "USD",
+      "rating": 4.4,
+      "reviewCount": 1241,
+      "features": ["Portable", "Manual pressure", "Compact"],
+      "offer": null,
+      "sourceId": "source-competitors",
+      "capturedAt": "2026-09-20T12:00:00Z"
+    },
+    {
+      "id": "comp-3",
+      "title": "RoamBar Coffee Press",
+      "price": 89,
+      "currency": "USD",
+      "rating": 4.1,
+      "reviewCount": 566,
+      "features": ["Portable", "Travel case", "Compact"],
+      "offer": "15% coupon",
+      "sourceId": "source-competitors",
+      "capturedAt": "2026-09-20T12:00:00Z"
+    },
+    {
+      "id": "comp-4",
+      "title": "OfficeGo Espresso Press",
+      "price": 74.5,
+      "currency": "USD",
+      "rating": 4,
+      "reviewCount": 338,
+      "features": ["Portable", "Manual pressure", "Easy clean"],
+      "offer": "10% coupon",
+      "sourceId": "source-competitors",
+      "capturedAt": "2026-09-20T12:00:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "review-1",
+      "competitorId": "comp-1",
+      "rating": 2,
+      "text": "Great for travel but it is hard to clean after each shot.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-2",
+      "competitorId": "comp-2",
+      "rating": 3,
+      "text": "Portable and simple, though cleaning takes longer than expected.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-3",
+      "competitorId": "comp-2",
+      "rating": 2,
+      "text": "The unit started leaking near the seal after a month.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-4",
+      "competitorId": "comp-3",
+      "rating": 5,
+      "text": "Compact enough for travel and easy to use at the office.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-5",
+      "competitorId": "comp-3",
+      "rating": 3,
+      "text": "I like the espresso quality but the price feels expensive.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-6",
+      "competitorId": "comp-4",
+      "rating": 4,
+      "text": "Easy to use and portable, but I wish it included a travel case.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-7",
+      "competitorId": "comp-1",
+      "rating": 2,
+      "text": "Messy cleaning and a small leak made this hard to use daily.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    },
+    {
+      "id": "review-8",
+      "competitorId": "comp-4",
+      "rating": 5,
+      "text": "Simple operation and compact size make it useful on the go.",
+      "sourceId": "source-reviews",
+      "capturedAt": "2026-09-20T12:05:00Z"
+    }
+  ],
+  "economics": {
+    "sellingPrice": 79,
+    "cogs": 28,
+    "shippingCost": 7,
+    "marketplaceFees": 12,
+    "paymentFees": 2.5,
+    "discountAmount": 0,
+    "adAllowance": 10
+  }
+}

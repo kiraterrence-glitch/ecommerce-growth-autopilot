@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "errors": 0,
+  "warnings": 3,
+  "issues": [
+    {
+      "code": "demand_not_measured",
+      "severity": "warning",
+      "message": "No demand-data source supplied; report must not infer demand strength"
+    },
+    {
+      "code": "small_competitor_sample",
+      "severity": "warning",
+      "message": "Fewer than 5 competitors supplied"
+    },
+    {
+      "code": "small_review_sample",
+      "severity": "warning",
+      "message": "Fewer than 10 reviews supplied"
+    }
+  ],
+  "checks": [
+    "source provenance",
+    "competitor deduplication",
+    "evidence-backed findings",
+    "demand-claim guardrail",
+    "reproducible unit economics"
+  ]
+}
