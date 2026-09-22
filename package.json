@@ -43,7 +43,8 @@
     "n8n:contract": "npm run build && node scripts/n8n-workflow-contract.mjs",
     "n8n:runtime-check": "node scripts/check-local-n8n-runtime.mjs",
     "n8n:engine-proof:receipt": "node scripts/capture-n8n-engine-proof.mjs",
-    "release:preflight": "node scripts/release-preflight.mjs"
+    "release:preflight": "node scripts/release-preflight.mjs",
+    "portfolio:capture": "node scripts/capture-portfolio-proof.mjs"
   },
   "license": "MIT",
   "devDependencies": {

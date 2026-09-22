@@ -11,7 +11,7 @@ Use this after the local n8n proof. It exists so a future coding agent does not 
 - [x] `PROJECT-STATE.json` matches package version and actual test count
 - [x] no `.env`, `.runtime`, credentials, PII, or raw merchant data committed (manual tracked-file/privacy audit, plus `npm run package:check` and `npm run secrets:check` for automated package and credential-pattern checks)
 - [x] all workflow exports are inactive and credential-free (`npm run validate:n8n`)
-- [ ] README screenshots show Research → Product Brain → Campaign → Approval → Local Draft
+- [x] README screenshots show Research → Product Brain → Campaign → Approval → Local Draft
 - [x] sample output is clearly labeled demo/synthetic data
 - [x] release notes state that live external writes are disabled
 - [x] recruiter walkthrough/demo script is prewritten in `docs/DEMO-SCRIPT.md`
