@@ -9,11 +9,11 @@ Use this after the local n8n proof. It exists so a future coding agent does not 
 - [x] deterministic n8n workflow contract proof is green
 - [x] `finish-portfolio-proof-windows.cmd` completes; its engine-proof step reports `N8N ENGINE PROOF PASSED` and writes `.runtime/n8n-engine-proof.json`
 - [x] `PROJECT-STATE.json` matches package version and actual test count
-- [ ] no `.env`, `.runtime`, credentials, PII, or raw merchant data committed
-- [ ] all workflow exports are inactive and credential-free
+- [x] no `.env`, `.runtime`, credentials, PII, or raw merchant data committed (`npm run package:check` and `npm run secrets:check`)
+- [x] all workflow exports are inactive and credential-free (`npm run validate:n8n`)
 - [ ] README screenshots show Research → Product Brain → Campaign → Approval → Local Draft
-- [ ] sample output is clearly labeled demo/synthetic data
-- [ ] release notes state that live external writes are disabled
+- [x] sample output is clearly labeled demo/synthetic data
+- [x] release notes state that live external writes are disabled
 - [x] recruiter walkthrough/demo script is prewritten in `docs/DEMO-SCRIPT.md`
 - [x] portfolio case-study copy is prewritten in `docs/PORTFOLIO-CASE-STUDY.md`
 - [x] GitHub publishing checklist is prewritten in `docs/GITHUB-PUBLISH.md`

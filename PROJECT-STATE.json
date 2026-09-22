@@ -106,6 +106,6 @@
   ],
   "next": [
     "Capture final dashboard, n8n canvas, and verification screenshots using open-dashboard-safe-windows.cmd and docs/DEMO-SCRIPT.md.",
-    "Add screenshots to README/case study and publish the portfolio entry."
+    "Add real local screenshots to README/case study and refresh the already-published portfolio entry."
   ]
 }

@@ -2,6 +2,8 @@
 
 A local-first eCommerce automation portfolio project that connects evidence-backed product research, structured AI strategy, multi-channel campaign drafts, creative generation, human approval, and safe n8n orchestration.
 
+[View the recruiter-facing portfolio case study](https://sean-monares-portfolio.vercel.app/projects/ecom-growth-autopilot/)
+
 The project is intentionally designed around a constraint that matters in real automation work: **an AI-generated answer is not trusted just because it looks plausible**. Research conclusions, Product Brain output, marketing drafts, approvals, and delivery all pass explicit validation boundaries before the next stage can proceed.
 
 > Portfolio baseline: local/mock/draft only. It cannot activate ads, spend budget, publish storefront changes, or send production email.
@@ -57,8 +59,8 @@ npm run verify
 Current v0.9.3 deterministic baseline:
 
 ```text
-65 tests
-65 passed
+66 tests
+66 passed
 0 failed
 
 Package safety          PASS
@@ -293,6 +295,8 @@ The repository already includes:
 - `docs/ARCHITECTURE-DIAGRAM.md`
 - `docs/GITHUB-PUBLISH.md`
 - `docs/RELEASE-CHECKLIST.md`
+
+The final presentation screenshots are intentionally not fabricated or reconstructed from test output. Capture them in the real local dashboard and n8n UI using the exact eight-shot checklist in [`docs/GITHUB-PUBLISH.md`](docs/GITHUB-PUBLISH.md#screenshots-to-capture).
 
 `docs/CODE-TOUR.md` is written so the project can be explained from three perspectives: business value, technical path, and interview answer.
 
