@@ -2,6 +2,8 @@
 
 A local-first eCommerce automation portfolio project that connects evidence-backed product research, structured AI strategy, multi-channel campaign drafts, creative generation, human approval, and safe n8n orchestration.
 
+[View the recruiter-facing portfolio case study](https://sean-monares-portfolio.vercel.app/projects/ecom-growth-autopilot/)
+
 The project is intentionally designed around a constraint that matters in real automation work: **an AI-generated answer is not trusted just because it looks plausible**. Research conclusions, Product Brain output, marketing drafts, approvals, and delivery all pass explicit validation boundaries before the next stage can proceed.
 
 > Portfolio baseline: local/mock/draft only. It cannot activate ads, spend budget, publish storefront changes, or send production email.
@@ -57,8 +59,8 @@ npm run verify
 Current v0.9.3 deterministic baseline:
 
 ```text
-65 tests
-65 passed
+66 tests
+66 passed
 0 failed
 
 Package safety          PASS
@@ -294,6 +296,22 @@ The repository already includes:
 - `docs/GITHUB-PUBLISH.md`
 - `docs/RELEASE-CHECKLIST.md`
 
+The committed screenshots below were captured on 2026-09-23 from the deterministic local dashboard after a real end-to-end demo run. The n8n proof card is rendered from the fresh machine-executed runtime receipt. All inputs are synthetic; no customer, credential, or merchant data is shown.
+
+Run `npm run portfolio:capture` after `npm run verify` and `npm run release:preflight` to regenerate the same evidence set from the local machine.
+
+### Visual proof
+
+| End-to-end run timeline | Research evidence and unit economics |
+| --- | --- |
+| ![Dashboard showing the validated product, research, Product Brain, campaign, quality, approval and delivery timeline.](docs/screenshots/dashboard-run-timeline.png) | ![Dashboard research view showing competitor evidence, review themes, price observations, unit economics and explicit limitations.](docs/screenshots/research-unit-economics.png) |
+| Product Brain | Draft campaign outputs |
+| ![Dashboard Product Brain view showing audiences, benefits, objections and grounded campaign angles from the deterministic provider.](docs/screenshots/product-brain.png) | ![Dashboard Meta campaign view showing six draft variants and their human review controls.](docs/screenshots/campaign-drafts.png) |
+| Human approval and blocked delivery | Local n8n engine receipt |
+| ![Dashboard delivery view showing zero approved assets and disabled local-draft actions until human approval.](docs/screenshots/approval-delivery-blocked.png) | ![Proof card generated from the local n8n 2.39.8 receipt showing passed stages, zero cloud executions, disabled external writes and blocked pre-approval delivery.](docs/screenshots/local-n8n-engine-proof.png) |
+
+The remaining optional presentation captures are the actual n8n canvas and a terminal verification screen. They are not required to understand or reproduce the verified flow, and they must not be fabricated. The exact status remains in [`docs/GITHUB-PUBLISH.md`](docs/GITHUB-PUBLISH.md#screenshots-to-capture).
+
 `docs/CODE-TOUR.md` is written so the project can be explained from three perspectives: business value, technical path, and interview answer.
 
 ## Scope boundary
@@ -302,6 +320,6 @@ This is a portfolio engineering system, not a production ad-buying platform. Rea
 
 ## Current release gate
 
-The machine-specific proof is complete: v0.9.3 executed successfully through local n8n Community Edition 2.39.8 on Windows, and `release:preflight` validated the resulting runtime receipt. The GitHub source repository is published. Remaining work is presentation-only: capture dashboard/n8n/verification screenshots and follow `docs/GITHUB-PUBLISH.md` for future release updates.
+The machine-specific proof is complete: v0.9.3 executed successfully through local n8n Community Edition 2.39.8 on Windows, and `release:preflight` validated the resulting runtime receipt. The GitHub source repository is published, and the six-image recruiter proof set is captured. The n8n canvas and terminal views remain optional presentation additions.
 
 For continuity, future coding agents should read `PROJECT-STATE.json` and `CONTINUE-LATER.md` first and **must not redo verified phases**.

@@ -20,14 +20,14 @@ Do this only after deterministic verification is green and `portfolio-release-pr
 
 ## Screenshots to capture
 
-1. Dashboard Run timeline.
-2. Research evidence and unit economics.
-3. Product Brain/provider metadata.
-4. Campaign/channel tabs.
-5. Human-approval / blocked-delivery state.
-6. Local n8n workflow canvas.
-7. Terminal verification summary.
-8. Local n8n engine-proof receipt/output.
+- [x] Dashboard Run timeline.
+- [x] Research evidence and unit economics.
+- [x] Product Brain/provider metadata.
+- [x] Campaign/channel tabs.
+- [x] Human-approval / blocked-delivery state.
+- [ ] Local n8n workflow canvas — optional; capture only from the real local UI.
+- [ ] Terminal verification summary — optional; the README links reproducible commands and CI remains authoritative.
+- [x] Local n8n engine-proof receipt/output.
 
 Never include personal email addresses, local account passwords, tokens, browser cookies, or customer data in screenshots.
 
