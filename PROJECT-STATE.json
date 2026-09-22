@@ -3,7 +3,7 @@
   "project": "Ecom Growth Autopilot",
   "version": "0.9.3",
   "baseOfRecord": "v0.9.3",
-  "currentPhase": "Technical portfolio proof and six-image recruiter evidence set complete on Windows; GitHub source repository published; portfolio site refresh prepared.",
+  "currentPhase": "Technical portfolio proof and six-image recruiter evidence set complete on Windows; GitHub source repository published; public Vercel portfolio gallery deployed and verified on desktop and mobile.",
   "verification": {
     "deterministicCommand": "npm run verify",
     "deterministicStatus": "passed",
@@ -78,7 +78,8 @@
     "single Windows finish wrapper now chains actual n8n engine proof and release preflight to minimize manual continuation steps",
     "Windows n8n CLI runner no longer wraps simple flags such as --version in literal quotes; regression coverage added after v0.9.2 runtime failure",
     "actual n8n CLI proof uses an isolated per-run N8N_USER_FOLDER with diagnostics/personalization/version checks disabled, avoiding profile/database contention with the user local n8n server",
-    "six sanitized recruiter screenshots captured reproducibly from the deterministic local dashboard and actual n8n runtime receipt"
+    "six sanitized recruiter screenshots captured reproducibly from the deterministic local dashboard and actual n8n runtime receipt",
+    "six-image evidence gallery deployed to the public Vercel portfolio and verified at desktop and 390 px mobile widths"
   ],
   "invariants": [
     "Business logic stays in testable TypeScript; n8n orchestrates only.",
@@ -106,7 +107,6 @@
     "AGENTS.md"
   ],
   "next": [
-    "Refresh the already-published portfolio entry with the committed dashboard and n8n receipt proof images.",
     "Optionally capture the real n8n canvas or terminal output later if a presentation specifically benefits from them."
   ]
 }

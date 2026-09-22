@@ -11,6 +11,7 @@
 - n8n Cloud executions used by this project: **0**.
 - External writes: **false**.
 - Live publishing: **false**.
+- The six-image evidence gallery is live on the public Vercel portfolio and was verified at desktop and 390 px mobile widths.
 - v0.9.0 exposed the missing workflow ID issue; v0.9.1 fixed it.
 - v0.9.2 exposed Windows n8n CLI quoting behavior; v0.9.3 fixed it and completed the real engine proof.
 
@@ -20,7 +21,6 @@ Do not rebuild product research, Product Brain, campaign generation, quality gat
 
 ## Remaining work only
 
-1. Refresh the portfolio entry with the six committed proof images captured from the real local dashboard and runtime receipt.
-2. Optionally capture the n8n canvas or terminal verification later if a presentation specifically benefits from them; do not fabricate either view.
+1. Optionally capture the n8n canvas or terminal verification later if a presentation specifically benefits from them; do not fabricate either view.
 
 The runtime receipt remains local under `.runtime/n8n-engine-proof.json` and is intentionally excluded from Git.
