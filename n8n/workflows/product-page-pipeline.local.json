@@ -1,0 +1,163 @@
+{
+  "id": "EcomProdPage1001",
+  "name": "Ecom Supplier to Product Page - Local",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecom-product-page-build",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "fa6ef58c-7ef7-47b2-a6d7-78dbca37e8bd",
+      "name": "Product Page Intake Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-640, 0],
+      "webhookId": "ecom-product-page-build-local"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/product-page/jobs",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ supplierUrl: ($node[\"Product Page Intake Webhook\"].json.body ?? $node[\"Product Page Intake Webhook\"].json).supplierUrl }) }}",
+        "options": {}
+      },
+      "id": "c5fda9c8-442f-48a6-975d-fd079bc1877f",
+      "name": "Create Product Page Job",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-360, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/product-page/evidence",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ jobId: $node[\"Create Product Page Job\"].json.job.jobId, specifications: ($node[\"Product Page Intake Webhook\"].json.body ?? $node[\"Product Page Intake Webhook\"].json).specifications ?? [] }) }}",
+        "options": {}
+      },
+      "id": "89be2b25-7239-4f69-84a3-b6a03e6ee638",
+      "name": "Verify Product Evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-80, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3001/product-page/brief",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ jobId: $node[\"Create Product Page Job\"].json.job.jobId, product: ($node[\"Product Page Intake Webhook\"].json.body ?? $node[\"Product Page Intake Webhook\"].json).product, specifications: ($node[\"Product Page Intake Webhook\"].json.body ?? $node[\"Product Page Intake Webhook\"].json).specifications ?? [] }) }}",
+        "options": {}
+      },
+      "id": "f5658e39-438c-4e84-86f4-50a9b61ad881",
+      "name": "Build Verified Product Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "992d1fe0-16bf-465e-90f9-07086f6989a1",
+      "name": "Return Product Page Draft",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [480, 0]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Product Page Intake Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create Product Page Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Product Page Job": {
+      "main": [
+        [
+          {
+            "node": "Verify Product Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Product Evidence": {
+      "main": [
+        [
+          {
+            "node": "Build Verified Product Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Verified Product Page": {
+      "main": [
+        [
+          {
+            "node": "Return Product Page Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bb1f69c4-354c-4fd5-b866-073bcfa18311",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

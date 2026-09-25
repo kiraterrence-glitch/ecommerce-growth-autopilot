@@ -102,3 +102,137 @@ export { buildChannelDeliveryPlan } from "./publishing/plan.js";
 export type { DemoStatusInput, DemoStepStatus, DemoTimelineStep } from "./demo/status.js";
 export { buildDemoStatus } from "./demo/status.js";
 export { assertLocalN8nBaseUrl, buildLocalN8nWebhookUrl } from "./orchestration/local-n8n.js";
+
+export type {
+  GemPagesBlock,
+  GemPagesManifest,
+  ProductPageApproval,
+  ProductPageBrief,
+  ProductPageJob,
+  ProductPageJobStatus,
+  ProductPageMediaAsset,
+  ProductPageMediaStatus,
+  ProductPageQualityIssue,
+  ProductPageQualityReport,
+  ProductPageSafety,
+  ProductPageSectionBrief,
+  ProductPageSectionType,
+  ProductPageShopifyDraft,
+  SpecificationObservation,
+  SpecificationVerification,
+  SupplierPlatform,
+  SupplierUrlIntake,
+  VerifiedSpecification,
+  VerifiedSpecificationSummary,
+} from "./product-page/types.js";
+export { parseSupplierUrl } from "./product-page/supplier.js";
+export { verifySpecifications } from "./product-page/specs.js";
+export {
+  createProductPageJob,
+  transitionProductPageApproval,
+  updateProductPageJobBuild,
+  updateProductPageJobVerification,
+} from "./product-page/job.js";
+export { buildProductPageBrief } from "./product-page/brief.js";
+export {
+  buildGemPagesManifest,
+  buildProductPageMediaPlan,
+  buildProductPageShopifyDraft,
+} from "./product-page/adapters.js";
+export { assessProductPageQuality } from "./product-page/quality.js";
+export { renderProductPageDashboardHtml } from "./product-page/dashboard.js";
+export type {
+  EvidenceAuditIssue,
+  EvidenceAuditReport,
+  EvidenceConfidence,
+  EvidenceConflict,
+  EvidenceLedger,
+  EvidenceRecord,
+  ExtractionStatus,
+  ManualEvidenceInput,
+  ProductSourceAdapter,
+  ProductSourceAdapterContext,
+  RawEvidenceFormat,
+  ResearchSourceKind,
+  SourceSnapshot,
+} from "./product-research/types.js";
+export {
+  validateAssetMetadata,
+  validateResearchUrl,
+} from "./product-research/security.js";
+export {
+  normalizeEvidenceText,
+  normalizeMeasurement,
+  normalizedComparableKey,
+} from "./product-research/normalization.js";
+export {
+  buildManualSourceSnapshot,
+} from "./product-research/manual.js";
+export {
+  extractWithAdapters,
+} from "./product-research/adapters.js";
+export {
+  buildEvidenceLedger,
+} from "./product-research/ledger.js";
+export {
+  auditEvidenceLedger,
+} from "./product-research/quality.js";
+export {
+  extractSupplierSnapshotFromHtml,
+} from "./product-research/supplier-html.js";
+export {
+  discoverProductAssets,
+} from "./product-research/media.js";
+export {
+  buildComparisonMatrix,
+  generateSafeComparisonClaims,
+} from "./product-research/comparison.js";
+export {
+  auditComparisonOutput,
+} from "./product-research/comparison-quality.js";
+
+export type {
+  ComparisonAuditIssue,
+  ComparisonAuditReport,
+  ComparisonCell,
+  ComparisonCellStatus,
+  ComparisonCompetitor,
+  ComparisonMatrix,
+  ComparisonRow,
+  ComparisonRowCompetitor,
+  CompetitorComparisonInput,
+  CompetitorRelationship,
+  SafeComparisonClaim,
+} from "./product-research/types.js";
+export type {
+  GroundedVisualStatement,
+  ProductVisualAsset,
+  ProductVisualAssetStatus,
+  ProductVisualInput,
+  ProductVisualKind,
+  ProductVisualPack,
+  ProductVisualQaIssue,
+  ProductVisualQaReport,
+  ProductVisualSourceImage,
+} from "./product-visuals/types.js";
+export {
+  auditProductVisualAssets,
+  buildProductVisualPack,
+} from "./product-visuals/engine.js";
+export {
+  escapeXml,
+  svgMutedTextLines,
+  svgTextLines,
+  wrapVisualText,
+} from "./product-visuals/svg.js";
+export type {
+  ProductPagePreview,
+  ProductPagePreviewInput,
+  ProductPreviewFaq,
+  ProductPreviewQaIssue,
+  ProductPreviewQaReport,
+} from "./product-preview/types.js";
+export {
+  auditProductPagePreview,
+  renderProductPagePreview,
+} from "./product-preview/renderer.js";

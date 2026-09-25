@@ -1,4 +1,4 @@
-# Project inventory — where to look first
+# Project inventory â€” where to look first
 
 Use this file to avoid rediscovering the repository structure.
 
@@ -41,7 +41,7 @@ All committed exports are inactive, credential-free, loopback-only, and forbidde
 | File | Stable ID | Purpose |
 |---|---|---|
 | `engine-proof-cli.local.json` | `EcomEngineProof0920` | Manual-trigger actual-engine proof on isolated port 3011 |
-| `full-portfolio-demo.local.json` | `EcomFullDemo0901` | Production-style local webhook: research → campaign → timeline |
+| `full-portfolio-demo.local.json` | `EcomFullDemo0901` | Production-style local webhook: research â†’ campaign â†’ timeline |
 | `product-intake-to-brain.local.json` | `EcomBrainDemo901` | Product Brain orchestration example |
 | `product-intake-to-campaign-kit.local.json` | `EcomCampDemo0901` | Campaign-kit orchestration example |
 | `research-intake-to-analysis.local.json` | `EcomRschDemo0901` | Research-analysis orchestration example |
@@ -78,3 +78,13 @@ Read in this order:
 6. `docs/GITHUB-PUBLISH.md`
 
 Do not infer completion from file presence. `PROJECT-STATE.json` records both deterministic verification and the completed actual Windows n8n 2.39.8 engine proof.
+
+## Product page automation
+
+| Area | Files | Responsibility |
+|---|---|---|
+| Product page domain | `src/product-page/*` | Supplier intake, specification verification, Product Page Brief, draft adapters, QA, local workspace |
+| Product page routes | `scripts/product-page-routes.mjs` | Local job, evidence, build, QA and approval API |
+| Product page persistence | `scripts/product-page-job-store.mjs` | Append-only local product-page job state |
+| Product page n8n | `n8n/workflows/product-page-pipeline.local.json` | Local supplier-to-page orchestration |
+| Product page docs | `docs/PRODUCT-PAGE-AUTOMATION.md` | Architecture, safety, demo instructions |

@@ -1,9 +1,9 @@
-# Continue here — v0.9.3 presentation closeout
+# Continue here ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â v0.9.3 presentation closeout
 
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 66 tests, 5 n8n exports.
+- Deterministic verification target: 114 tests, 6 n8n exports.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -24,3 +24,47 @@ Do not rebuild product research, Product Brain, campaign generation, quality gat
 1. Optionally capture the n8n canvas or terminal verification later if a presentation specifically benefits from them; do not fabricate either view.
 
 The runtime receipt remains local under `.runtime/n8n-engine-proof.json` and is intentionally excluded from Git.
+
+## Product Page Workspace
+
+The supplier-to-product-page extension now includes the local API, persistent jobs, dashboard, Shopify/GemPages draft adapters, QA, human approval and local n8n orchestration.
+
+Local workspace:
+
+`http://127.0.0.1:3001/product-page`
+
+Live publishing remains disabled.
+
+## Product research evidence foundation
+
+Phase 1 adds provenance-aware evidence records, source snapshots, unit normalization, conflict detection, URL/asset safety boundaries, source-adapter contracts, and fail-closed manual-capture behavior.
+
+No live marketplace extraction is enabled in this phase.
+
+## Phase 2 supplier extraction
+
+Phase 2 adds fixture-tested supplier JSON-LD extraction, metadata fallback, variant extraction, media discovery, guarded network capture, local asset hashing/storage, provenance retention, rights-state tracking, and fail-closed handling for blocked pages.
+
+Live supplier requests are not part of deterministic verification.
+
+## Phase 3 competitor evidence
+
+Phase 3 adds explicit competitor confirmation, comparability classification, normalized comparison matrices, conflict/missing-data states, evidence-backed numeric claims, and comparison QA.
+
+Automatic competitor discovery remains intentionally disabled.
+
+## Phase 4 visual production
+
+Phase 4 adds deterministic SVG hero, benefit, feature, comparison and offer graphics with evidence provenance, source-image rights tracking, no fabricated product imagery, local file storage and dedicated visual QA.
+
+The next phase renders these outputs into the complete local product-page preview.
+
+## Phase 5 product-page preview
+
+Phase 5 adds a real responsive ecommerce preview consuming the generated hero, benefit, feature, comparison and offer visuals.
+
+The preview remains local-only, contains no checkout integration and performs no external writes.
+
+Demo URL:
+
+`http://127.0.0.1:3001/product-page/preview-demo`
