@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portable Espresso Maker · Product Preview</title>
+<meta
+  name="description"
+  content="A compact manual espresso concept demonstrating an evidence-grounded ecommerce workflow."
+>
+<style>
+:root{
+  --bg:#f7f7f4;
+  --surface:#ffffff;
+  --text:#111318;
+  --muted:#626a78;
+  --line:#e3e6eb;
+  --dark:#0b1019;
+  --accent:#1358e8;
+  --accent2:#0b3da5;
+  --max:1240px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+img,
+svg{
+  display:block;
+  max-width:100%;
+}
+
+a{
+  color:inherit;
+}
+
+.preview-shell{
+  min-height:100vh;
+}
+
+.preview-bar{
+  background:var(--dark);
+  color:#fff;
+  text-align:center;
+  padding:10px 20px;
+  font-size:13px;
+  letter-spacing:.04em;
+}
+
+.site-header{
+  background:rgba(255,255,255,.95);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(12px);
+}
+
+.header-inner{
+  max-width:var(--max);
+  margin:auto;
+  height:72px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  font-size:19px;
+  font-weight:850;
+  letter-spacing:-.03em;
+}
+
+.header-note{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.main{
+  max-width:var(--max);
+  margin:auto;
+  padding:52px 24px 90px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(460px,.95fr);
+  gap:54px;
+  align-items:center;
+  margin-bottom:82px;
+}
+
+.eyebrow{
+  margin:0 0 14px;
+  color:var(--accent);
+  font-size:13px;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.product-title{
+  margin:0;
+  max-width:720px;
+  font-size:clamp(44px,6vw,78px);
+  line-height:.98;
+  letter-spacing:-.055em;
+}
+
+.product-subtitle{
+  max-width:650px;
+  margin:26px 0 0;
+  color:var(--muted);
+  font-size:20px;
+  line-height:1.65;
+}
+
+.price{
+  margin:30px 0 0;
+  font-size:28px;
+  font-weight:850;
+}
+
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:32px;
+}
+
+.preview-cta{
+  appearance:none;
+  border:0;
+  border-radius:14px;
+  background:var(--accent);
+  color:#fff;
+  padding:17px 25px;
+  font:inherit;
+  font-weight:800;
+  cursor:default;
+  box-shadow:
+    0 12px 30px
+    rgba(19,88,232,.22);
+}
+
+.preview-cta:hover{
+  background:var(--accent2);
+}
+
+.demo-badge{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid #d5d8df;
+  border-radius:999px;
+  padding:10px 14px;
+  color:#555e6e;
+  background:#fff;
+  font-size:12px;
+  font-weight:750;
+}
+
+.safety-note{
+  margin-top:20px;
+  color:#747c89;
+  font-size:13px;
+}
+
+.visual-card{
+  margin:0;
+}
+
+.visual-frame{
+  border-radius:26px;
+  overflow:hidden;
+  background:#0b1019;
+  box-shadow:
+    0 24px 70px
+    rgba(16,24,40,.12);
+}
+
+.visual-frame svg{
+  width:100%;
+  height:auto;
+}
+
+.visual-card figcaption{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.trust-strip{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:1px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:var(--line);
+  margin-bottom:94px;
+}
+
+.trust-item{
+  background:#fff;
+  padding:24px;
+}
+
+.trust-item strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+}
+
+.trust-item span{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.section{
+  margin:0 0 100px;
+}
+
+.section-heading{
+  max-width:760px;
+  margin-bottom:38px;
+}
+
+.section-heading h2{
+  margin:0;
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.02;
+  letter-spacing:-.045em;
+}
+
+.section-heading p{
+  margin:18px 0 0;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.65;
+}
+
+.split-section{
+  display:grid;
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(0,1fr);
+  gap:28px;
+}
+
+.offer-section{
+  display:grid;
+  grid-template-columns:
+    minmax(0,1.15fr)
+    minmax(300px,.65fr);
+  gap:36px;
+  align-items:center;
+}
+
+.offer-copy{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:34px;
+}
+
+.offer-copy h2{
+  margin:0;
+  font-size:38px;
+  letter-spacing:-.035em;
+}
+
+.offer-copy p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.faq{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:10px 28px;
+}
+
+.faq-item{
+  border-bottom:1px solid var(--line);
+  padding:20px 0;
+}
+
+.faq-item:last-child{
+  border-bottom:0;
+}
+
+.faq-item summary{
+  cursor:pointer;
+  font-weight:800;
+  font-size:17px;
+}
+
+.faq-item p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:0;
+}
+
+.shipping{
+  background:#111722;
+  color:#fff;
+  border-radius:28px;
+  padding:38px;
+}
+
+.shipping h2{
+  margin-top:0;
+}
+
+.shipping p{
+  color:#c8cfda;
+  line-height:1.7;
+  margin-bottom:0;
+}
+
+.footer{
+  border-top:1px solid var(--line);
+  padding:34px 24px 48px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(max-width:900px){
+  .main{
+    padding-top:34px;
+  }
+
+  .hero,
+  .split-section,
+  .offer-section{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    gap:36px;
+  }
+
+  .trust-strip{
+    grid-template-columns:1fr;
+  }
+
+  .product-title{
+    font-size:clamp(42px,12vw,68px);
+  }
+}
+
+@media(max-width:560px){
+  .header-inner{
+    height:62px;
+    padding:0 16px;
+  }
+
+  .header-note{
+    display:none;
+  }
+
+  .main{
+    padding:
+      28px 16px
+      64px;
+  }
+
+  .product-subtitle{
+    font-size:17px;
+  }
+
+  .section{
+    margin-bottom:70px;
+  }
+
+  .visual-frame{
+    border-radius:18px;
+  }
+
+  .offer-copy,
+  .faq,
+  .shipping{
+    border-radius:20px;
+    padding:24px;
+  }
+}
+</style>
+</head>
+
+<body
+  data-preview-id="demo-product-preview"
+  data-external-writes="false"
+  data-live-publishing="false"
+>
+<div class="preview-shell">
+
+  <div class="preview-bar">
+    Local product-page preview · Human approval required before publication
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        Product Preview
+      </div>
+      <div class="header-note">
+        Evidence-grounded · Draft only
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">
+          Product overview
+        </p>
+
+        <h1 class="product-title">
+          Portable Espresso Maker
+        </h1>
+
+        <p class="product-subtitle">
+          A compact manual espresso concept demonstrating an evidence-grounded ecommerce workflow.
+        </p>
+
+        <p class="price">
+          USD 39.90 · Demo fixture
+        </p>
+
+        <div class="cta-row">
+          <button
+            class="preview-cta"
+            type="button"
+            data-preview-cta="true"
+            aria-disabled="true"
+          >
+            Review product details
+          </button>
+
+          <span class="demo-badge">DEMO PREVIEW · NO LIVE CHECKOUT</span>
+        </div>
+
+        <p class="safety-note">
+          This preview cannot purchase, publish, or write to an external store.
+        </p>
+      </div>
+
+      
+    <figure class="visual-card" data-visual-kind="hero">
+      <div class="visual-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#090d16"/>
+  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
+  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  
+      <rect x="70" y="90" width="230" height="46" rx="23" fill="#1d4ed8"/>
+      <text x="185" y="121" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#ffffff">PRODUCT OVERVIEW</text>
+
+      <text x="70" y="250" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#f8fafc">Portable Espresso Maker</text>
+      <text x="70" y="377" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">A compact manual espresso concept</text><text x="70" y="419" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">demonstrating an evidence-grounded</text><text x="70" y="461" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">ecommerce workflow.</text>
+
+      
+      <rect x="665" y="175" width="445" height="650" rx="36" fill="#111827" stroke="#334155" stroke-width="3"/>
+      <text x="887" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#94a3b8">PRODUCT IMAGE</text>
+      <text x="887" y="515" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#64748b">SOURCE REQUIRED</text>
+    
+
+      
+    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+  
+    
+</svg>
+      </div>
+      <figcaption>
+        Product hero visual
+      </figcaption>
+    </figure>
+  
+    </section>
+
+    <section class="trust-strip">
+      <div class="trust-item">
+        <strong>
+          Verified evidence
+        </strong>
+        <span>
+          Product facts remain linked to captured source evidence.
+        </span>
+      </div>
+
+      <div class="trust-item">
+        <strong>
+          Comparison safeguards
+        </strong>
+        <span>
+          Competitor claims require comparable verified values.
+        </span>
+      </div>
+
+      <div class="trust-item">
+        <strong>
+          Human approval
+        </strong>
+        <span>
+          No external publishing occurs from this preview.
+        </span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">
+          Benefits
+        </p>
+        <h2>
+          Built around the reasons a shopper would consider the product
+        </h2>
+      </div>
+
+      
+    <figure class="visual-card" data-visual-kind="benefit">
+      <div class="visual-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#090d16"/>
+  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
+  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  
+      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">WHY IT MATTERS</text>
+      <text x="70" y="185" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#f8fafc">Benefits grounded in product</text><text x="70" y="239" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#f8fafc">evidence</text>
+      
+          <rect x="70" y="250" width="520" height="120" rx="24" fill="#111827" stroke="#243247"/>
+          <circle cx="112" cy="310" r="18" fill="#2563eb"/>
+          <text x="112" y="317" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#ffffff">1</text>
+          <text x="150" y="295" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">Portable for travel and work</text>
+        
+          <rect x="70" y="400" width="520" height="120" rx="24" fill="#111827" stroke="#243247"/>
+          <circle cx="112" cy="460" r="18" fill="#2563eb"/>
+          <text x="112" y="467" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#ffffff">2</text>
+          <text x="150" y="445" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">No electricity required</text>
+        
+      
+      <rect x="665" y="175" width="445" height="650" rx="36" fill="#111827" stroke="#334155" stroke-width="3"/>
+      <text x="887" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#94a3b8">PRODUCT IMAGE</text>
+      <text x="887" y="515" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#64748b">SOURCE REQUIRED</text>
+    
+      
+    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+  
+    
+</svg>
+      </div>
+      <figcaption>
+        Evidence-grounded benefits visual
+      </figcaption>
+    </figure>
+  
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">
+          Product details
+        </p>
+        <h2>
+          Important product information, without invented specifications
+        </h2>
+      </div>
+
+      
+    <figure class="visual-card" data-visual-kind="feature">
+      <div class="visual-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#090d16"/>
+  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
+  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  
+      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">PRODUCT DETAILS</text>
+      <text x="70" y="185" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#f8fafc">Verified product features</text>
+      
+          <rect x="70" y="250" width="520" height="120" rx="24" fill="#111827" stroke="#243247"/>
+          <circle cx="112" cy="310" r="18" fill="#2563eb"/>
+          <text x="112" y="317" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#ffffff">1</text>
+          <text x="150" y="295" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">Listed capacity: 500 ml</text>
+        
+          <rect x="70" y="400" width="520" height="120" rx="24" fill="#111827" stroke="#243247"/>
+          <circle cx="112" cy="460" r="18" fill="#2563eb"/>
+          <text x="112" y="467" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#ffffff">2</text>
+          <text x="150" y="445" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">Manual operation</text>
+        
+      
+      <rect x="665" y="175" width="445" height="650" rx="36" fill="#111827" stroke="#334155" stroke-width="3"/>
+      <text x="887" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#94a3b8">PRODUCT IMAGE</text>
+      <text x="887" y="515" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#64748b">SOURCE REQUIRED</text>
+    
+      
+    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+  
+    
+</svg>
+      </div>
+      <figcaption>
+        Verified features visual
+      </figcaption>
+    </figure>
+  
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">
+          Comparison
+        </p>
+        <h2>
+          Compare the facts that can actually be supported
+        </h2>
+        <p>
+          Missing or conflicting evidence stays unresolved rather than becoming a marketing claim.
+        </p>
+      </div>
+
+      
+    <figure class="visual-card" data-visual-kind="comparison">
+      <div class="visual-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#090d16"/>
+  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
+  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  
+      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">VERIFIED COMPARISON</text>
+      <text x="70" y="175" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#f8fafc">Compare the listed facts</text>
+      
+          <rect x="70" y="210" width="1060" height="135" rx="26" fill="#111827" stroke="#243247"/>
+          <rect x="90" y="232" width="130" height="34" rx="17" fill="#1e40af"/>
+          <text x="155" y="255" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" fill="#ffffff">CAPACITY</text>
+          <text x="90" y="298" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">Our product has a higher listed Capacity than Competitor A</text><text x="90" y="329" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="650" fill="#f8fafc">(500 ml vs 350 ml).</text>
+        
+      
+      
+    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+  
+    
+</svg>
+      </div>
+      <figcaption>
+        Evidence-backed comparison visual
+      </figcaption>
+    </figure>
+  
+    </section>
+
+    <section class="section offer-section">
+      
+    <figure class="visual-card" data-visual-kind="offer">
+      <div class="visual-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#090d16"/>
+  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
+  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  
+      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">CURRENT LISTED OFFER</text>
+
+      <text x="70" y="220" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#f8fafc">Portable Espresso Maker</text>
+
+      <rect x="70" y="470" width="520" height="260" rx="34" fill="#1e3a8a"/>
+      <text x="110" y="555" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#f8fafc">Demo listed price: USD 39.90</text>
+
+      
+      <rect x="665" y="175" width="445" height="650" rx="36" fill="#111827" stroke="#334155" stroke-width="3"/>
+      <text x="887" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#94a3b8">PRODUCT IMAGE</text>
+      <text x="887" y="515" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#64748b">SOURCE REQUIRED</text>
+    
+
+      <text x="70" y="860" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#94a3b8">Pricing and offer details must be re-verified before publication.</text>
+
+      
+    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+  
+    
+</svg>
+      </div>
+      <figcaption>
+        Current offer visual
+      </figcaption>
+    </figure>
+  
+
+      <div class="offer-copy">
+        <p class="eyebrow">
+          Review the offer
+        </p>
+
+        <h2>
+          USD 39.90 · Demo fixture
+        </h2>
+
+        <p>
+          Pricing, availability and merchant terms should be re-verified before publication.
+        </p>
+
+        <button
+          class="preview-cta"
+          type="button"
+          data-preview-cta="true"
+          aria-disabled="true"
+        >
+          Review product details
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">
+          Questions
+        </p>
+
+        <h2>
+          Helpful information before purchasing
+        </h2>
+      </div>
+
+      <div class="faq">
+        
+        <details class="faq-item">
+          <summary>Is this connected to a live store?</summary>
+          <p>No. This is a local portfolio preview. External writes and live publishing are disabled.</p>
+        </details>
+      
+        <details class="faq-item">
+          <summary>Where do the comparison claims come from?</summary>
+          <p>Comparison claims are generated only from normalized verified evidence supplied for both comparable products.</p>
+        </details>
+      
+        <details class="faq-item">
+          <summary>Why is there no fabricated product photograph?</summary>
+          <p>A real source image has not been approved for this deterministic demo fixture, so the visual layer explicitly shows that a source is required.</p>
+        </details>
+      
+      </div>
+    </section>
+
+    <section class="shipping">
+      <h2>
+        Shipping and returns
+      </h2>
+
+      <p>
+        Connect the merchant&#39;s verified shipping and returns policy before publication. This preview does not invent fulfillment terms.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Local preview only · externalWrites=false · livePublishing=false
+  </footer>
+
+</div>
+</body>
+</html>

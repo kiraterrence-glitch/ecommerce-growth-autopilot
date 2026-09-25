@@ -3,7 +3,7 @@
     "project":  "Ecom Growth Autopilot",
     "version":  "0.9.3",
     "baseOfRecord":  "v0.9.3",
-    "currentPhase":  "GitHub source repository published; Phase 5 responsive local ecommerce product-page preview implemented and deterministically verified on feature/product-research-visual-v1.",
+    "currentPhase":  "GitHub source repository published; Phase 6 real-browser visual QA, responsive screenshots and portfolio product-page proof completed on feature/product-research-visual-v1.",
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
@@ -84,7 +84,10 @@
                       "persistent local product-page job history",
                       "Product Page Workspace dashboard",
                       "local product-page n8n orchestration",
-                      "end-to-end product-page API verification"
+                      "end-to-end product-page API verification",
+                      "real Chrome browser visual QA",
+                      "desktop tablet mobile product-page screenshots",
+                      "product-page portfolio proof package"
                   ],
     "invariants":  [
                        "Business logic stays in testable TypeScript; n8n orchestrates only.",
