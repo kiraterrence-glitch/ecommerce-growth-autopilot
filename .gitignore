@@ -8,3 +8,6 @@ coverage/
 *.log
 .tmp/
 .runtime/
+
+supabase/.temp/
+supabase/.branches/
