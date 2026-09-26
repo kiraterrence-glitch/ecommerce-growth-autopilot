@@ -124,7 +124,7 @@ export function createProductLibraryServer({
       html(
         response,
         200,
-        renderProductLibrary(repository),
+        renderProductLibrary(repository, marketplaceApi),
       );
 
       return;
@@ -150,7 +150,10 @@ export function createProductLibraryServer({
       html(
         response,
         200,
-        renderProductDetail(snapshot),
+        renderProductDetail(
+          snapshot,
+          marketplaceApi.panel(productId),
+        ),
       );
 
       return;

@@ -158,6 +158,82 @@ footer{
   table{font-size:12px}
   th,td{padding:10px 6px}
 }
+.badge-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center
+}
+.badge-ok{
+  background:#e9f8ee;
+  color:#176b36
+}
+.badge-warn{
+  background:#fff1e8;
+  color:#9a4d0a
+}
+.badge-neutral{
+  background:#eef1f4;
+  color:#566170
+}
+.market-summary{
+  margin-top:16px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fafbfc
+}
+.market-summary strong{
+  display:block;
+  margin-bottom:4px
+}
+.market-summary span{
+  color:var(--muted);
+  font-size:12px
+}
+.market-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px
+}
+.market-stats{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:10px;
+  margin:18px 0
+}
+.market-warning{
+  padding:15px 18px;
+  margin:18px 0;
+  background:#fff8e8;
+  border:1px solid #eed8ab;
+  border-radius:14px
+}
+.market-good{
+  padding:15px 18px;
+  margin:18px 0;
+  background:#eef9f2;
+  border:1px solid #cce5d3;
+  border-radius:14px
+}
+.section h3{
+  margin-top:28px
+}
+@media(max-width:900px){
+  .market-stats{
+    grid-template-columns:repeat(3,1fr)
+  }
+}
+@media(max-width:700px){
+  .market-stats{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .market-head{
+    flex-direction:column
+  }
+}
 </style>
 </head>
 <body>
@@ -189,7 +265,7 @@ function countSnapshot(snapshot) {
   };
 }
 
-export function renderProductLibrary(repository) {
+export function renderProductLibrary(repository, marketplaceApi = null) {
   const products = repository.listProducts();
 
   const cards = products
@@ -197,9 +273,29 @@ export function renderProductLibrary(repository) {
       const snapshot = repository.getSnapshot(product.id);
       const counts = countSnapshot(snapshot);
 
+      const marketplace =
+        marketplaceApi
+          ? marketplaceApi.panel(product.id)
+          : null;
+
       return `
 <a class="card" href="/products/${encodeURIComponent(product.id)}">
-  <span class="badge">${escapeHtml(product.status)}</span>
+  <div class="badge-row">
+    <span class="badge">${escapeHtml(product.status)}</span>
+
+    ${
+      marketplace
+        ? `<span class="badge ${
+            marketplace.status === "READY"
+              ? "badge-ok"
+              : marketplace.status === "NEEDS_REVIEW"
+                ? "badge-warn"
+                : "badge-neutral"
+          }">${escapeHtml(marketplace.status)}</span>`
+        : ""
+    }
+  </div>
+
   <h2>${escapeHtml(product.title)}</h2>
   <div class="muted">SKU: ${escapeHtml(product.sku)}</div>
 
@@ -209,6 +305,21 @@ export function renderProductLibrary(repository) {
     <div class="stat"><strong>${counts.competitors}</strong><span>Competitors</span></div>
     <div class="stat"><strong>${counts.qa}</strong><span>QA runs</span></div>
   </div>
+
+  ${
+    marketplace
+      ? `
+  <div class="market-summary">
+    <strong>Marketplace intelligence</strong>
+    <span>
+      ${marketplace.summary.sourceCount} sources ·
+      ${marketplace.summary.evidenceCount} evidence ·
+      ${marketplace.summary.conflictCount} conflicts ·
+      ${marketplace.summary.unknownRightsCount} unknown-rights
+    </span>
+  </div>`
+      : ""
+  }
 </a>`;
     })
     .join("");
@@ -250,7 +361,121 @@ ${rows.join("")}
 </table>`;
 }
 
-export function renderProductDetail(snapshot) {
+function renderMarketplacePanel(panel) {
+  if (!panel) {
+    return "";
+  }
+
+  const sourceRows =
+    panel.sources.map(
+      (item) => `
+<tr>
+  <td class="code">${escapeHtml(item.sourceId)}</td>
+  <td>${escapeHtml(item.policyId)}</td>
+  <td>${escapeHtml(item.captureMethod)}</td>
+  <td>${escapeHtml(item.rightsStatus)}</td>
+  <td class="code">${escapeHtml(item.sourceUrl)}</td>
+</tr>`,
+    );
+
+  const evidenceRows =
+    panel.evidence.map(
+      (item) => `
+<tr>
+  <td>${escapeHtml(item.field)}</td>
+  <td>${escapeHtml(item.rawValue)}</td>
+  <td>${escapeHtml(item.normalizedValue)}</td>
+  <td>${escapeHtml(item.unit ?? "")}</td>
+  <td>${escapeHtml(item.status)}</td>
+  <td>${escapeHtml(item.rightsStatus)}</td>
+  <td class="code">${escapeHtml(item.sourceId)}</td>
+</tr>`,
+    );
+
+  const assessmentRows =
+    panel.summary.assessments.map(
+      (item) => `
+<tr>
+  <td>${escapeHtml(item.field)}</td>
+  <td>${escapeHtml(item.status)}</td>
+  <td>${item.verified.length}</td>
+  <td>${item.unverified.length}</td>
+  <td>${item.canonicalValues.length}</td>
+</tr>`,
+    );
+
+  const warnings =
+    panel.warnings.length > 0
+      ? `
+<div class="market-warning">
+  <strong>Review required</strong>
+  <ul>
+    ${panel.warnings
+      .map(
+        (warning) =>
+          `<li>${escapeHtml(warning)}</li>`,
+      )
+      .join("")}
+  </ul>
+</div>`
+      : `
+<div class="market-good">
+  No marketplace blocking warnings are currently present.
+</div>`;
+
+  return `
+<section class="section">
+  <div class="market-head">
+    <div>
+      <span class="badge">MARKETPLACE INTELLIGENCE</span>
+      <h2>Marketplace evidence</h2>
+    </div>
+
+    <span class="badge ${
+      panel.status === "READY"
+        ? "badge-ok"
+        : panel.status === "NEEDS_REVIEW"
+          ? "badge-warn"
+          : "badge-neutral"
+    }">
+      ${escapeHtml(panel.status)}
+    </span>
+  </div>
+
+  <div class="market-stats">
+    <div class="stat"><strong>${panel.summary.sourceCount}</strong><span>Sources</span></div>
+    <div class="stat"><strong>${panel.summary.evidenceCount}</strong><span>Evidence</span></div>
+    <div class="stat"><strong>${panel.summary.verifiedEvidenceCount}</strong><span>Verified</span></div>
+    <div class="stat"><strong>${panel.summary.unverifiedEvidenceCount}</strong><span>Unverified</span></div>
+    <div class="stat"><strong>${panel.summary.conflictCount}</strong><span>Conflicts</span></div>
+    <div class="stat"><strong>${panel.summary.unknownRightsCount}</strong><span>Unknown rights</span></div>
+  </div>
+
+  ${warnings}
+
+  <h3>Marketplace sources</h3>
+
+  ${table(
+    ["Source ID", "Policy", "Capture", "Rights", "Source URL"],
+    sourceRows,
+  )}
+
+  <h3>Marketplace evidence records</h3>
+
+  ${table(
+    ["Field", "Raw", "Normalized", "Unit", "Verification", "Rights", "Source"],
+    evidenceRows,
+  )}
+
+  <h3>Evidence assessment</h3>
+
+  ${table(
+    ["Field", "State", "Verified", "Unverified", "Canonical values"],
+    assessmentRows,
+  )}
+</section>`;
+}
+export function renderProductDetail(snapshot, marketplacePanel = null) {
   if (!snapshot) {
     return null;
   }
@@ -359,6 +584,8 @@ export function renderProductDetail(snapshot) {
   <div class="stat"><strong>${snapshot.visuals.length}</strong><span>Visuals</span></div>
   <div class="stat"><strong>${snapshot.qaRuns.length}</strong><span>QA runs</span></div>
 </section>
+
+${renderMarketplacePanel(marketplacePanel)}
 
 <section class="section">
   <h2>Sources</h2>
