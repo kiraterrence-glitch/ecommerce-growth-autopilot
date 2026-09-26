@@ -3,7 +3,7 @@
     "project":  "Ecom Growth Autopilot",
     "version":  "0.9.3",
     "baseOfRecord":  "v0.9.3",
-    "currentPhase":  "GitHub source repository published; Phase 6 real-browser visual QA, responsive screenshots and portfolio product-page proof completed on feature/product-research-visual-v1.",
+    "currentPhase":  "GitHub source repository published; Phase 7 visual polish implemented with compact evidence-grounded visuals, enhanced comparison presentation and refreshed real-browser portfolio proof.",
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
@@ -87,7 +87,8 @@
                       "end-to-end product-page API verification",
                       "real Chrome browser visual QA",
                       "desktop tablet mobile product-page screenshots",
-                      "product-page portfolio proof package"
+                      "product-page portfolio proof package",
+                      "product-page visual polish"
                   ],
     "invariants":  [
                        "Business logic stays in testable TypeScript; n8n orchestrates only.",

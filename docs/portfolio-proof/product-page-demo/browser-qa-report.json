@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T23:12:45.333Z",
+  "generatedAt": "2026-09-26T00:09:37.870Z",
   "previewRoute": "/product-page/preview-demo",
   "passed": true,
   "externalWrites": false,
@@ -16,7 +16,7 @@
         "viewportWidth": 1440,
         "viewportHeight": 1000,
         "pageWidth": 1440,
-        "pageHeight": 7410,
+        "pageHeight": 5126,
         "horizontalOverflow": false,
         "visualCount": 5,
         "svgCount": 5,
@@ -29,7 +29,7 @@
         "externalWrites": "false",
         "livePublishing": "false",
         "heading": "Portable Espresso Maker",
-        "title": "Portable Espresso Maker · Product Preview"
+        "title": "Portable Espresso Maker ? Product Preview"
       },
       "screenshot": "screenshots/desktop.png"
     },
@@ -44,7 +44,7 @@
         "viewportWidth": 1024,
         "viewportHeight": 768,
         "pageWidth": 1024,
-        "pageHeight": 6440,
+        "pageHeight": 4683,
         "horizontalOverflow": false,
         "visualCount": 5,
         "svgCount": 5,
@@ -57,7 +57,7 @@
         "externalWrites": "false",
         "livePublishing": "false",
         "heading": "Portable Espresso Maker",
-        "title": "Portable Espresso Maker · Product Preview"
+        "title": "Portable Espresso Maker ? Product Preview"
       },
       "screenshot": "screenshots/tablet.png"
     },
@@ -72,7 +72,7 @@
         "viewportWidth": 390,
         "viewportHeight": 844,
         "pageWidth": 390,
-        "pageHeight": 5246,
+        "pageHeight": 4435,
         "horizontalOverflow": false,
         "visualCount": 5,
         "svgCount": 5,
@@ -85,7 +85,7 @@
         "externalWrites": "false",
         "livePublishing": "false",
         "heading": "Portable Espresso Maker",
-        "title": "Portable Espresso Maker · Product Preview"
+        "title": "Portable Espresso Maker ? Product Preview"
       },
       "screenshot": "screenshots/mobile.png"
     }

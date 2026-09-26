@@ -49,6 +49,7 @@ function visualFigure(
       <div class="visual-frame">
         ${asset.svg}
       </div>
+
       <figcaption>
         ${escapeHtml(label)}
       </figcaption>
@@ -63,8 +64,13 @@ function faqMarkup(
     .map(
       (item) => `
         <details class="faq-item">
-          <summary>${escapeHtml(item.question)}</summary>
-          <p>${escapeHtml(item.answer)}</p>
+          <summary>
+            <span>${escapeHtml(item.question)}</span>
+          </summary>
+
+          <p>
+            ${escapeHtml(item.answer)}
+          </p>
         </details>
       `,
     )
@@ -100,7 +106,10 @@ export function auditProductPagePreview(
       issues.push({
         code:
           "missing_preview_visual",
-        severity: "error",
+
+        severity:
+          "error",
+
         message:
           `Preview is missing required visual ${kind}.`,
       });
@@ -111,7 +120,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "visual_pack_failed_qa",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "The visual pack failed its upstream QA gate.",
     });
@@ -125,7 +137,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "missing_viewport",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Responsive viewport metadata is missing.",
     });
@@ -139,31 +154,44 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "missing_mobile_layout",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Mobile layout breakpoint is missing.",
     });
   }
 
   if (
-    /<script\b/i.test(html)
+    /<script\b/i.test(
+      html,
+    )
   ) {
     issues.push({
       code:
         "preview_script_present",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Static product preview must not contain executable scripts.",
     });
   }
 
   if (
-    /javascript:/i.test(html)
+    /javascript:/i.test(
+      html,
+    )
   ) {
     issues.push({
       code:
         "unsafe_javascript_url",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Preview contains an unsafe javascript URL.",
     });
@@ -180,7 +208,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "missing_safety_flags",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Preview does not expose local-only safety state.",
     });
@@ -194,14 +225,19 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "missing_preview_cta",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Product-page CTA is missing.",
     });
   }
 
   if (
-    /\/checkout\b/i.test(html) ||
+    /\/checkout\b/i.test(
+      html,
+    ) ||
     /shopify\.com\/checkout/i.test(
       html,
     )
@@ -209,7 +245,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "live_checkout_detected",
-      severity: "error",
+
+      severity:
+        "error",
+
       message:
         "Preview must not connect to a live checkout.",
     });
@@ -219,7 +258,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "demo_mode",
-      severity: "warning",
+
+      severity:
+        "warning",
+
       message:
         "Preview is explicitly running in demo mode.",
     });
@@ -236,9 +278,12 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "visual_sources_missing",
-      severity: "warning",
+
+      severity:
+        "warning",
+
       message:
-        `${needsSource} visual(s) still need real product imagery.`,
+        `${needsSource} hero visual(s) still need real approved product imagery.`,
     });
   }
 
@@ -253,7 +298,10 @@ export function auditProductPagePreview(
     issues.push({
       code:
         "visual_rights_unknown",
-      severity: "warning",
+
+      severity:
+        "warning",
+
       message:
         `${unknownRights} visual(s) use imagery with unconfirmed rights.`,
     });
@@ -262,26 +310,34 @@ export function auditProductPagePreview(
   const errors =
     issues.filter(
       (issue) =>
-        issue.severity === "error",
+        issue.severity ===
+        "error",
     ).length;
 
   const warnings =
     issues.filter(
       (issue) =>
-        issue.severity === "warning",
+        issue.severity ===
+        "warning",
     ).length;
 
   return {
-    passed: errors === 0,
+    passed:
+      errors === 0,
+
     errors,
+
     warnings,
+
     requiredVisualCount:
       requiredKinds.length,
+
     renderedVisualCount:
       requiredKinds.filter(
         (kind) =>
           renderedKinds.has(kind),
       ).length,
+
     issues,
   };
 }
@@ -339,30 +395,38 @@ export function renderProductPagePreview(
 
   const demoBadge =
     input.demoMode
-      ? `<span class="demo-badge">DEMO PREVIEW · NO LIVE CHECKOUT</span>`
+      ? `<span class="demo-badge">DEMO PREVIEW ? NO LIVE CHECKOUT</span>`
       : "";
 
   const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${escapeHtml(input.productTitle)} · Product Preview</title>
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>${escapeHtml(input.productTitle)} ? Product Preview</title>
+
 <meta
   name="description"
   content="${escapeHtml(input.subtitle)}"
 >
+
 <style>
 :root{
   --bg:#f7f7f4;
   --surface:#ffffff;
   --text:#111318;
-  --muted:#626a78;
-  --line:#e3e6eb;
+  --muted:#535d6b;
+  --muted-soft:#6d7786;
+  --line:#e1e4e9;
   --dark:#0b1019;
   --accent:#1358e8;
   --accent2:#0b3da5;
-  --max:1240px;
+  --max:1180px;
 }
 
 *{
@@ -393,10 +457,6 @@ svg{
   max-width:100%;
 }
 
-a{
-  color:inherit;
-}
-
 .preview-shell{
   min-height:100vh;
 }
@@ -407,11 +467,12 @@ a{
   text-align:center;
   padding:10px 20px;
   font-size:13px;
-  letter-spacing:.04em;
+  font-weight:650;
+  letter-spacing:.035em;
 }
 
 .site-header{
-  background:rgba(255,255,255,.95);
+  background:rgba(255,255,255,.96);
   border-bottom:1px solid var(--line);
   position:sticky;
   top:0;
@@ -422,7 +483,7 @@ a{
 .header-inner{
   max-width:var(--max);
   margin:auto;
-  height:72px;
+  height:68px;
   padding:0 24px;
   display:flex;
   align-items:center;
@@ -444,21 +505,21 @@ a{
 .main{
   max-width:var(--max);
   margin:auto;
-  padding:52px 24px 90px;
+  padding:42px 24px 76px;
 }
 
 .hero{
   display:grid;
   grid-template-columns:
-    minmax(0,1fr)
-    minmax(460px,.95fr);
-  gap:54px;
+    minmax(0,1.08fr)
+    minmax(390px,.82fr);
+  gap:40px;
   align-items:center;
-  margin-bottom:82px;
+  margin-bottom:62px;
 }
 
 .eyebrow{
-  margin:0 0 14px;
+  margin:0 0 13px;
   color:var(--accent);
   font-size:13px;
   font-weight:850;
@@ -468,46 +529,46 @@ a{
 
 .product-title{
   margin:0;
-  max-width:720px;
-  font-size:clamp(44px,6vw,78px);
+  max-width:680px;
+  font-size:clamp(44px,5.5vw,72px);
   line-height:.98;
   letter-spacing:-.055em;
 }
 
 .product-subtitle{
-  max-width:650px;
-  margin:26px 0 0;
+  max-width:620px;
+  margin:23px 0 0;
   color:var(--muted);
-  font-size:20px;
-  line-height:1.65;
+  font-size:19px;
+  line-height:1.58;
 }
 
 .price{
-  margin:30px 0 0;
-  font-size:28px;
+  margin:26px 0 0;
+  font-size:27px;
   font-weight:850;
 }
 
 .cta-row{
   display:flex;
   flex-wrap:wrap;
-  gap:14px;
-  margin-top:32px;
+  gap:12px;
+  margin-top:28px;
 }
 
 .preview-cta{
   appearance:none;
   border:0;
-  border-radius:14px;
+  border-radius:13px;
   background:var(--accent);
   color:#fff;
-  padding:17px 25px;
+  padding:16px 23px;
   font:inherit;
   font-weight:800;
   cursor:default;
   box-shadow:
-    0 12px 30px
-    rgba(19,88,232,.22);
+    0 12px 28px
+    rgba(19,88,232,.20);
 }
 
 .preview-cta:hover{
@@ -520,16 +581,17 @@ a{
   border:1px solid #d5d8df;
   border-radius:999px;
   padding:10px 14px;
-  color:#555e6e;
+  color:#4e5867;
   background:#fff;
   font-size:12px;
   font-weight:750;
 }
 
 .safety-note{
-  margin-top:20px;
-  color:#747c89;
-  font-size:13px;
+  margin-top:17px;
+  color:#657080;
+  font-size:14px;
+  line-height:1.5;
 }
 
 .visual-card{
@@ -537,12 +599,12 @@ a{
 }
 
 .visual-frame{
-  border-radius:26px;
+  border-radius:24px;
   overflow:hidden;
   background:#0b1019;
   box-shadow:
-    0 24px 70px
-    rgba(16,24,40,.12);
+    0 20px 55px
+    rgba(16,24,40,.11);
 }
 
 .visual-frame svg{
@@ -551,69 +613,75 @@ a{
 }
 
 .visual-card figcaption{
-  margin-top:12px;
-  color:var(--muted);
-  font-size:12px;
+  margin-top:10px;
+  color:#626d7c;
+  font-size:13px;
+  line-height:1.4;
 }
 
 .trust-strip{
   display:grid;
   grid-template-columns:
     repeat(3,1fr);
-  gap:1px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-  background:var(--line);
-  margin-bottom:94px;
+  gap:14px;
+  margin-bottom:72px;
 }
 
 .trust-item{
   background:#fff;
-  padding:24px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:23px;
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:13px;
+  align-items:start;
 }
 
-.trust-item strong{
+.trust-icon{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#eaf1ff;
+  color:#1658dc;
+  font-weight:900;
+}
+
+.trust-copy strong{
   display:block;
-  margin-bottom:6px;
+  margin:2px 0 6px;
   font-size:15px;
 }
 
-.trust-item span{
+.trust-copy span{
   color:var(--muted);
-  font-size:13px;
+  font-size:14px;
   line-height:1.5;
 }
 
 .section{
-  margin:0 0 100px;
+  margin:0 0 72px;
 }
 
 .section-heading{
-  max-width:760px;
-  margin-bottom:38px;
+  max-width:720px;
+  margin-bottom:26px;
 }
 
 .section-heading h2{
   margin:0;
-  font-size:clamp(34px,5vw,58px);
+  font-size:clamp(34px,4.4vw,53px);
   line-height:1.02;
   letter-spacing:-.045em;
 }
 
 .section-heading p{
-  margin:18px 0 0;
+  margin:15px 0 0;
   color:var(--muted);
-  font-size:18px;
-  line-height:1.65;
-}
-
-.split-section{
-  display:grid;
-  grid-template-columns:
-    minmax(0,1fr)
-    minmax(0,1fr);
-  gap:28px;
+  font-size:17px;
+  line-height:1.6;
 }
 
 .offer-section{
@@ -621,38 +689,60 @@ a{
   grid-template-columns:
     minmax(0,1.15fr)
     minmax(300px,.65fr);
-  gap:36px;
+  gap:30px;
   align-items:center;
 }
 
 .offer-copy{
   background:#fff;
   border:1px solid var(--line);
-  border-radius:26px;
-  padding:34px;
+  border-radius:24px;
+  padding:31px;
+  box-shadow:
+    0 18px 45px
+    rgba(16,24,40,.07);
 }
 
 .offer-copy h2{
   margin:0;
-  font-size:38px;
+  font-size:37px;
   letter-spacing:-.035em;
 }
 
 .offer-copy p{
   color:var(--muted);
-  line-height:1.7;
+  line-height:1.65;
+}
+
+.offer-proof{
+  display:grid;
+  gap:11px;
+  margin:22px 0 26px;
+}
+
+.offer-proof span{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  color:#45505f;
+  font-size:14px;
+  line-height:1.45;
+}
+
+.offer-proof b{
+  color:#1558df;
 }
 
 .faq{
   background:#fff;
   border:1px solid var(--line);
-  border-radius:26px;
-  padding:10px 28px;
+  border-radius:24px;
+  padding:5px 26px;
 }
 
 .faq-item{
   border-bottom:1px solid var(--line);
-  padding:20px 0;
+  padding:0;
 }
 
 .faq-item:last-child{
@@ -660,55 +750,85 @@ a{
 }
 
 .faq-item summary{
+  list-style:none;
   cursor:pointer;
   font-weight:800;
-  font-size:17px;
+  font-size:16px;
+  padding:21px 36px 21px 0;
+  position:relative;
+}
+
+.faq-item summary::-webkit-details-marker{
+  display:none;
+}
+
+.faq-item summary::after{
+  content:"+";
+  position:absolute;
+  right:2px;
+  top:16px;
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#eef3fb;
+  color:#1c57cf;
+  font-size:20px;
+  line-height:1;
+}
+
+.faq-item[open] summary::after{
+  content:"?";
 }
 
 .faq-item p{
   color:var(--muted);
-  line-height:1.7;
-  margin-bottom:0;
+  line-height:1.65;
+  margin:0;
+  padding:0 38px 20px 0;
+  font-size:14px;
 }
 
 .shipping{
   background:#111722;
   color:#fff;
-  border-radius:28px;
-  padding:38px;
+  border-radius:24px;
+  padding:34px;
 }
 
 .shipping h2{
   margin-top:0;
+  margin-bottom:12px;
 }
 
 .shipping p{
-  color:#c8cfda;
-  line-height:1.7;
+  color:#c8d0dc;
+  line-height:1.65;
   margin-bottom:0;
 }
 
 .footer{
   border-top:1px solid var(--line);
-  padding:34px 24px 48px;
+  padding:31px 24px 42px;
   text-align:center;
-  color:var(--muted);
+  color:#66717f;
   font-size:13px;
 }
 
 @media(max-width:900px){
   .main{
-    padding-top:34px;
+    padding-top:32px;
   }
 
   .hero,
-  .split-section,
   .offer-section{
     grid-template-columns:1fr;
   }
 
   .hero{
-    gap:36px;
+    gap:30px;
+    margin-bottom:52px;
   }
 
   .trust-strip{
@@ -716,13 +836,17 @@ a{
   }
 
   .product-title{
-    font-size:clamp(42px,12vw,68px);
+    font-size:clamp(42px,11vw,64px);
+  }
+
+  .section{
+    margin-bottom:64px;
   }
 }
 
 @media(max-width:560px){
   .header-inner{
-    height:62px;
+    height:60px;
     padding:0 16px;
   }
 
@@ -732,8 +856,8 @@ a{
 
   .main{
     padding:
-      28px 16px
-      64px;
+      27px 16px
+      58px;
   }
 
   .product-subtitle{
@@ -741,18 +865,38 @@ a{
   }
 
   .section{
-    margin-bottom:70px;
+    margin-bottom:58px;
+  }
+
+  .section-heading{
+    margin-bottom:21px;
   }
 
   .visual-frame{
-    border-radius:18px;
+    border-radius:17px;
+  }
+
+  .visual-card figcaption{
+    font-size:12px;
+  }
+
+  .trust-item{
+    padding:19px;
   }
 
   .offer-copy,
   .faq,
   .shipping{
-    border-radius:20px;
-    padding:24px;
+    border-radius:19px;
+  }
+
+  .offer-copy,
+  .shipping{
+    padding:23px;
+  }
+
+  .faq{
+    padding:4px 20px;
   }
 }
 </style>
@@ -766,7 +910,7 @@ a{
 <div class="preview-shell">
 
   <div class="preview-bar">
-    Local product-page preview · Human approval required before publication
+    Local product-page preview ? Human approval required before publication
   </div>
 
   <header class="site-header">
@@ -774,8 +918,9 @@ a{
       <div class="brand">
         Product Preview
       </div>
+
       <div class="header-note">
-        Evidence-grounded · Draft only
+        Evidence-grounded ? Draft only
       </div>
     </div>
   </header>
@@ -820,37 +965,54 @@ a{
 
       ${visualFigure(
         hero,
-        "Product hero visual",
+        "Product visual ? approved source required for real imagery",
       )}
     </section>
 
     <section class="trust-strip">
+
       <div class="trust-item">
-        <strong>
-          Verified evidence
-        </strong>
-        <span>
-          Product facts remain linked to captured source evidence.
-        </span>
+        <span class="trust-icon">?</span>
+
+        <div class="trust-copy">
+          <strong>
+            Verified evidence
+          </strong>
+
+          <span>
+            Product facts remain linked to captured source evidence.
+          </span>
+        </div>
       </div>
 
       <div class="trust-item">
-        <strong>
-          Comparison safeguards
-        </strong>
-        <span>
-          Competitor claims require comparable verified values.
-        </span>
+        <span class="trust-icon">?</span>
+
+        <div class="trust-copy">
+          <strong>
+            Comparison safeguards
+          </strong>
+
+          <span>
+            Claims require comparable normalized values from both products.
+          </span>
+        </div>
       </div>
 
       <div class="trust-item">
-        <strong>
-          Human approval
-        </strong>
-        <span>
-          No external publishing occurs from this preview.
-        </span>
+        <span class="trust-icon">?</span>
+
+        <div class="trust-copy">
+          <strong>
+            Human approval
+          </strong>
+
+          <span>
+            No external publishing occurs automatically from this preview.
+          </span>
+        </div>
       </div>
+
     </section>
 
     <section class="section">
@@ -858,6 +1020,7 @@ a{
         <p class="eyebrow">
           Benefits
         </p>
+
         <h2>
           Built around the reasons a shopper would consider the product
         </h2>
@@ -865,7 +1028,7 @@ a{
 
       ${visualFigure(
         benefits,
-        "Evidence-grounded benefits visual",
+        "Evidence-grounded benefit statements",
       )}
     </section>
 
@@ -874,6 +1037,7 @@ a{
         <p class="eyebrow">
           Product details
         </p>
+
         <h2>
           Important product information, without invented specifications
         </h2>
@@ -881,7 +1045,7 @@ a{
 
       ${visualFigure(
         features,
-        "Verified features visual",
+        "Verified product specifications",
       )}
     </section>
 
@@ -890,24 +1054,27 @@ a{
         <p class="eyebrow">
           Comparison
         </p>
+
         <h2>
           Compare the facts that can actually be supported
         </h2>
+
         <p>
-          Missing or conflicting evidence stays unresolved rather than becoming a marketing claim.
+          Missing or conflicting evidence stays unresolved instead of becoming a marketing claim.
         </p>
       </div>
 
       ${visualFigure(
         comparison,
-        "Evidence-backed comparison visual",
+        "Evidence-backed normalized comparison",
       )}
     </section>
 
     <section class="section offer-section">
+
       ${visualFigure(
         offer,
-        "Current offer visual",
+        "Evidence-grounded offer summary",
       )}
 
       <div class="offer-copy">
@@ -920,8 +1087,25 @@ a{
         </h2>
 
         <p>
-          Pricing, availability and merchant terms should be re-verified before publication.
+          The offer remains a draft until merchant pricing, availability and fulfillment terms are re-verified.
         </p>
+
+        <div class="offer-proof">
+          <span>
+            <b>?</b>
+            Price is tied to captured evidence.
+          </span>
+
+          <span>
+            <b>?</b>
+            Availability is not assumed.
+          </span>
+
+          <span>
+            <b>?</b>
+            No live checkout or store write occurs here.
+          </span>
+        </div>
 
         <button
           class="preview-cta"
@@ -932,6 +1116,7 @@ a{
           ${escapeHtml(input.ctaLabel)}
         </button>
       </div>
+
     </section>
 
     <section class="section">
@@ -963,7 +1148,7 @@ a{
   </main>
 
   <footer class="footer">
-    Local preview only · externalWrites=false · livePublishing=false
+    Local preview only ? externalWrites=false ? livePublishing=false
   </footer>
 
 </div>
@@ -979,9 +1164,15 @@ a{
   return {
     previewId:
       input.previewId,
+
     html,
+
     qa,
-    externalWrites: false,
-    livePublishing: false,
+
+    externalWrites:
+      false,
+
+    livePublishing:
+      false,
   };
 }

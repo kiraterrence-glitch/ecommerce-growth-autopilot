@@ -1,6 +1,5 @@
 import {
   escapeXml,
-  svgMutedTextLines,
   svgTextLines,
   wrapVisualText,
 } from "./svg.js";
@@ -14,8 +13,37 @@ import type {
   ProductVisualQaReport,
 } from "./types.js";
 
-const width = 1200;
-const height = 1200;
+type Canvas = Readonly<{
+  width: number;
+  height: number;
+}>;
+
+const canvasByKind = {
+  hero: {
+    width: 1200,
+    height: 900,
+  },
+
+  benefit: {
+    width: 1200,
+    height: 760,
+  },
+
+  feature: {
+    width: 1200,
+    height: 760,
+  },
+
+  comparison: {
+    width: 1200,
+    height: 650,
+  },
+
+  offer: {
+    width: 1200,
+    height: 700,
+  },
+} as const;
 
 function unique(
   values: readonly string[],
@@ -27,40 +55,124 @@ function unique(
   ];
 }
 
-function imageElement(
-  url: string | null,
-): string {
-  if (!url) {
-    return `
-      <rect x="665" y="175" width="445" height="650" rx="36" fill="#111827" stroke="#334155" stroke-width="3"/>
-      <text x="887" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#94a3b8">PRODUCT IMAGE</text>
-      <text x="887" y="515" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#64748b">SOURCE REQUIRED</text>
-    `;
-  }
-
-  return `
-    <rect x="665" y="175" width="445" height="650" rx="36" fill="#ffffff"/>
-    <image x="685" y="195" width="405" height="610"
-      preserveAspectRatio="xMidYMid meet"
-      href="${escapeXml(url)}"/>
-  `;
-}
-
 function baseSvg(
+  canvas: Canvas,
   inner: string,
 ): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-  <rect width="${width}" height="${height}" fill="#090d16"/>
-  <circle cx="1060" cy="130" r="220" fill="#12223a"/>
-  <circle cx="90" cy="1080" r="260" fill="#121c2f"/>
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}" viewBox="0 0 ${canvas.width} ${canvas.height}">
+  <rect width="${canvas.width}" height="${canvas.height}" fill="#090d16"/>
+  <circle cx="${canvas.width - 120}" cy="90" r="220" fill="#12223a"/>
+  <circle cx="80" cy="${canvas.height + 30}" r="230" fill="#121c2f"/>
   ${inner}
 </svg>`;
 }
 
-function footer(): string {
+function footer(
+  canvas: Canvas,
+): string {
   return `
-    <text x="70" y="1130" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#64748b">Evidence-grounded visual Â· Human review required</text>
+    <text x="68" y="${canvas.height - 42}" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9aa8bb">Evidence-grounded ? Human review required</text>
   `;
+}
+
+function pendingBadge(): string {
+  return `
+    <rect x="865" y="62" width="265" height="44" rx="22" fill="#172337" stroke="#33465f"/>
+    <text x="997" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#aebed3">APPROVED IMAGE PENDING</text>
+  `;
+}
+
+function heroImage(
+  input: ProductVisualInput,
+): string {
+  if (!input.sourceImage) {
+    return `
+      <rect x="190" y="160" width="820" height="560" rx="42" fill="#111a29" stroke="#33465f" stroke-width="3"/>
+      <circle cx="600" cy="395" r="70" fill="#17243a"/>
+      <path d="M565 410 L600 375 L635 410" fill="none" stroke="#6c87ab" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="555" y="350" width="90" height="112" rx="18" fill="none" stroke="#6c87ab" stroke-width="5"/>
+      <text x="600" y="530" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" fill="#d7e1ee">PRODUCT IMAGE</text>
+      <text x="600" y="570" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#8395ad">SOURCE REQUIRED</text>
+      <text x="600" y="620" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#667890">The workflow will not fabricate a product photograph.</text>
+    `;
+  }
+
+  return `
+    <rect x="145" y="120" width="910" height="640" rx="42" fill="#ffffff"/>
+    <image
+      x="180"
+      y="155"
+      width="840"
+      height="570"
+      preserveAspectRatio="xMidYMid meet"
+      href="${escapeXml(input.sourceImage.url)}"
+    />
+  `;
+}
+
+function renderHero(
+  input: ProductVisualInput,
+): ProductVisualAsset {
+  const canvas =
+    canvasByKind.hero;
+
+  const svg =
+    baseSvg(
+      canvas,
+      `
+        <rect x="68" y="54" width="235" height="44" rx="22" fill="#1d4ed8"/>
+        <text x="185" y="83" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" fill="#ffffff">PRODUCT VISUAL</text>
+
+        ${heroImage(input)}
+
+        ${footer(canvas)}
+      `,
+    );
+
+  return {
+    assetId:
+      `${input.jobId}-visual-hero`,
+
+    kind:
+      "hero",
+
+    filename:
+      "01-hero.svg",
+
+    width:
+      canvas.width,
+
+    height:
+      canvas.height,
+
+    status:
+      input.sourceImage
+        ? "READY"
+        : "NEEDS_SOURCE",
+
+    svg,
+
+    evidenceIds:
+      unique([
+        ...input.titleEvidenceIds,
+
+        ...(
+          input.sourceImage
+            ? [
+                input.sourceImage.evidenceId,
+              ]
+            : []
+        ),
+      ]),
+
+    sourceImageUrl:
+      input.sourceImage?.url ??
+      null,
+
+    rightsStatus:
+      input.sourceImage?.rightsStatus ??
+      null,
+  };
 }
 
 function statementEvidence(
@@ -74,66 +186,53 @@ function statementEvidence(
   );
 }
 
-function renderHero(
-  input: ProductVisualInput,
-): ProductVisualAsset {
-  const title =
-    wrapVisualText(
-      input.productTitle,
-      24,
-    ).slice(0, 4);
+function statementCards(
+  statements: readonly GroundedVisualStatement[],
+): string {
+  const visible =
+    statements.slice(0, 4);
 
-  const subtitle =
-    wrapVisualText(
-      input.subtitle,
-      42,
-    ).slice(0, 5);
+  return visible
+    .map(
+      (item, index) => {
+        const column =
+          index % 2;
 
-  const svg =
-    baseSvg(`
-      <rect x="70" y="90" width="230" height="46" rx="23" fill="#1d4ed8"/>
-      <text x="185" y="121" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#ffffff">PRODUCT OVERVIEW</text>
+        const row =
+          Math.floor(index / 2);
 
-      ${svgTextLines(title, 70, 250, 72, 62, 800)}
-      ${svgMutedTextLines(subtitle, 70, 250 + title.length * 72 + 55, 42, 28)}
+        const x =
+          68 +
+          column * 545;
 
-      ${imageElement(input.sourceImage?.url ?? null)}
+        const y =
+          275 +
+          row * 180;
 
-      ${footer()}
-    `);
+        const lines =
+          wrapVisualText(
+            item.text,
+            34,
+          ).slice(0, 3);
 
-  return {
-    assetId:
-      `${input.jobId}-visual-hero`,
-    kind: "hero",
-    filename:
-      "01-hero.svg",
-    width,
-    height,
-    status:
-      input.sourceImage
-        ? "READY"
-        : "NEEDS_SOURCE",
-    svg,
-    evidenceIds:
-      unique([
-        ...input.titleEvidenceIds,
-        ...(
-          input.sourceImage
-            ? [
-                input.sourceImage
-                  .evidenceId,
-              ]
-            : []
-        ),
-      ]),
-    sourceImageUrl:
-      input.sourceImage?.url ??
-      null,
-    rightsStatus:
-      input.sourceImage?.rightsStatus ??
-      null,
-  };
+        return `
+          <rect x="${x}" y="${y}" width="505" height="142" rx="24" fill="#111a29" stroke="#253650"/>
+
+          <circle cx="${x + 46}" cy="${y + 48}" r="18" fill="#2563eb"/>
+          <text x="${x + 46}" y="${y + 54}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" fill="#ffffff">${index + 1}</text>
+
+          ${svgTextLines(
+            lines,
+            x + 82,
+            y + 46,
+            30,
+            21,
+            700,
+          )}
+        `;
+      },
+    )
+    .join("");
 }
 
 function renderStatementCard(
@@ -141,145 +240,215 @@ function renderStatementCard(
   kind: "benefit" | "feature",
   statements: readonly GroundedVisualStatement[],
 ): ProductVisualAsset {
+  const canvas =
+    kind === "benefit"
+      ? canvasByKind.benefit
+      : canvasByKind.feature;
+
   const label =
     kind === "benefit"
       ? "WHY IT MATTERS"
-      : "PRODUCT DETAILS";
+      : "VERIFIED PRODUCT DETAILS";
 
   const heading =
     kind === "benefit"
-      ? "Benefits grounded in product evidence"
+      ? "Evidence-backed benefits"
       : "Verified product features";
 
-  const visible =
-    statements.slice(0, 4);
-
-  const cards =
-    visible
-      .map((item, index) => {
-        const y =
-          315 + index * 150;
-
-        const lines =
-          wrapVisualText(
-            item.text,
-            42,
-          ).slice(0, 3);
-
-        return `
-          <rect x="70" y="${y - 65}" width="520" height="120" rx="24" fill="#111827" stroke="#243247"/>
-          <circle cx="112" cy="${y - 5}" r="18" fill="#2563eb"/>
-          <text x="112" y="${y + 2}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#ffffff">${index + 1}</text>
-          ${svgTextLines(lines, 150, y - 20, 31, 22, 650)}
-        `;
-      })
-      .join("");
-
   const svg =
-    baseSvg(`
-      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">${label}</text>
-      ${svgTextLines(wrapVisualText(heading, 30), 70, 185, 54, 44, 800)}
-      ${cards}
-      ${imageElement(input.sourceImage?.url ?? null)}
-      ${footer()}
-    `);
+    baseSvg(
+      canvas,
+      `
+        <text x="68" y="88" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#60a5fa">${label}</text>
+
+        ${svgTextLines(
+          wrapVisualText(
+            heading,
+            33,
+          ).slice(0, 2),
+          68,
+          160,
+          52,
+          44,
+          800,
+        )}
+
+        ${
+          input.sourceImage
+            ? ""
+            : pendingBadge()
+        }
+
+        ${statementCards(statements)}
+
+        ${footer(canvas)}
+      `,
+    );
 
   return {
     assetId:
       `${input.jobId}-visual-${kind}`,
+
     kind,
+
     filename:
       kind === "benefit"
         ? "02-benefits.svg"
         : "03-features.svg",
-    width,
-    height,
+
+    width:
+      canvas.width,
+
+    height:
+      canvas.height,
+
     status:
-      input.sourceImage
-        ? "READY"
-        : "NEEDS_SOURCE",
+      "READY",
+
     svg,
+
     evidenceIds:
-      unique([
-        ...statementEvidence(
-          visible,
-        ),
-        ...(
-          input.sourceImage
-            ? [
-                input.sourceImage
-                  .evidenceId,
-              ]
-            : []
-        ),
-      ]),
+      statementEvidence(
+        statements.slice(0, 4),
+      ),
+
     sourceImageUrl:
-      input.sourceImage?.url ??
       null,
+
     rightsStatus:
-      input.sourceImage?.rightsStatus ??
       null,
+  };
+}
+
+function comparisonValues(
+  text: string,
+): Readonly<{
+  left: string;
+  right: string;
+}> | null {
+  const match =
+    /\(([^()]+?)\s+vs\s+([^()]+?)\)\.?$/i.exec(
+      text,
+    );
+
+  if (!match?.[1] || !match?.[2]) {
+    return null;
+  }
+
+  return {
+    left:
+      match[1].trim(),
+
+    right:
+      match[2].trim(),
   };
 }
 
 function renderComparison(
   input: ProductVisualInput,
 ): ProductVisualAsset {
+  const canvas =
+    canvasByKind.comparison;
+
   const claims =
     input.comparisonClaims.slice(
       0,
-      4,
+      3,
     );
 
   const rows =
     claims
-      .map((claim, index) => {
-        const y =
-          280 + index * 170;
+      .map(
+        (claim, index) => {
+          const y =
+            310 +
+            index * 105;
 
-        const lines =
-          wrapVisualText(
-            claim.text,
-            58,
-          ).slice(0, 3);
+          const values =
+            comparisonValues(
+              claim.text,
+            );
 
-        return `
-          <rect x="70" y="${y - 70}" width="1060" height="135" rx="26" fill="#111827" stroke="#243247"/>
-          <rect x="90" y="${y - 48}" width="130" height="34" rx="17" fill="#1e40af"/>
-          <text x="155" y="${y - 25}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" fill="#ffffff">${escapeXml(claim.field.toUpperCase())}</text>
-          ${svgTextLines(lines, 90, y + 18, 31, 22, 650)}
-        `;
-      })
+          if (!values) {
+            return `
+              <rect x="68" y="${y - 54}" width="1064" height="84" rx="20" fill="#111a29" stroke="#253650"/>
+              <text x="94" y="${y - 19}" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" fill="#60a5fa">${escapeXml(claim.field.toUpperCase())}</text>
+              <text x="94" y="${y + 10}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="650" fill="#f8fafc">${escapeXml(claim.text)}</text>
+            `;
+          }
+
+          return `
+            <rect x="68" y="${y - 60}" width="1064" height="92" rx="20" fill="#111a29" stroke="#253650"/>
+
+            <text x="94" y="${y - 22}" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#8aa7ce">${escapeXml(claim.field.toUpperCase())}</text>
+
+            <text x="560" y="${y - 24}" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" fill="#ffffff">${escapeXml(values.left)}</text>
+
+            <text x="603" y="${y - 23}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#667890">vs</text>
+
+            <text x="646" y="${y - 24}" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" fill="#cbd5e1">${escapeXml(values.right)}</text>
+
+            <text x="560" y="${y + 8}" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#60a5fa">OUR PRODUCT</text>
+
+            <text x="646" y="${y + 8}" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#8a9aae">COMPETITOR</text>
+
+            <text x="1065" y="${y + 2}" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#72849c">${escapeXml(values.left)} vs ${escapeXml(values.right)}</text>
+          `;
+        },
+      )
       .join("");
 
   const empty =
     claims.length === 0
       ? `
-        <rect x="70" y="270" width="1060" height="200" rx="28" fill="#111827" stroke="#334155"/>
-        <text x="600" y="355" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#cbd5e1">No safe numeric comparison claims available</text>
-        <text x="600" y="410" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#64748b">More verified comparable evidence is required.</text>
+        <rect x="68" y="270" width="1064" height="160" rx="24" fill="#111a29" stroke="#33465f"/>
+        <text x="600" y="335" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#cbd5e1">No safe numeric comparison is available</text>
+        <text x="600" y="382" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#8395ad">More comparable verified evidence is required.</text>
       `
       : "";
 
   const svg =
-    baseSvg(`
-      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">VERIFIED COMPARISON</text>
-      <text x="70" y="175" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#f8fafc">Compare the listed facts</text>
-      ${rows}
-      ${empty}
-      ${footer()}
-    `);
+    baseSvg(
+      canvas,
+      `
+        <text x="68" y="78" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#60a5fa">VERIFIED COMPARISON</text>
+
+        <text x="68" y="148" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="800" fill="#f8fafc">Compare the listed facts</text>
+
+        <text x="68" y="193" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#aebed3">Only comparable, normalized evidence is shown.</text>
+
+        <text x="560" y="228" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" fill="#60a5fa">OUR PRODUCT</text>
+
+        <text x="646" y="228" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800" fill="#8a9aae">COMPETITOR</text>
+
+        ${rows}
+        ${empty}
+
+        ${footer(canvas)}
+      `,
+    );
 
   return {
     assetId:
       `${input.jobId}-visual-comparison`,
-    kind: "comparison",
+
+    kind:
+      "comparison",
+
     filename:
       "04-comparison.svg",
-    width,
-    height,
-    status: "READY",
+
+    width:
+      canvas.width,
+
+    height:
+      canvas.height,
+
+    status:
+      "READY",
+
     svg,
+
     evidenceIds:
       unique(
         claims.flatMap(
@@ -287,77 +456,92 @@ function renderComparison(
             claim.evidenceIds,
         ),
       ),
-    sourceImageUrl: null,
-    rightsStatus: null,
+
+    sourceImageUrl:
+      null,
+
+    rightsStatus:
+      null,
   };
 }
 
 function renderOffer(
   input: ProductVisualInput,
 ): ProductVisualAsset {
+  const canvas =
+    canvasByKind.offer;
+
   const offer =
     wrapVisualText(
       input.offer.text,
-      34,
-    ).slice(0, 5);
+      32,
+    ).slice(0, 4);
 
   const svg =
-    baseSvg(`
-      <text x="70" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#60a5fa">CURRENT LISTED OFFER</text>
+    baseSvg(
+      canvas,
+      `
+        <text x="68" y="84" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#60a5fa">CURRENT LISTED OFFER</text>
 
-      ${svgTextLines(
-        wrapVisualText(
-          input.productTitle,
-          28,
-        ).slice(0, 3),
-        70,
-        220,
-        60,
-        48,
-        800,
-      )}
+        ${svgTextLines(
+          offer,
+          68,
+          180,
+          58,
+          43,
+          800,
+        )}
 
-      <rect x="70" y="470" width="520" height="260" rx="34" fill="#1e3a8a"/>
-      ${svgTextLines(offer, 110, 555, 53, 38, 800)}
+        <rect x="690" y="145" width="440" height="340" rx="30" fill="#111a29" stroke="#2d405b"/>
 
-      ${imageElement(input.sourceImage?.url ?? null)}
+        <circle cx="740" cy="220" r="18" fill="#173666"/>
+        <text x="740" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="780" y="226" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">Price captured from evidence</text>
 
-      <text x="70" y="860" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#94a3b8">Pricing and offer details must be re-verified before publication.</text>
+        <circle cx="740" cy="300" r="18" fill="#173666"/>
+        <text x="740" y="306" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="780" y="306" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">Availability requires verification</text>
 
-      ${footer()}
-    `);
+        <circle cx="740" cy="380" r="18" fill="#173666"/>
+        <text x="740" y="386" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="780" y="386" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">No live checkout or publishing</text>
+
+        <text x="68" y="515" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#aebed3">Pricing and merchant terms must be re-verified before publication.</text>
+
+        ${footer(canvas)}
+      `,
+    );
 
   return {
     assetId:
       `${input.jobId}-visual-offer`,
-    kind: "offer",
+
+    kind:
+      "offer",
+
     filename:
       "05-offer.svg",
-    width,
-    height,
+
+    width:
+      canvas.width,
+
+    height:
+      canvas.height,
+
     status:
-      input.sourceImage
-        ? "READY"
-        : "NEEDS_SOURCE",
+      "READY",
+
     svg,
+
     evidenceIds:
-      unique([
-        ...input.offer
-          .evidenceIds,
-        ...(
-          input.sourceImage
-            ? [
-                input.sourceImage
-                  .evidenceId,
-              ]
-            : []
-        ),
-      ]),
+      unique(
+        input.offer.evidenceIds,
+      ),
+
     sourceImageUrl:
-      input.sourceImage?.url ??
       null,
+
     rightsStatus:
-      input.sourceImage?.rightsStatus ??
       null,
   };
 }
@@ -497,7 +681,7 @@ export function auditProductVisualAssets(
         qaIssue(
           "visual_needs_source",
           "warning",
-          "Visual is structurally generated but still needs a real product image source.",
+          "Hero visual still needs an approved real product image.",
           asset.assetId,
         ),
       );
@@ -534,21 +718,27 @@ export function auditProductVisualAssets(
     ).length;
 
   return {
-    passed: errors === 0,
+    passed:
+      errors === 0,
+
     errors,
+
     warnings,
+
     readyAssetCount:
       assets.filter(
         (asset) =>
           asset.status ===
           "READY",
       ).length,
+
     needsSourceCount:
       assets.filter(
         (asset) =>
           asset.status ===
           "NEEDS_SOURCE",
       ).length,
+
     issues,
   };
 }
@@ -586,17 +776,21 @@ export function buildProductVisualPack(
 
   const assets = [
     renderHero(input),
+
     renderStatementCard(
       input,
       "benefit",
       input.benefits,
     ),
+
     renderStatementCard(
       input,
       "feature",
       input.features,
     ),
+
     renderComparison(input),
+
     renderOffer(input),
   ];
 
@@ -609,8 +803,11 @@ export function buildProductVisualPack(
   return {
     jobId:
       input.jobId,
+
     generatedAt,
+
     assets,
+
     qa,
   };
 }
