@@ -169,7 +169,7 @@ export function buildDemoProductPagePreview() {
         "A compact manual espresso concept demonstrating an evidence-grounded ecommerce workflow.",
 
       priceLine:
-        "USD 39.90 ? Demo fixture",
+        "USD 39.90 - Demo fixture",
 
       ctaLabel:
         "Review product details",

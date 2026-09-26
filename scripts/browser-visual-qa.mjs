@@ -1042,45 +1042,59 @@ try {
 
   const viewports = [
     {
-      name:
-        "desktop",
-
-      width:
-        1440,
-
-      height:
-        1000,
-
-      mobile:
-        false,
+      name: "mobile-320",
+      width: 320,
+      height: 700,
+      mobile: true,
     },
 
     {
-      name:
-        "tablet",
-
-      width:
-        1024,
-
-      height:
-        768,
-
-      mobile:
-        false,
+      name: "mobile-375",
+      width: 375,
+      height: 812,
+      mobile: true,
     },
 
     {
-      name:
-        "mobile",
+      name: "mobile",
+      width: 390,
+      height: 844,
+      mobile: true,
+    },
 
-      width:
-        390,
+    {
+      name: "tablet-768",
+      width: 768,
+      height: 1024,
+      mobile: false,
+    },
 
-      height:
-        844,
+    {
+      name: "tablet",
+      width: 1024,
+      height: 768,
+      mobile: false,
+    },
 
-      mobile:
-        true,
+    {
+      name: "desktop-1280",
+      width: 1280,
+      height: 800,
+      mobile: false,
+    },
+
+    {
+      name: "desktop",
+      width: 1440,
+      height: 1000,
+      mobile: false,
+    },
+
+    {
+      name: "desktop-1920",
+      width: 1920,
+      height: 1080,
+      mobile: false,
     },
   ];
 

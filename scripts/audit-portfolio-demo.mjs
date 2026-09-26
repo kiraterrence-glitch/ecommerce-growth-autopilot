@@ -34,11 +34,11 @@ try {
   }
 
   if (
-    report.viewports.length !==
-    3
+    report.viewports.length <
+    8
   ) {
     throw new Error(
-      `Expected three viewport results, received ${report.viewports.length}.`,
+      `Expected at least eight viewport results, received ${report.viewports.length}.`,
     );
   }
 

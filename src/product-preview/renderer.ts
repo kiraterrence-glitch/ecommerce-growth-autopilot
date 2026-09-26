@@ -395,7 +395,7 @@ export function renderProductPagePreview(
 
   const demoBadge =
     input.demoMode
-      ? `<span class="demo-badge">DEMO PREVIEW ? NO LIVE CHECKOUT</span>`
+      ? `<span class="demo-badge">DEMO PREVIEW &middot; NO LIVE CHECKOUT</span>`
       : "";
 
   const html = `<!doctype html>
@@ -408,7 +408,7 @@ export function renderProductPagePreview(
   content="width=device-width,initial-scale=1"
 >
 
-<title>${escapeHtml(input.productTitle)} ? Product Preview</title>
+<title>${escapeHtml(input.productTitle)} &middot; Product Preview</title>
 
 <meta
   name="description"
@@ -910,7 +910,7 @@ svg{
 <div class="preview-shell">
 
   <div class="preview-bar">
-    Local product-page preview ? Human approval required before publication
+    Local product-page preview &middot; Human approval required before publication
   </div>
 
   <header class="site-header">
@@ -920,7 +920,7 @@ svg{
       </div>
 
       <div class="header-note">
-        Evidence-grounded ? Draft only
+        Evidence-grounded &middot; Draft only
       </div>
     </div>
   </header>
@@ -972,7 +972,7 @@ svg{
     <section class="trust-strip">
 
       <div class="trust-item">
-        <span class="trust-icon">?</span>
+        <span class="trust-icon">&#10003;</span>
 
         <div class="trust-copy">
           <strong>
@@ -986,7 +986,7 @@ svg{
       </div>
 
       <div class="trust-item">
-        <span class="trust-icon">?</span>
+        <span class="trust-icon">&#10003;</span>
 
         <div class="trust-copy">
           <strong>
@@ -1000,7 +1000,7 @@ svg{
       </div>
 
       <div class="trust-item">
-        <span class="trust-icon">?</span>
+        <span class="trust-icon">&#10003;</span>
 
         <div class="trust-copy">
           <strong>
@@ -1092,17 +1092,17 @@ svg{
 
         <div class="offer-proof">
           <span>
-            <b>?</b>
+            <b>&#10003;</b>
             Price is tied to captured evidence.
           </span>
 
           <span>
-            <b>?</b>
+            <b>&#10003;</b>
             Availability is not assumed.
           </span>
 
           <span>
-            <b>?</b>
+            <b>&#10003;</b>
             No live checkout or store write occurs here.
           </span>
         </div>
@@ -1148,7 +1148,7 @@ svg{
   </main>
 
   <footer class="footer">
-    Local preview only ? externalWrites=false ? livePublishing=false
+    Local preview only &middot; externalWrites=false &middot; livePublishing=false
   </footer>
 
 </div>

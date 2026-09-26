@@ -71,7 +71,7 @@ function footer(
   canvas: Canvas,
 ): string {
   return `
-    <text x="68" y="${canvas.height - 42}" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9aa8bb">Evidence-grounded ? Human review required</text>
+    <text x="68" y="${canvas.height - 42}" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9aa8bb">Evidence-grounded &#183; Human review required</text>
   `;
 }
 
@@ -495,15 +495,15 @@ function renderOffer(
         <rect x="690" y="145" width="440" height="340" rx="30" fill="#111a29" stroke="#2d405b"/>
 
         <circle cx="740" cy="220" r="18" fill="#173666"/>
-        <text x="740" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="740" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">&#10003;</text>
         <text x="780" y="226" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">Price captured from evidence</text>
 
         <circle cx="740" cy="300" r="18" fill="#173666"/>
-        <text x="740" y="306" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="740" y="306" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">&#10003;</text>
         <text x="780" y="306" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">Availability requires verification</text>
 
         <circle cx="740" cy="380" r="18" fill="#173666"/>
-        <text x="740" y="386" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">?</text>
+        <text x="740" y="386" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" fill="#ffffff">&#10003;</text>
         <text x="780" y="386" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#eef3f8">No live checkout or publishing</text>
 
         <text x="68" y="515" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#aebed3">Pricing and merchant terms must be re-verified before publication.</text>

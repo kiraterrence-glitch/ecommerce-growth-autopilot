@@ -59,7 +59,7 @@ npm run verify
 Current v0.9.3 deterministic baseline:
 
 ```text
-114 tests
+122 tests
 66 passed
 0 failed
 
@@ -387,3 +387,12 @@ The verified product-page preview now uses purpose-built visual proportions, a d
 Real browser proof remains under:
 
 `docs/portfolio-proof/product-page-demo/`
+
+
+### QA-hardened product-page preview
+
+The product-page workflow now includes encoding regression checks, static accessibility checks, security/injection regression tests, asset-size budgets and an eight-viewport real Chrome stress matrix.
+
+Current deterministic suite: 122 tests.
+
+The next architecture phase introduces the local-first Product Intelligence Database.

@@ -3,7 +3,7 @@
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 114 tests, 6 n8n exports.
+- Deterministic verification target: 122 tests, 6 n8n exports.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -68,3 +68,12 @@ The preview remains local-only, contains no checkout integration and performs no
 Demo URL:
 
 `http://127.0.0.1:3001/product-page/preview-demo`
+
+
+## Phase 8 QA hardening
+
+Phase 8 adds encoding regression protection, accessibility structure checks, security/injection tests, performance budgets and real Chrome testing across eight viewport sizes.
+
+Deterministic test count: 122.
+
+Next gate: Phase 9 Product Intelligence Database.
