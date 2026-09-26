@@ -493,6 +493,22 @@ function statusOf(error) {
 }
 
 function classifyError(error) {
+  if (
+    error?.permanent ===
+    true
+  ) {
+    return {
+      retry:
+        false,
+
+      code:
+        typeof error.syncCode ===
+        "string"
+          ? error.syncCode
+          : "PERMANENT_REMOTE_ERROR",
+    };
+  }
+
   const status =
     statusOf(error);
 
