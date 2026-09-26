@@ -50,3 +50,19 @@ Pattern relationships are observational. They do not prove that a hook, structur
 Competitor and creator content signals remain messaging evidence only. They must never be promoted into product facts without separate product evidence.
 
 No viral score, winner score or opaque opportunity score is generated.
+
+## Phase 13A.3 — Activation briefs
+
+Content Intelligence can convert descriptive observations into original draft directions for Meta ads, lifecycle email, landing pages and creative production.
+
+Activation remains draft-only.
+
+The activation layer does not publish, schedule, send, edit external systems or perform external writes.
+
+Captured creator and competitor content is treated as messaging evidence only.
+
+Generated directions must use original wording. A deterministic originality guard rejects long copied word sequences from source transcripts.
+
+Content Intelligence cannot establish product facts. Factual product statements require separately verified product evidence.
+
+Observed performance relationships remain descriptive and do not establish causality.

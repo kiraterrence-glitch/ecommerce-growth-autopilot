@@ -306,3 +306,21 @@ export type {
   ContentPerformanceAnalysis,
   ContentSignalSummary,
 } from "./content-intelligence/index.js";
+
+export {
+  assertContentActivationOriginality,
+  assertContentActivationSafety,
+  checkContentActivationOriginality,
+  checkContentActivationSafety,
+  ContentActivationOriginalityError,
+  ContentActivationSafetyError,
+  generateContentActivationBriefs,
+} from "./content-intelligence/index.js";
+
+export type {
+  ContentActivationBrief,
+  ContentActivationChannel,
+  ContentActivationPatternBasis,
+  ContentActivationSafety,
+  ContentActivationSignalCounts,
+} from "./content-intelligence/index.js";

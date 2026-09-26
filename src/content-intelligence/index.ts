@@ -47,3 +47,21 @@ export type {
   ContentPerformanceAnalysis,
   ContentSignalSummary,
 } from "./analysis.js";
+
+export {
+  assertContentActivationOriginality,
+  assertContentActivationSafety,
+  checkContentActivationOriginality,
+  checkContentActivationSafety,
+  ContentActivationOriginalityError,
+  ContentActivationSafetyError,
+  generateContentActivationBriefs,
+} from "./activation.js";
+
+export type {
+  ContentActivationBrief,
+  ContentActivationChannel,
+  ContentActivationPatternBasis,
+  ContentActivationSafety,
+  ContentActivationSignalCounts,
+} from "./activation.js";
