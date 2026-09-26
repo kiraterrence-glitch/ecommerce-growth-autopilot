@@ -236,3 +236,26 @@ export {
   auditProductPagePreview,
   renderProductPagePreview,
 } from "./product-preview/renderer.js";
+export type {
+  ApprovalRecord as ProductIntelligenceApprovalRecord,
+  ApprovalStatus as ProductIntelligenceApprovalStatus,
+  ComparisonRunRecord as ProductIntelligenceComparisonRunRecord,
+  CompetitorLinkRecord as ProductIntelligenceCompetitorLinkRecord,
+  EvidenceRecord as ProductIntelligenceEvidenceRecord,
+  EvidenceStatus as ProductIntelligenceEvidenceStatus,
+  ProductIntelligenceSnapshot,
+  ProductLifecycleStatus as ProductIntelligenceLifecycleStatus,
+  ProductPageDraftRecord as ProductIntelligencePageDraftRecord,
+  ProductRecord as ProductIntelligenceProductRecord,
+  ProductRevisionRecord as ProductIntelligenceRevisionRecord,
+  ProductSourceRecord as ProductIntelligenceSourceRecord,
+  ProductSourceType as ProductIntelligenceSourceType,
+  ProductVariantRecord as ProductIntelligenceVariantRecord,
+  QaRunRecord as ProductIntelligenceQaRunRecord,
+  QaRunType as ProductIntelligenceQaRunType,
+  VisualAssetRecord as ProductIntelligenceVisualAssetRecord,
+} from "./product-intelligence/types.js";
+
+export type {
+  ProductIntelligenceRepository,
+} from "./product-intelligence/repository.js";

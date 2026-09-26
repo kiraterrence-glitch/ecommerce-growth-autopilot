@@ -59,7 +59,7 @@ npm run verify
 Current v0.9.3 deterministic baseline:
 
 ```text
-122 tests
+134 tests
 66 passed
 0 failed
 
@@ -393,6 +393,6 @@ Real browser proof remains under:
 
 The product-page workflow now includes encoding regression checks, static accessibility checks, security/injection regression tests, asset-size budgets and an eight-viewport real Chrome stress matrix.
 
-Current deterministic suite: 122 tests.
+Current deterministic suite: 134 tests.
 
 The next architecture phase introduces the local-first Product Intelligence Database.
