@@ -20,6 +20,10 @@ import {
   renderProductLibrary,
 } from "./product-library-renderer.mjs";
 
+import {
+  createMarketplaceProductLibraryApi,
+} from "./product-library-marketplace-api.mjs";
+
 function json(response, status, value) {
   response.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
@@ -53,11 +57,27 @@ export function createProductLibraryServer({
     ensureDemoProductIntelligence(repository);
   }
 
-  const server = createServer((request, response) => {
+  const marketplaceApi =
+    createMarketplaceProductLibraryApi({
+      repository,
+      databasePath,
+    });
+
+  const server = createServer(async (request, response) => {
     const url = new URL(
       request.url ?? "/",
       "http://127.0.0.1",
     );
+
+    if (
+      await marketplaceApi.handle(
+        request,
+        response,
+        url,
+      )
+    ) {
+      return;
+    }
 
     if (request.method === "GET" && url.pathname === "/health") {
       json(response, 200, {
@@ -142,8 +162,14 @@ export function createProductLibraryServer({
   });
 
   let repositoryClosed = false;
+  let marketplaceClosed = false;
 
   server.on("close", () => {
+    if (!marketplaceClosed) {
+      marketplaceClosed = true;
+      marketplaceApi.close();
+    }
+
     if (!repositoryClosed) {
       repositoryClosed = true;
       repository.close();
@@ -153,6 +179,7 @@ export function createProductLibraryServer({
   return {
     server,
     repository,
+    marketplaceApi,
     demoProductId: DEMO_PRODUCT_ID,
   };
 }
