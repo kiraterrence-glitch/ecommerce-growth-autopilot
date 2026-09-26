@@ -691,17 +691,34 @@ export class ContentIntelligenceStore {
           createdAt,
         );
 
+      const deleteChildren = [
+        this.database.prepare(`
+          DELETE FROM content_intelligence_items
+          WHERE run_id = ?
+        `),
+
+        this.database.prepare(`
+          DELETE FROM content_intelligence_patterns
+          WHERE run_id = ?
+        `),
+
+        this.database.prepare(`
+          DELETE FROM content_intelligence_customer_signals
+          WHERE run_id = ?
+        `),
+
+        this.database.prepare(`
+          DELETE FROM content_intelligence_activation_briefs
+          WHERE run_id = ?
+        `),
+      ];
+
       for (
-        const table
-        of [
-          "content_intelligence_items",
-          "content_intelligence_patterns",
-          "content_intelligence_customer_signals",
-          "content_intelligence_activation_briefs",
-        ]
+        const statement
+        of deleteChildren
       ) {
-        this.database.exec(
-          `DELETE FROM ${table} WHERE run_id = '${runId.replaceAll("'", "''")}'`,
+        statement.run(
+          runId,
         );
       }
 

@@ -97,3 +97,28 @@ Activation persistence remains fail-closed:
 - product claims still require separately verified product evidence.
 
 SQLite remains the local authoritative persistence layer.
+
+## Phase 13B.2 — Product-bound intelligence service
+
+Raw Content Intelligence input can now be processed for an existing Product Intelligence product through one local service:
+
+1. validate captured content;
+2. classify content deterministically;
+3. calculate descriptive performance and patterns;
+4. build customer intelligence;
+5. create original draft activation briefs;
+6. persist the complete snapshot in the same Product Intelligence SQLite database;
+7. reload the persisted run for verification.
+
+Automatic run IDs are deterministic for the same product and validated content.
+
+The service remains fail-closed:
+
+- the product must already exist;
+- activation remains draft-only;
+- external writes remain disabled;
+- live publishing remains disabled;
+- source content remains messaging evidence only;
+- product facts require separately verified product evidence.
+
+Snapshot child-row deletion uses parameterized prepared statements.
