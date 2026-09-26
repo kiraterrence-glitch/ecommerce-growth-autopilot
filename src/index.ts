@@ -265,3 +265,27 @@ export type {
   ProductIntelligenceRemoteStore,
   ProductIntelligenceSyncEnvelope,
 } from "./product-intelligence/cloud-sync.js";
+
+export {
+  CONTENT_INTELLIGENCE_CREATIVE_FORMATS,
+  CONTENT_INTELLIGENCE_HOOK_TYPES,
+  CONTENT_INTELLIGENCE_PLATFORMS,
+  CONTENT_INTELLIGENCE_STRUCTURES,
+  assertContentIntelligenceGrounding,
+  checkContentIntelligenceGrounding,
+  classifyContentIntelligenceBatchDeterministically,
+  classifyContentIntelligenceDeterministically,
+  ContentIntelligenceGroundingError,
+  validateContentIntelligenceDataset,
+  validateContentIntelligenceRecord,
+} from "./content-intelligence/index.js";
+
+export type {
+  ContentIntelligenceClassification,
+  ContentIntelligenceCreativeFormat,
+  ContentIntelligenceHookType,
+  ContentIntelligenceMetrics,
+  ContentIntelligencePlatform,
+  ContentIntelligenceRecord,
+  ContentIntelligenceStructure,
+} from "./content-intelligence/index.js";

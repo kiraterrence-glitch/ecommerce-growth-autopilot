@@ -1,0 +1,104 @@
+[
+  {
+    "id": "content-001",
+    "platform": "tiktok",
+    "sourceUrl": "https://example.com/content/001",
+    "creator": "demo-travel",
+    "publishedAt": "2026-09-20T08:00:00Z",
+    "transcript": "Tired of bulky coffee gear when you travel? A compact manual setup can keep the routine simple without electricity. Try a smaller travel kit before your next trip.",
+    "metrics": {
+      "views": 12000,
+      "likes": 960,
+      "comments": 75,
+      "shares": 110,
+      "saves": 140,
+      "followers": 6000
+    },
+    "tags": ["travel", "coffee"]
+  },
+  {
+    "id": "content-002",
+    "platform": "instagram",
+    "sourceUrl": "https://example.com/content/002",
+    "creator": "demo-commerce",
+    "publishedAt": "2026-09-21T08:00:00Z",
+    "transcript": "Want three ways to make a product page easier to scan? 1. Lead with the main benefit. 2. Show verified specifications. 3. Put the customer objection near the CTA.",
+    "metrics": {
+      "views": 8600,
+      "likes": 540,
+      "comments": 61,
+      "shares": 92,
+      "saves": 181,
+      "followers": 5100
+    },
+    "tags": ["product-page", "ecommerce"]
+  },
+  {
+    "id": "content-003",
+    "platform": "youtube",
+    "sourceUrl": "https://example.com/content/003",
+    "creator": "demo-research",
+    "publishedAt": "2026-09-22T08:00:00Z",
+    "transcript": "Stop copying competitor claims. The mistake is treating their listing as your product evidence. Fix it by verifying each fact against your own supplier source record.",
+    "metrics": {
+      "views": 6200,
+      "likes": 455,
+      "comments": 44,
+      "shares": 76,
+      "saves": 95,
+      "followers": 4800
+    },
+    "tags": ["research", "evidence"]
+  },
+  {
+    "id": "content-004",
+    "platform": "facebook",
+    "sourceUrl": "https://example.com/content/004",
+    "creator": "demo-ops",
+    "publishedAt": "2026-09-23T08:00:00Z",
+    "transcript": "Watch how I compare two supplier sheets side by side. I check capacity, weight, and variant names before writing any claim. Start with the source record.",
+    "metrics": {
+      "views": 4100,
+      "likes": 280,
+      "comments": 31,
+      "shares": 47,
+      "saves": 64,
+      "followers": 3200
+    },
+    "tags": ["supplier", "verification"]
+  },
+  {
+    "id": "content-005",
+    "platform": "other",
+    "sourceUrl": "https://example.com/content/005",
+    "creator": "demo-cro",
+    "publishedAt": "2026-09-24T08:00:00Z",
+    "transcript": "When I reviewed this campaign, the first product page draft buried the customer objection. The lesson was to surface the concern before the offer and answer it with verified evidence.",
+    "metrics": {
+      "views": 7300,
+      "likes": 501,
+      "comments": 58,
+      "shares": 66,
+      "saves": 119,
+      "followers": 4500
+    },
+    "tags": ["cro", "objections"]
+  },
+  {
+    "id": "content-006",
+    "platform": "instagram",
+    "sourceUrl": "https://example.com/content/006",
+    "creator": "demo-creative",
+    "publishedAt": "2026-09-25T08:00:00Z",
+    "transcript": "This hook earned more saves than the creator's usual posts. The proof is the captured performance data from the same creator baseline. Review the evidence before reusing the pattern.",
+    "metrics": {
+      "views": 15400,
+      "likes": 1040,
+      "comments": 83,
+      "shares": 144,
+      "saves": 305,
+      "followers": 7200
+    },
+    "tags": ["creative", "performance"]
+  }
+]
