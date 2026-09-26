@@ -66,3 +66,34 @@ Generated directions must use original wording. A deterministic originality guar
 Content Intelligence cannot establish product facts. Factual product statements require separately verified product evidence.
 
 Observed performance relationships remain descriptive and do not establish causality.
+
+## Phase 13B.1 — SQLite persistence
+
+Content Intelligence now has local Product Intelligence persistence.
+
+The store uses the same SQLite database file as Product Intelligence and follows the same separate-store pattern used by marketplace evidence.
+
+Persisted data includes:
+
+- analysis runs;
+- captured content and transcripts;
+- metrics and tags;
+- deterministic classifications;
+- performance analysis;
+- pattern summaries;
+- customer intelligence signals;
+- activation briefs.
+
+Runs are bound to an existing Product Intelligence product through a foreign key.
+
+Re-persisting the same run replaces its child snapshot transactionally, preventing stale pattern, signal, item or activation rows.
+
+Activation persistence remains fail-closed:
+
+- draft only;
+- external writes disabled;
+- live publishing disabled;
+- source content remains messaging evidence;
+- product claims still require separately verified product evidence.
+
+SQLite remains the local authoritative persistence layer.
