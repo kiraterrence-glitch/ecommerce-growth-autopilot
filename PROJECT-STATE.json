@@ -3,11 +3,11 @@
     "project":  "Ecom Growth Autopilot",
     "version":  "0.9.3",
     "baseOfRecord":  "v0.9.3",
-    "currentPhase":  "GitHub source repository published. Phase 12A-1 marketplace source safety and deterministic provenance foundation implemented.",
+    "currentPhase":  "GitHub source repository published. Phase 12A-2 strict marketplace evidence import, conflict detection and automated claim safety implemented.",
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
-                         "deterministicTestCount":  194,
+                         "deterministicTestCount":  218,
                          "verifiedOn":  "2026-09-23",
                          "windowsLiveLastPassedVersion":  "0.8.0",
                          "windowsLiveModel":  "qwen3-vl:4b",
@@ -100,7 +100,11 @@
                       "offline Supabase security and adapter test matrix",
                       "opt-in live Supabase smoke test",
                       "marketplace source-policy registry",
-                      "user-provided marketplace provenance capture"
+                      "user-provided marketplace provenance capture",
+                      "strict marketplace CSV evidence import",
+                      "marketplace evidence duplicate protection",
+                      "cross-source evidence conflict detection",
+                      "automated marketplace claim safety"
                   ],
     "invariants":  [
                        "Business logic stays in testable TypeScript; n8n orchestrates only.",
