@@ -259,3 +259,9 @@ export type {
 export type {
   ProductIntelligenceRepository,
 } from "./product-intelligence/repository.js";
+
+export type {
+  ProductIntelligenceRemoteResult,
+  ProductIntelligenceRemoteStore,
+  ProductIntelligenceSyncEnvelope,
+} from "./product-intelligence/cloud-sync.js";
