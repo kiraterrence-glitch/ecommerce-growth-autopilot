@@ -3,11 +3,11 @@
     "project":  "Ecom Growth Autopilot",
     "version":  "0.9.3",
     "baseOfRecord":  "v0.9.3",
-    "currentPhase":  "GitHub source repository published. Phase 12A-2 strict marketplace evidence import, conflict detection and automated claim safety implemented.",
+    "currentPhase":  "GitHub source repository published. Phase 12A-3A marketplace evidence persistence and Product Library view-model integration implemented.",
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
-                         "deterministicTestCount":  218,
+                         "deterministicTestCount":  235,
                          "verifiedOn":  "2026-09-23",
                          "windowsLiveLastPassedVersion":  "0.8.0",
                          "windowsLiveModel":  "qwen3-vl:4b",
@@ -104,7 +104,10 @@
                       "strict marketplace CSV evidence import",
                       "marketplace evidence duplicate protection",
                       "cross-source evidence conflict detection",
-                      "automated marketplace claim safety"
+                      "automated marketplace claim safety",
+                      "marketplace evidence SQLite persistence",
+                      "transactional marketplace evidence import",
+                      "marketplace Product Library view-model"
                   ],
     "invariants":  [
                        "Business logic stays in testable TypeScript; n8n orchestrates only.",
