@@ -3,7 +3,7 @@
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 134 tests, 6 n8n exports.
+- Deterministic verification target: 147 tests, 6 n8n exports.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -77,3 +77,20 @@ Phase 8 adds encoding regression protection, accessibility structure checks, sec
 Deterministic test count: 122.
 
 Next gate: Phase 9 Product Intelligence Database.
+
+
+## Phase 10 Product Library
+
+SQLite Product Intelligence is now connected to a local library/API.
+
+Run:
+
+`node scripts/product-library-server.mjs`
+
+Open:
+
+`http://127.0.0.1:3002/products`
+
+Deterministic verification target: 147 tests, 6 n8n exports.
+
+Next gate: optional cloud database research and Supabase/PostgreSQL adapter planning.

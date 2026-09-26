@@ -396,3 +396,20 @@ The product-page workflow now includes encoding regression checks, static access
 Current deterministic suite: 134 tests.
 
 The next architecture phase introduces the local-first Product Intelligence Database.
+
+
+### SQLite-backed Product Library
+
+Persistent Product Intelligence records can now be inspected through a local Product Library.
+
+Start it with:
+
+`node scripts/product-library-server.mjs`
+
+Then open:
+
+`http://127.0.0.1:3002/products`
+
+The library exposes product sources, evidence, revision history, competitors, comparison history, visual assets, page drafts, QA results and approval state.
+
+Current deterministic suite: 147 tests.
