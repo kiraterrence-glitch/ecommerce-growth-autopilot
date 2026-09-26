@@ -3,7 +3,7 @@
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 257 tests, 6 n8n exports.
+- Deterministic verification target: 267 tests, 6 n8n exports.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -91,7 +91,7 @@ Open:
 
 `http://127.0.0.1:3002/products`
 
-Deterministic verification target: 257 tests, 6 n8n exports.
+Deterministic verification target: 267 tests, 6 n8n exports.
 
 Next gate: optional cloud database research and Supabase/PostgreSQL adapter planning.
 

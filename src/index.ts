@@ -289,3 +289,20 @@ export type {
   ContentIntelligenceRecord,
   ContentIntelligenceStructure,
 } from "./content-intelligence/index.js";
+
+export {
+  analyzeContentIntelligence,
+  analyzeContentPerformance,
+  summarizeContentPatterns,
+  summarizeCustomerIntelligence,
+} from "./content-intelligence/index.js";
+
+export type {
+  ContentCustomerIntelligence,
+  ContentIntelligenceAnalysisReport,
+  ContentIntelligenceMethodology,
+  ContentPatternDimension,
+  ContentPatternSummary,
+  ContentPerformanceAnalysis,
+  ContentSignalSummary,
+} from "./content-intelligence/index.js";

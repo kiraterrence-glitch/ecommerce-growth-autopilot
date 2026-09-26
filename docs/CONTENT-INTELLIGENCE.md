@@ -17,3 +17,36 @@ The deterministic classifier is intentionally transparent and does not emit an o
 Observed content patterns are evidence about the source content only. They are not proof that a marketing tactic caused performance and they are not product claims.
 
 Later phases may add performance analysis, AI/Ollama classification, Product Brain context, persistence, API routes, dashboards and activation briefs.
+
+## Phase 13A.2 — Performance and pattern intelligence
+
+Performance analysis remains descriptive and observable.
+
+The system calculates:
+
+- engagement count;
+- engagement rate by views;
+- views per follower;
+- creator median views;
+- creator median engagement rate;
+- creator-relative ratios;
+- hook pattern medians;
+- structure pattern medians;
+- topic pattern medians;
+- creative-format pattern medians;
+- CTA-presence pattern medians;
+- grounded audience signals;
+- grounded pain points;
+- grounded benefits;
+- grounded objections;
+- grounded buying triggers.
+
+Zero denominators return `null` rather than infinity or an invented fallback.
+
+Creator-relative metrics use the median of the captured records for that creator in the current dataset.
+
+Pattern relationships are observational. They do not prove that a hook, structure, CTA, format, topic or other characteristic caused performance.
+
+Competitor and creator content signals remain messaging evidence only. They must never be promoted into product facts without separate product evidence.
+
+No viral score, winner score or opaque opportunity score is generated.

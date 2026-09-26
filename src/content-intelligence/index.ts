@@ -30,3 +30,20 @@ export {
   checkContentIntelligenceGrounding,
   ContentIntelligenceGroundingError,
 } from "./quality.js";
+
+export {
+  analyzeContentIntelligence,
+  analyzeContentPerformance,
+  summarizeContentPatterns,
+  summarizeCustomerIntelligence,
+} from "./analysis.js";
+
+export type {
+  ContentCustomerIntelligence,
+  ContentIntelligenceAnalysisReport,
+  ContentIntelligenceMethodology,
+  ContentPatternDimension,
+  ContentPatternSummary,
+  ContentPerformanceAnalysis,
+  ContentSignalSummary,
+} from "./analysis.js";
