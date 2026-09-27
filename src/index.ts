@@ -324,3 +324,11 @@ export type {
   ContentActivationSafety,
   ContentActivationSignalCounts,
 } from "./content-intelligence/index.js";
+
+export {
+  createContentIntelligenceProductBrainContext,
+} from "./content-intelligence/index.js";
+
+export type {
+  ContentIntelligenceProductBrainContext,
+} from "./content-intelligence/index.js";

@@ -65,3 +65,11 @@ export type {
   ContentActivationSafety,
   ContentActivationSignalCounts,
 } from "./activation.js";
+
+export {
+  createContentIntelligenceProductBrainContext,
+} from "./product-brain-context.js";
+
+export type {
+  ContentIntelligenceProductBrainContext,
+} from "./product-brain-context.js";

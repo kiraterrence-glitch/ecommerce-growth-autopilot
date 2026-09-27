@@ -2,6 +2,7 @@ export type AiGenerateRequest = Readonly<{
   system: string;
   prompt: string;
   temperature?: number;
+  schema?: Readonly<Record<string, unknown>>;
 }>;
 
 export interface AiProvider {

@@ -122,3 +122,18 @@ The service remains fail-closed:
 - product facts require separately verified product evidence.
 
 Snapshot child-row deletion uses parameterized prepared statements.
+
+## Phase 13C — Product Brain integration
+
+Content Intelligence now feeds the existing Product Brain as messaging-only context.
+
+Boundaries:
+
+- Product JSON remains the source of factual product claims.
+- Content Intelligence may guide audience language, pain framing, objections, buying triggers, hooks, structures, topics, creative formats and CTA direction.
+- Content-derived benefit signals are not passed into Product Brain as product facts.
+- Research and Content Intelligence can be used together.
+- Existing research-only Product Brain calls remain backward compatible.
+- Product Brain sends a strict JSON Schema to compatible AI providers.
+- Ollama receives that schema through its structured-output format field.
+- External writes and live publishing remain disabled.
