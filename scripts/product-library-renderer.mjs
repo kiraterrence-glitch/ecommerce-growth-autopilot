@@ -265,20 +265,332 @@ function countSnapshot(snapshot) {
   };
 }
 
-export function renderProductLibrary(repository, marketplaceApi = null) {
-  const products = repository.listProducts();
+function contentList(value) {
+  return Array.isArray(value)
+    ? value
+    : [];
+}
 
-  const cards = products
-    .map((product) => {
-      const snapshot = repository.getSnapshot(product.id);
-      const counts = countSnapshot(snapshot);
+function contentField(
+  item,
+  keys,
+  fallback = "",
+) {
+  if (
+    typeof item !== "object" ||
+    item === null
+  ) {
+    return fallback;
+  }
 
-      const marketplace =
-        marketplaceApi
-          ? marketplaceApi.panel(product.id)
-          : null;
+  for (const key of keys) {
+    const value =
+      item[key];
 
-      return `
+    if (
+      value !== undefined &&
+      value !== null &&
+      String(value).trim()
+    ) {
+      return String(value);
+    }
+  }
+
+  return fallback;
+}
+
+function renderContentIntelligencePanel(run) {
+  if (!run) {
+    return `
+<section class="section">
+  <div class="badge-row">
+    <span class="badge badge-neutral">NO CONTENT INTELLIGENCE</span>
+    <span class="badge badge-neutral">MESSAGING SIGNALS ONLY</span>
+  </div>
+
+  <h2>Content Intelligence</h2>
+
+  <p class="empty">
+    No Content Intelligence analysis has been stored for this product yet.
+  </p>
+</section>`;
+  }
+
+  const items =
+    contentList(
+      run.items,
+    );
+
+  const patterns =
+    contentList(
+      run.patterns,
+    );
+
+  const signals =
+    contentList(
+      run.customerSignals,
+    );
+
+  const briefs =
+    contentList(
+      run.activationBriefs,
+    );
+
+  const patternRows =
+    patterns
+      .slice(0, 12)
+      .map(
+        (item) => `
+<tr>
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "dimension",
+        "type",
+        "category",
+      ],
+      "Pattern",
+    ),
+  )}</td>
+
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "value",
+        "pattern",
+        "label",
+      ],
+      "",
+    ),
+  )}</td>
+
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "count",
+        "observations",
+        "sampleSize",
+      ],
+      "",
+    ),
+  )}</td>
+</tr>`,
+      );
+
+  const signalRows =
+    signals
+      .slice(0, 16)
+      .map(
+        (item) => `
+<tr>
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "signalType",
+        "type",
+        "category",
+        "kind",
+      ],
+      "Signal",
+    ),
+  )}</td>
+
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "phrase",
+        "value",
+        "label",
+        "text",
+      ],
+      "",
+    ),
+  )}</td>
+
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "count",
+        "observations",
+      ],
+      "",
+    ),
+  )}</td>
+</tr>`,
+      );
+
+  const briefRows =
+    briefs.map(
+      (item) => `
+<tr>
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "channel",
+        "briefType",
+        "type",
+        "kind",
+      ],
+      "Draft",
+    ),
+  )}</td>
+
+  <td>${escapeHtml(
+    contentField(
+      item,
+      [
+        "title",
+        "name",
+        "subject",
+        "headline",
+      ],
+      "Activation brief",
+    ),
+  )}</td>
+
+  <td>DRAFT ONLY</td>
+</tr>`,
+    );
+
+  return `
+<section class="section">
+  <div class="badge-row">
+    <span class="badge badge-ok">CONTENT INTELLIGENCE READY</span>
+    <span class="badge badge-neutral">MESSAGING SIGNALS ONLY</span>
+    <span class="badge badge-neutral">VERIFIED PRODUCT EVIDENCE ONLY</span>
+    <span class="badge badge-neutral">DRAFT ONLY</span>
+  </div>
+
+  <h2>Content Intelligence</h2>
+
+  <p class="muted">
+    Latest run:
+    <span class="code">${escapeHtml(
+      contentField(
+        run,
+        ["runId"],
+        "unknown",
+      ),
+    )}</span>
+
+    ${
+      contentField(
+        run,
+        ["createdAt"],
+        "",
+      )
+        ? ` · ${escapeHtml(
+            contentField(
+              run,
+              ["createdAt"],
+            ),
+          )}`
+        : ""
+    }
+  </p>
+
+  <div class="stats">
+    <div class="stat">
+      <strong>${items.length}</strong>
+      <span>Content items</span>
+    </div>
+
+    <div class="stat">
+      <strong>${patterns.length}</strong>
+      <span>Patterns</span>
+    </div>
+
+    <div class="stat">
+      <strong>${signals.length}</strong>
+      <span>Customer signals</span>
+    </div>
+
+    <div class="stat">
+      <strong>${briefs.length}</strong>
+      <span>Draft briefs</span>
+    </div>
+  </div>
+
+  <h3>Observed patterns</h3>
+  ${table(
+    [
+      "Dimension",
+      "Pattern",
+      "Observations",
+    ],
+    patternRows,
+  )}
+
+  <h3>Customer signals</h3>
+  ${table(
+    [
+      "Type",
+      "Signal",
+      "Observations",
+    ],
+    signalRows,
+  )}
+
+  <h3>Activation briefs</h3>
+  ${table(
+    [
+      "Channel",
+      "Brief",
+      "Safety",
+    ],
+    briefRows,
+  )}
+
+  <p class="muted">
+    Content performance is descriptive, not causal.
+    Content Intelligence cannot establish product specifications,
+    guarantees, certifications, prices, discounts or performance claims.
+  </p>
+</section>`;
+}
+export function renderProductLibrary(
+  repository,
+  marketplaceApi = null,
+  contentIntelligenceApi = null,
+) {
+  const products =
+    repository.listProducts();
+
+  const cards =
+    products
+      .map((product) => {
+        const snapshot =
+          repository.getSnapshot(
+            product.id,
+          );
+
+        const counts =
+          countSnapshot(
+            snapshot,
+          );
+
+        const marketplace =
+          marketplaceApi
+            ? marketplaceApi.panel(
+                product.id,
+              )
+            : null;
+
+        const contentIntelligence =
+          contentIntelligenceApi
+            ? contentIntelligenceApi.latest(
+                product.id,
+              )
+            : null;
+
+        return `
 <a class="card" href="/products/${encodeURIComponent(product.id)}">
   <div class="badge-row">
     <span class="badge">${escapeHtml(product.status)}</span>
@@ -294,16 +606,40 @@ export function renderProductLibrary(repository, marketplaceApi = null) {
           }">${escapeHtml(marketplace.status)}</span>`
         : ""
     }
+
+    ${
+      contentIntelligence
+        ? `<span class="badge badge-ok">CONTENT INTELLIGENCE READY</span>`
+        : `<span class="badge badge-neutral">NO CONTENT INTELLIGENCE</span>`
+    }
   </div>
 
   <h2>${escapeHtml(product.title)}</h2>
-  <div class="muted">SKU: ${escapeHtml(product.sku)}</div>
+
+  <div class="muted">
+    SKU: ${escapeHtml(product.sku)}
+  </div>
 
   <div class="stats">
-    <div class="stat"><strong>${counts.evidence}</strong><span>Evidence</span></div>
-    <div class="stat"><strong>${counts.revisions}</strong><span>Revisions</span></div>
-    <div class="stat"><strong>${counts.competitors}</strong><span>Competitors</span></div>
-    <div class="stat"><strong>${counts.qa}</strong><span>QA runs</span></div>
+    <div class="stat">
+      <strong>${counts.evidence}</strong>
+      <span>Evidence</span>
+    </div>
+
+    <div class="stat">
+      <strong>${counts.revisions}</strong>
+      <span>Revisions</span>
+    </div>
+
+    <div class="stat">
+      <strong>${counts.competitors}</strong>
+      <span>Competitors</span>
+    </div>
+
+    <div class="stat">
+      <strong>${counts.qa}</strong>
+      <span>QA runs</span>
+    </div>
   </div>
 
   ${
@@ -311,28 +647,47 @@ export function renderProductLibrary(repository, marketplaceApi = null) {
       ? `
   <div class="market-summary">
     <strong>Marketplace intelligence</strong>
+
     <span>
-      ${marketplace.summary.sourceCount} sources ·
-      ${marketplace.summary.evidenceCount} evidence ·
-      ${marketplace.summary.conflictCount} conflicts ·
+      ${marketplace.summary.sourceCount} sources &middot;
+      ${marketplace.summary.evidenceCount} evidence &middot;
+      ${marketplace.summary.conflictCount} conflicts &middot;
       ${marketplace.summary.unknownRightsCount} unknown-rights
     </span>
   </div>`
       : ""
   }
+
+  ${
+    contentIntelligence
+      ? `
+  <div class="market-summary">
+    <strong>Content Intelligence</strong>
+
+    <span>
+      ${contentList(contentIntelligence.items).length} items &middot;
+      ${contentList(contentIntelligence.patterns).length} patterns &middot;
+      ${contentList(contentIntelligence.customerSignals).length} signals &middot;
+      ${contentList(contentIntelligence.activationBriefs).length} draft briefs
+    </span>
+  </div>`
+      : ""
+  }
 </a>`;
-    })
-    .join("");
+      })
+      .join("");
 
   return layout(
     "Product Library",
     `
 <section class="hero">
   <span class="badge">LOCAL DATABASE</span>
+
   <h1>Product Intelligence Library</h1>
+
   <p>
     Persistent products, research evidence, revisions, competitors,
-    generated assets, QA history and approvals.
+    generated assets, QA history, approvals and Content Intelligence.
   </p>
 </section>
 
@@ -342,7 +697,6 @@ export function renderProductLibrary(repository, marketplaceApi = null) {
 `,
   );
 }
-
 function table(headings, rows) {
   if (rows.length === 0) {
     return '<p class="empty">No records.</p>';
@@ -475,7 +829,7 @@ function renderMarketplacePanel(panel) {
   )}
 </section>`;
 }
-export function renderProductDetail(snapshot, marketplacePanel = null) {
+export function renderProductDetail(snapshot, marketplacePanel = null, contentIntelligenceRun = null) {
   if (!snapshot) {
     return null;
   }
@@ -586,6 +940,8 @@ export function renderProductDetail(snapshot, marketplacePanel = null) {
 </section>
 
 ${renderMarketplacePanel(marketplacePanel)}
+
+${renderContentIntelligencePanel(contentIntelligenceRun)}
 
 <section class="section">
   <h2>Sources</h2>

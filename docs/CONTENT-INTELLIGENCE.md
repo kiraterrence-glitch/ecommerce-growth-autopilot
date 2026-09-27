@@ -161,3 +161,28 @@ The API:
 - preserves messaging-signals-only and verified-product-evidence-only boundaries.
 
 The Product Library server closes the Content Intelligence SQLite connection with its normal server shutdown lifecycle.
+## Phase 13D.2 — Product Library UI
+
+Content Intelligence is now visible in the local Product Library.
+
+The product list shows:
+
+- Content Intelligence readiness;
+- captured content-item count;
+- observed pattern count;
+- customer-signal count;
+- draft activation-brief count.
+
+Product detail pages show:
+
+- latest Content Intelligence run;
+- observed patterns;
+- customer signals;
+- draft activation briefs;
+- messaging-signals-only safety status;
+- verified-product-evidence-only product-fact policy;
+- descriptive-not-causal performance guidance.
+
+All stored Content Intelligence values are HTML-escaped before rendering.
+No client-side JavaScript is introduced.
+External writes and live publishing remain disabled.

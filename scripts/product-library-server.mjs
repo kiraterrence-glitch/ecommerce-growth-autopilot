@@ -143,7 +143,7 @@ export function createProductLibraryServer({
       html(
         response,
         200,
-        renderProductLibrary(repository, marketplaceApi),
+        renderProductLibrary(repository, marketplaceApi, contentIntelligenceApi),
       );
 
       return;
@@ -172,6 +172,7 @@ export function createProductLibraryServer({
         renderProductDetail(
           snapshot,
           marketplaceApi.panel(productId),
+          contentIntelligenceApi.latest(productId),
         ),
       );
 
