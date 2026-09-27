@@ -446,6 +446,199 @@
           }
         }
       ]
+    },
+    {
+      "name": "Product Library - Content Intelligence",
+      "description": "Local-only Content Intelligence regression requests. External writes and live publishing remain disabled.",
+      "item": [
+        {
+          "name": "Content Intelligence Latest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "pm.test('Content Intelligence state is safe', () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(['NO_CONTENT_INTELLIGENCE', 'READY']).to.include(j.status);",
+                  "  pm.expect(j.safety.externalWrites).to.eql(false);",
+                  "  pm.expect(j.safety.livePublishing).to.eql(false);",
+                  "  pm.expect(j.safety.sourceContentPolicy).to.eql('messaging_signals_only');",
+                  "  pm.expect(j.safety.productFactPolicy).to.eql('verified_product_evidence_only');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence"
+          },
+          "response": []
+        },
+        {
+          "name": "Analyze Content Intelligence",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201 Created', () => pm.response.to.have.status(201));",
+                  "pm.test('analysis remains local-only', () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j.status).to.eql('CREATED');",
+                  "  pm.expect(j.productId).to.eql(pm.environment.get('productId'));",
+                  "  pm.expect(j.externalWrites).to.eql(false);",
+                  "  pm.expect(j.livePublishing).to.eql(false);",
+                  "  pm.expect(j.result.runId).to.eql(pm.environment.get('contentRunId'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": [\n    {\n      \"id\": \"content-001\",\n      \"platform\": \"tiktok\",\n      \"sourceUrl\": \"https://example.com/content/001\",\n      \"creator\": \"demo-travel\",\n      \"publishedAt\": \"2026-09-20T08:00:00Z\",\n      \"transcript\": \"Tired of bulky coffee gear when you travel? A compact manual setup can keep the routine simple without electricity. Try a smaller travel kit before your next trip.\",\n      \"metrics\": {\n        \"views\": 12000,\n        \"likes\": 960,\n        \"comments\": 75,\n        \"shares\": 110,\n        \"saves\": 140,\n        \"followers\": 6000\n      },\n      \"tags\": [\n        \"travel\",\n        \"coffee\"\n      ]\n    },\n    {\n      \"id\": \"content-002\",\n      \"platform\": \"instagram\",\n      \"sourceUrl\": \"https://example.com/content/002\",\n      \"creator\": \"demo-commerce\",\n      \"publishedAt\": \"2026-09-21T08:00:00Z\",\n      \"transcript\": \"Want three ways to make a product page easier to scan? 1. Lead with the main benefit. 2. Show verified specifications. 3. Put the customer objection near the CTA.\",\n      \"metrics\": {\n        \"views\": 8600,\n        \"likes\": 540,\n        \"comments\": 61,\n        \"shares\": 92,\n        \"saves\": 181,\n        \"followers\": 5100\n      },\n      \"tags\": [\n        \"product-page\",\n        \"ecommerce\"\n      ]\n    },\n    {\n      \"id\": \"content-003\",\n      \"platform\": \"youtube\",\n      \"sourceUrl\": \"https://example.com/content/003\",\n      \"creator\": \"demo-research\",\n      \"publishedAt\": \"2026-09-22T08:00:00Z\",\n      \"transcript\": \"Stop copying competitor claims. The mistake is treating their listing as your product evidence. Fix it by verifying each fact against your own supplier source record.\",\n      \"metrics\": {\n        \"views\": 6200,\n        \"likes\": 455,\n        \"comments\": 44,\n        \"shares\": 76,\n        \"saves\": 95,\n        \"followers\": 4800\n      },\n      \"tags\": [\n        \"research\",\n        \"evidence\"\n      ]\n    },\n    {\n      \"id\": \"content-004\",\n      \"platform\": \"facebook\",\n      \"sourceUrl\": \"https://example.com/content/004\",\n      \"creator\": \"demo-ops\",\n      \"publishedAt\": \"2026-09-23T08:00:00Z\",\n      \"transcript\": \"Watch how I compare two supplier sheets side by side. I check capacity, weight, and variant names before writing any claim. Start with the source record.\",\n      \"metrics\": {\n        \"views\": 4100,\n        \"likes\": 280,\n        \"comments\": 31,\n        \"shares\": 47,\n        \"saves\": 64,\n        \"followers\": 3200\n      },\n      \"tags\": [\n        \"supplier\",\n        \"verification\"\n      ]\n    },\n    {\n      \"id\": \"content-005\",\n      \"platform\": \"other\",\n      \"sourceUrl\": \"https://example.com/content/005\",\n      \"creator\": \"demo-cro\",\n      \"publishedAt\": \"2026-09-24T08:00:00Z\",\n      \"transcript\": \"When I reviewed this campaign, the first product page draft buried the customer objection. The lesson was to surface the concern before the offer and answer it with verified evidence.\",\n      \"metrics\": {\n        \"views\": 7300,\n        \"likes\": 501,\n        \"comments\": 58,\n        \"shares\": 66,\n        \"saves\": 119,\n        \"followers\": 4500\n      },\n      \"tags\": [\n        \"cro\",\n        \"objections\"\n      ]\n    },\n    {\n      \"id\": \"content-006\",\n      \"platform\": \"instagram\",\n      \"sourceUrl\": \"https://example.com/content/006\",\n      \"creator\": \"demo-creative\",\n      \"publishedAt\": \"2026-09-25T08:00:00Z\",\n      \"transcript\": \"This hook earned more saves than the creator's usual posts. The proof is the captured performance data from the same creator baseline. Review the evidence before reusing the pattern.\",\n      \"metrics\": {\n        \"views\": 15400,\n        \"likes\": 1040,\n        \"comments\": 83,\n        \"shares\": 144,\n        \"saves\": 305,\n        \"followers\": 7200\n      },\n      \"tags\": [\n        \"creative\",\n        \"performance\"\n      ]\n    }\n  ],\n  \"runId\": \"{{contentRunId}}\",\n  \"createdAt\": \"2026-09-27T00:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence"
+          },
+          "response": []
+        },
+        {
+          "name": "Content Intelligence Run",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "pm.test('specific run is product-bound', () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j.run.runId).to.eql(pm.environment.get('contentRunId'));",
+                  "  pm.expect(j.run.productId).to.eql(pm.environment.get('productId'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence/runs/{{contentRunId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Content Intelligence Missing Run",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404 missing run', () => pm.response.to.have.status(404));",
+                  "pm.test('fails closed', () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('CONTENT_INTELLIGENCE_RUN_NOT_FOUND');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence/runs/missing-run"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Content Intelligence Malformed JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 malformed JSON', () => pm.response.to.have.status(400));",
+                  "pm.test('request fails closed', () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('CONTENT_INTELLIGENCE_REQUEST_FAILED');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{bad json",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Content Intelligence Wrong Content Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('415 wrong content type', () => pm.response.to.have.status(415));",
+                  "pm.test('request fails closed', () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('CONTENT_INTELLIGENCE_REQUEST_FAILED');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "not-json"
+            },
+            "url": "{{productLibraryBaseUrl}}/api/products/{{productId}}/content-intelligence"
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

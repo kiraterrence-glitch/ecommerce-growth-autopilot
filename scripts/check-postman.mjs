@@ -24,7 +24,15 @@ for (const file of [...collections, ...environments]) {
 }
 
 const collection = JSON.parse(await readFile(join(directory, collections[0]), "utf8"));
-const names = (collection.item || []).map((item) => item.name);
+const names = (
+  function flattenNames(items) {
+    return (items || []).flatMap((item) =>
+      item.item
+        ? flattenNames(item.item)
+        : [item.name],
+    );
+  }
+)(collection.item);
 for (const expected of [
   "Ollama Models",
   "Ollama JSON Smoke",
@@ -40,6 +48,12 @@ for (const expected of [
   "Live Delivery Mode Is Blocked",
   "Latest Local n8n Engine Proof",
   "Reject Invalid Product",
+  "Content Intelligence Latest",
+  "Analyze Content Intelligence",
+  "Content Intelligence Run",
+  "Content Intelligence Missing Run",
+  "Reject Content Intelligence Malformed JSON",
+  "Reject Content Intelligence Wrong Content Type",
 ]) {
   if (!names.includes(expected)) throw new Error(`postman collection missing request: ${expected}`);
 }
@@ -51,8 +65,8 @@ function flattenItems(items) {
 for (const item of flattenItems(collection.item)) {
   const rawUrl = typeof item.request?.url === "string" ? item.request.url : item.request?.url?.raw;
   if (!rawUrl) continue;
-  if (!rawUrl.startsWith("{{baseUrl}}/") && !rawUrl.startsWith("{{ollamaUrl}}/")) {
-    throw new Error(`postman request ${item.name}: URL must use local baseUrl/ollamaUrl variables; got ${rawUrl}`);
+  if (!rawUrl.startsWith("{{baseUrl}}/") && !rawUrl.startsWith("{{ollamaUrl}}/") && !rawUrl.startsWith("{{productLibraryBaseUrl}}/")) {
+    throw new Error(`postman request ${item.name}: URL must use local baseUrl/ollamaUrl/productLibraryBaseUrl variables; got ${rawUrl}`);
   }
 }
 
@@ -61,6 +75,13 @@ const values = Object.fromEntries((environment.values || []).map((entry) => [ent
 if (values.baseUrl !== "http://127.0.0.1:3001") {
   throw new Error(`postman local environment must default baseUrl to http://127.0.0.1:3001; got ${values.baseUrl}`);
 }
+
+if (values.productLibraryBaseUrl !== "http://127.0.0.1:3002") {
+  throw new Error(
+    `postman local environment must default productLibraryBaseUrl to http://127.0.0.1:3002; got ${values.productLibraryBaseUrl}`,
+  );
+}
+
 if (values.ollamaUrl !== "http://127.0.0.1:11434") {
   throw new Error(`postman local environment must default ollamaUrl to http://127.0.0.1:11434; got ${values.ollamaUrl}`);
 }

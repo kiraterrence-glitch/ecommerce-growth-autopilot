@@ -1,0 +1,75 @@
+export {
+  CONTENT_INTELLIGENCE_CREATIVE_FORMATS,
+  CONTENT_INTELLIGENCE_HOOK_TYPES,
+  CONTENT_INTELLIGENCE_PLATFORMS,
+  CONTENT_INTELLIGENCE_STRUCTURES,
+} from "./types.js";
+
+export type {
+  ContentIntelligenceClassification,
+  ContentIntelligenceCreativeFormat,
+  ContentIntelligenceHookType,
+  ContentIntelligenceMetrics,
+  ContentIntelligencePlatform,
+  ContentIntelligenceRecord,
+  ContentIntelligenceStructure,
+} from "./types.js";
+
+export {
+  validateContentIntelligenceDataset,
+  validateContentIntelligenceRecord,
+} from "./validation.js";
+
+export {
+  classifyContentIntelligenceBatchDeterministically,
+  classifyContentIntelligenceDeterministically,
+} from "./classifier.js";
+
+export {
+  assertContentIntelligenceGrounding,
+  checkContentIntelligenceGrounding,
+  ContentIntelligenceGroundingError,
+} from "./quality.js";
+
+export {
+  analyzeContentIntelligence,
+  analyzeContentPerformance,
+  summarizeContentPatterns,
+  summarizeCustomerIntelligence,
+} from "./analysis.js";
+
+export type {
+  ContentCustomerIntelligence,
+  ContentIntelligenceAnalysisReport,
+  ContentIntelligenceMethodology,
+  ContentPatternDimension,
+  ContentPatternSummary,
+  ContentPerformanceAnalysis,
+  ContentSignalSummary,
+} from "./analysis.js";
+
+export {
+  assertContentActivationOriginality,
+  assertContentActivationSafety,
+  checkContentActivationOriginality,
+  checkContentActivationSafety,
+  ContentActivationOriginalityError,
+  ContentActivationSafetyError,
+  generateContentActivationBriefs,
+} from "./activation.js";
+
+export type {
+  ContentActivationBrief,
+  ContentActivationChannel,
+  ContentActivationPatternBasis,
+  ContentActivationSafety,
+  ContentActivationSignalCounts,
+} from "./activation.js";
+
+export {
+  createContentIntelligenceProductBrainContext,
+} from "./product-brain-context.js";
+
+export type {
+  ContentIntelligenceProductBrainContext,
+} from "./product-brain-context.js";

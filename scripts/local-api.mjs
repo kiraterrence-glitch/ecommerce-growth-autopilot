@@ -34,6 +34,7 @@ import {
 import { loadLocalEnv } from "./env.mjs";
 import { JsonlAuditStore } from "./jsonl-audit-store.mjs";
 import { JsonlProjectHistoryStore } from "./project-history-store.mjs";
+import { handleProductPageRoute } from "./product-page-routes.mjs";
 
 await loadLocalEnv();
 
@@ -201,6 +202,16 @@ export function startServer() {
 
     try {
       const url = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
+      if (
+        await handleProductPageRoute({
+          request,
+          response,
+          url,
+          requestId,
+        })
+      ) {
+        return;
+      }
 
       if (request.method === "GET" && (url.pathname === "/" || url.pathname === "/dashboard")) {
         sendHtml(response, 200, renderDashboardHtml(), requestId);

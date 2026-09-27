@@ -106,7 +106,7 @@ export class OllamaProvider implements AiProvider {
               { role: "system", content: request.system },
               { role: "user", content: request.prompt },
             ],
-            format: "json",
+            format: request.schema ?? "json",
             stream: false,
             think: this.#think,
             options: { temperature: request.temperature ?? 0.2 },

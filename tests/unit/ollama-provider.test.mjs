@@ -102,3 +102,56 @@ test("Ollama provider reports all checked response fields when nothing usable is
     /message\.content, response, message\.thinking, or thinking/,
   );
 });
+
+test("Ollama provider passes supplied JSON Schema through format", async () => {
+  let captured;
+
+  globalThis.fetch = async (_url, options) => {
+    captured = JSON.parse(options.body);
+
+    return new Response(
+      JSON.stringify({
+        message: {
+          role: "assistant",
+          content: '{"ok":true}',
+        },
+      }),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+        },
+      },
+    );
+  };
+
+  const schema = {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      ok: {
+        type: "boolean",
+      },
+    },
+    required: ["ok"],
+  };
+
+  const provider = new OllamaProvider({
+    model: "local-test-model",
+  });
+
+  const result = await provider.generateJson({
+    system: "system",
+    prompt: "prompt",
+    schema,
+  });
+
+  assert.deepEqual(result, {
+    ok: true,
+  });
+
+  assert.deepEqual(
+    captured.format,
+    schema,
+  );
+});
