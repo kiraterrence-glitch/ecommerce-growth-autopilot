@@ -1,4 +1,7 @@
 import {
+  createContentIntelligenceProductLibraryApi,
+} from "./product-library-content-intelligence-api.mjs";
+import {
   createServer,
 } from "node:http";
 
@@ -63,6 +66,12 @@ export function createProductLibraryServer({
       databasePath,
     });
 
+  const contentIntelligenceApi =
+    createContentIntelligenceProductLibraryApi({
+      repository,
+      databasePath,
+    });
+
   const server = createServer(async (request, response) => {
     const url = new URL(
       request.url ?? "/",
@@ -71,6 +80,16 @@ export function createProductLibraryServer({
 
     if (
       await marketplaceApi.handle(
+        request,
+        response,
+        url,
+      )
+    ) {
+      return;
+    }
+
+    if (
+      await contentIntelligenceApi.handle(
         request,
         response,
         url,
@@ -179,10 +198,15 @@ export function createProductLibraryServer({
     }
   });
 
+  server.once("close", () => {
+    contentIntelligenceApi.close();
+  });
+
   return {
     server,
     repository,
     marketplaceApi,
+    contentIntelligenceApi,
     demoProductId: DEMO_PRODUCT_ID,
   };
 }

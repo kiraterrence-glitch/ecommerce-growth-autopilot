@@ -137,3 +137,27 @@ Boundaries:
 - Product Brain sends a strict JSON Schema to compatible AI providers.
 - Ollama receives that schema through its structured-output format field.
 - External writes and live publishing remain disabled.
+## Phase 13D.1 — Product Library local API
+
+Content Intelligence is now exposed through the existing local Product Library server.
+
+Routes:
+
+- `GET /api/products/:id/content-intelligence`
+- `POST /api/products/:id/content-intelligence`
+- `GET /api/products/:id/content-intelligence/runs/:runId`
+
+The API:
+
+- operates on the same local Product Intelligence SQLite database;
+- requires an existing product;
+- persists product-bound Content Intelligence runs;
+- exposes latest and specific runs;
+- rejects malformed JSON;
+- rejects unsupported content types;
+- fails closed for unknown products and missing runs;
+- keeps external writes disabled;
+- keeps live publishing disabled;
+- preserves messaging-signals-only and verified-product-evidence-only boundaries.
+
+The Product Library server closes the Content Intelligence SQLite connection with its normal server shutdown lifecycle.
