@@ -334,12 +334,19 @@ export type {
 } from "./content-intelligence/index.js";
 
 export {
+  buildCompetitionProfile,
   buildProductOpportunityInput,
   buildProductOpportunityReport,
   evaluateProductOpportunity,
+  interpretCompetitionProfile,
 } from "./product-opportunity/index.js";
 
 export type {
+  CompetitionInterpretation,
+  CompetitionMarketSnapshot,
+  CompetitionProfile,
+  CompetitionSourceDisagreement,
+  CompetitionSufficiency,
   CompetitionEvidence,
   CustomerEvidence,
   DemandEvidence,

@@ -234,6 +234,13 @@ test(
         .independentVerifiedSourceCount,
       1,
     );
+
+    assert.equal(
+      profile.marketEvidence
+        .snapshots[0]
+        ?.periodStart,
+      "2026-09-01T00:00:00Z",
+    );
   },
 );
 
@@ -484,6 +491,12 @@ test(
         .snapshots[0].value,
       24,
     );
+
+    assert.equal(
+      profile.marketEvidence
+        .disagreements.length,
+      0,
+    );
   },
 );
 
@@ -535,6 +548,109 @@ test(
         "averageSellerCount",
       ),
       false,
+    );
+  },
+);
+
+test(
+  "equivalent-period competition values from independent sources are surfaced as disagreement",
+  () => {
+    const profile =
+      buildCompetitionProfile(
+        project,
+        analysis,
+        [
+          marketObservation({
+            sourceId:
+              "source-a",
+            value:
+              20,
+          }),
+
+          marketObservation({
+            id:
+              "seller-b",
+            sourceId:
+              "source-b",
+            value:
+              35,
+          }),
+        ],
+        AS_OF,
+      );
+
+    assert.deepEqual(
+      profile.marketEvidence
+        .disagreements,
+      [
+        {
+          signal:
+            "SELLER_COUNT",
+          unit:
+            "COUNT",
+          geography:
+            "US",
+          periodStart:
+            "2026-09-01T00:00:00Z",
+          periodEnd:
+            "2026-09-20T00:00:00Z",
+          observations: [
+            {
+              sourceId:
+                "source-a",
+              value:
+                20,
+            },
+            {
+              sourceId:
+                "source-b",
+              value:
+                35,
+            },
+          ],
+          interpretation:
+            "SOURCE_VALUES_DIFFER_REVIEW_REQUIRED",
+        },
+      ],
+    );
+  },
+);
+
+test(
+  "different competition measurement periods are not compared as disagreement",
+  () => {
+    const profile =
+      buildCompetitionProfile(
+        project,
+        analysis,
+        [
+          marketObservation({
+            sourceId:
+              "source-a",
+            value:
+              20,
+          }),
+
+          marketObservation({
+            id:
+              "seller-b",
+            sourceId:
+              "source-b",
+            value:
+              35,
+            periodStart:
+              "2026-08-01T00:00:00Z",
+            periodEnd:
+              "2026-08-31T00:00:00Z",
+          }),
+        ],
+        AS_OF,
+      );
+
+    assert.equal(
+      profile.marketEvidence
+        .disagreements.length,
+      0,
     );
   },
 );

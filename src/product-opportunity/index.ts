@@ -96,4 +96,14 @@ export type {
 export type {
   CompetitionMarketSnapshot,
   CompetitionProfile,
+  CompetitionSourceDisagreement,
 } from "./competition-profile.js";
+
+export {
+  interpretCompetitionProfile,
+} from "./competition-interpretation.js";
+
+export type {
+  CompetitionInterpretation,
+  CompetitionSufficiency,
+} from "./competition-interpretation.js";

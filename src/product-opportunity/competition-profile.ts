@@ -32,10 +32,35 @@ export type CompetitionMarketSnapshot =
 
     value: number;
 
+    periodStart: string;
+
     periodEnd: string;
 
     freshness:
       "FRESH" | "AGING";
+  }>;
+
+export type CompetitionSourceDisagreement =
+  Readonly<{
+    signal:
+      CompetitionMarketSignalKind;
+
+    unit:
+      CompetitionMarketUnit;
+
+    geography: string;
+
+    periodStart: string;
+    periodEnd: string;
+
+    observations:
+      readonly Readonly<{
+        sourceId: string;
+        value: number;
+      }>[];
+
+    interpretation:
+      "SOURCE_VALUES_DIFFER_REVIEW_REQUIRED";
   }>;
 
 export type CompetitionProfile =
@@ -113,6 +138,9 @@ export type CompetitionProfile =
 
       snapshots:
         readonly CompetitionMarketSnapshot[];
+
+      disagreements:
+        readonly CompetitionSourceDisagreement[];
 
       hasDirectSaturationEvidence:
         boolean;
@@ -416,6 +444,11 @@ function latestSnapshots(
             .observation
             .value,
 
+        periodStart:
+          assessment
+            .observation
+            .periodStart,
+
         periodEnd:
           assessment
             .observation
@@ -442,6 +475,168 @@ function latestSnapshots(
             ].join("|"),
           ),
     );
+}
+
+function disagreementKey(
+  assessment:
+    CurrentCompetitionObservationAssessment,
+): string {
+  const item =
+    assessment.observation;
+
+  return JSON.stringify([
+    item.signal,
+    item.unit,
+    item.geography,
+    item.periodStart,
+    item.periodEnd,
+  ]);
+}
+
+function buildDisagreements(
+  usable:
+    readonly CurrentCompetitionObservationAssessment[],
+): CompetitionSourceDisagreement[] {
+  const groups =
+    new Map<
+      string,
+      CurrentCompetitionObservationAssessment[]
+    >();
+
+  for (const assessment of usable) {
+    const key =
+      disagreementKey(
+        assessment,
+      );
+
+    const group =
+      groups.get(key) ?? [];
+
+    group.push(assessment);
+    groups.set(key, group);
+  }
+
+  const disagreements:
+    CompetitionSourceDisagreement[] =
+    [];
+
+  for (const group of groups.values()) {
+    const latestBySource =
+      new Map<
+        string,
+        CurrentCompetitionObservationAssessment
+      >();
+
+    for (const assessment of group) {
+      const sourceId =
+        assessment.observation
+          .sourceId;
+
+      const current =
+        latestBySource.get(
+          sourceId,
+        );
+
+      if (
+        !current ||
+        Date.parse(
+          assessment.observation
+            .capturedAt,
+        ) >
+          Date.parse(
+            current.observation
+              .capturedAt,
+          )
+      ) {
+        latestBySource.set(
+          sourceId,
+          assessment,
+        );
+      }
+    }
+
+    if (latestBySource.size < 2) {
+      continue;
+    }
+
+    const observations =
+      [...latestBySource.values()]
+        .map(
+          (assessment) => ({
+            sourceId:
+              assessment.observation
+                .sourceId,
+
+            value:
+              assessment.observation
+                .value,
+          }),
+        )
+        .sort(
+          (left, right) =>
+            left.sourceId.localeCompare(
+              right.sourceId,
+            ),
+        );
+
+    if (
+      new Set(
+        observations.map(
+          (item) => item.value,
+        ),
+      ).size <= 1
+    ) {
+      continue;
+    }
+
+    const first = group[0];
+
+    if (!first) {
+      continue;
+    }
+
+    disagreements.push({
+      signal:
+        first.observation.signal,
+
+      unit:
+        first.observation.unit,
+
+      geography:
+        first.observation
+          .geography,
+
+      periodStart:
+        first.observation
+          .periodStart,
+
+      periodEnd:
+        first.observation
+          .periodEnd,
+
+      observations,
+
+      interpretation:
+        "SOURCE_VALUES_DIFFER_REVIEW_REQUIRED",
+    });
+  }
+
+  return disagreements.sort(
+    (left, right) =>
+      [
+        left.signal,
+        left.geography,
+        left.periodStart,
+      ]
+        .join("|")
+        .localeCompare(
+          [
+            right.signal,
+            right.geography,
+            right.periodStart,
+          ].join("|"),
+        ),
+  );
 }
 
 export function buildCompetitionProfile(
@@ -688,6 +883,11 @@ export function buildCompetitionProfile(
 
       snapshots:
         latestSnapshots(
+          usable,
+        ),
+
+      disagreements:
+        buildDisagreements(
           usable,
         ),
 
