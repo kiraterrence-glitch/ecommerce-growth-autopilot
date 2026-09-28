@@ -3,12 +3,14 @@
     "project":  "Ecom Growth Autopilot",
     "version":  "0.9.3",
     "baseOfRecord":  "v0.9.3",
-    "currentPhase":  "GitHub source repository published. Phase 14A Product Opportunity Decision Contract complete: Research Analysis integration, fail-closed VALIDATE/HOLD/REJECT gates, evidence-confidence reporting, sample-safe percentages, reasons and next actions.",
+    "currentPhase":  "GitHub source repository published. Phase 14B Product Opportunity Market Validation complete locally: evidence-backed demand and competition profiles, SUPPORTED/PARTIAL/INSUFFICIENT interpretations, combined market validation, and a contract 1.1 canonical evidence pipeline feeding fail-closed VALIDATE/HOLD/REJECT gates.",
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
-                         "deterministicTestCount":  337,
-                         "verifiedOn":  "2026-09-23",
+                         "deterministicTestCount":  415,
+                         "executedTestCount":  423,
+                         "testCountMeaning":  "deterministicTestCount is the repository scanner's declared test-case count; executedTestCount is Node's full-suite result including file-level harness entries",
+                         "verifiedOn":  "2026-09-28",
                          "windowsLiveLastPassedVersion":  "0.8.0",
                          "windowsLiveModel":  "qwen3-vl:4b",
                          "currentVersionNeedsWindowsLiveRecheck":  false,
@@ -107,7 +109,12 @@
                       "automated marketplace claim safety",
                       "marketplace evidence SQLite persistence",
                       "transactional marketplace evidence import",
-                      "marketplace Product Library view-model"
+                      "marketplace Product Library view-model",
+                      "Product Opportunity Decision Contract with VALIDATE, HOLD and REJECT gates",
+                      "demand evidence observation, freshness, profile and sufficiency interpretation",
+                      "competition evidence profile, disagreement handling and sufficiency interpretation",
+                      "combined market validation with READY_FOR_COMMERCIAL_REVIEW, PARTIAL_EVIDENCE and INSUFFICIENT_EVIDENCE states",
+                      "canonical evidence-backed Product Opportunity pipeline with contract 1.1 market gating"
                   ],
     "invariants":  [
                        "Business logic stays in testable TypeScript; n8n orchestrates only.",
@@ -135,6 +142,7 @@
                       "AGENTS.md"
                   ],
     "next":  [
+                 "Run the post-Phase 14B ecommerce-management gap audit and design the next bounded increment before adding another architecture layer.",
                  "Optionally capture the real n8n canvas or terminal output later if a presentation specifically benefits from them."
              ]
 }
