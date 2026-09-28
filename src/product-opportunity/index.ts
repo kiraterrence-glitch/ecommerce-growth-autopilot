@@ -36,6 +36,15 @@ export type {
 } from "./report.js";
 
 export {
+  runProductOpportunityEvidencePipeline,
+} from "./evidence-pipeline.js";
+
+export type {
+  ProductOpportunityEvidencePipelineContext,
+  ProductOpportunityEvidencePipelineResult,
+} from "./evidence-pipeline.js";
+
+export {
   assessDemandObservation,
   DEFAULT_DEMAND_FRESHNESS_POLICY,
   validateDemandObservation,

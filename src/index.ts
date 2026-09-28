@@ -339,6 +339,7 @@ export {
   buildProductOpportunityReport,
   evaluateProductOpportunity,
   interpretCompetitionProfile,
+  runProductOpportunityEvidencePipeline,
   validateMarketEvidence,
 } from "./product-opportunity/index.js";
 
@@ -362,6 +363,8 @@ export type {
   OpportunityGateStatus,
   OpportunityMarketValidationEvidence,
   ProductOpportunityDecision,
+  ProductOpportunityEvidencePipelineContext,
+  ProductOpportunityEvidencePipelineResult,
   ProductOpportunityInput,
   ProductOpportunityReport,
   ResearchOpportunityBridge,

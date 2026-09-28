@@ -9,6 +9,11 @@ import type {
   SupplierEvidence,
 } from "./types.js";
 
+/**
+ * @deprecated Manual compatibility adapter. New evidence-backed callers
+ * should use runProductOpportunityEvidencePipeline so demand and market
+ * conclusions are derived from observations.
+ */
 export type ResearchOpportunityBridge =
   Readonly<{
     demand: Readonly<{
