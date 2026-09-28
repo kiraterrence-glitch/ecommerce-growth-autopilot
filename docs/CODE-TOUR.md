@@ -85,3 +85,11 @@ Run `npm run verify`. Normal verification is deterministic and does not require 
 **Technical view:** `scripts/release-preflight.mjs` requires the saved actual-engine receipt before the project can be treated as release-ready. `portfolio-release-preflight-windows.cmd` combines deterministic verification with that receipt check.
 
 **Interview view:** “The repository distinguishes code verification, model smoke tests, and real orchestration-runtime proof. Each claim has a separate gate.”
+
+## 12. Product Opportunity market validation
+
+**Business view:** decide whether a candidate has enough current, verified demand and competition evidence to justify deeper commercial review. `READY_FOR_COMMERCIAL_REVIEW` is an evidence-sufficiency result, not a winning-product claim, launch approval, or profitability guarantee.
+
+**Technical view:** `src/product-opportunity/demand*.ts` and `competition*.ts` validate observations, exclude stale/unverified evidence from current support, preserve source disagreements, and create profiles. The two interpreters return `SUPPORTED`, `PARTIAL`, or `INSUFFICIENT`; `market-validation.ts` combines them. `evidence-pipeline.ts` is the canonical entry point: it derives those conclusions from observations, reuses Research Analysis for customer/economics facts, and sends an explicit market gate into the independent `VALIDATE` / `HOLD` / `REJECT` engine. The older manual Research bridge remains only for compatibility.
+
+**Interview view:** “I separated evidence sufficiency from opportunity judgment. The pipeline cannot accept a caller’s claimed demand result, relative trends never become absolute volume, competitor percentages never become market share, and supported market evidence still cannot bypass economics, supplier, provenance, conflict, or unsupported-claim gates.”

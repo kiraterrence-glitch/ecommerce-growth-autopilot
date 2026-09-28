@@ -1,0 +1,436 @@
+﻿import type {
+  CompetitionFreshness,
+  CompetitionFreshnessPolicy,
+  CompetitionMarketObservation,
+  CompetitionObservationAssessment,
+} from "./competition-types.js";
+
+const DAY_MS =
+  24 * 60 * 60 * 1000;
+
+const ISO_DATE_TIME =
+  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,3})?(?:Z|[+-](\d{2}):(\d{2}))$/u;
+
+const COMPETITION_SOURCE_TYPES =
+  new Set([
+    "MARKETPLACE",
+    "FIRST_PARTY",
+    "OTHER",
+  ]);
+
+const COMPETITION_ACQUISITION_METHODS =
+  new Set([
+    "AUTHORIZED_API",
+    "AUTHORIZED_EXPORT",
+    "CSV_IMPORT",
+    "HTML_SNAPSHOT",
+    "MANUAL_CAPTURE",
+  ]);
+
+const COMPETITION_SIGNALS =
+  new Set([
+    "NICHE_PRODUCT_COUNT",
+    "TOP_CLICK_PRODUCT_COUNT",
+    "SELLER_COUNT",
+    "SPONSORED_PRODUCT_SHARE",
+    "PRIME_OFFER_SHARE",
+    "OUT_OF_STOCK_RATE",
+  ]);
+
+const COMPETITION_UNITS =
+  new Set([
+    "COUNT",
+    "PERCENT",
+  ]);
+
+export const DEFAULT_COMPETITION_FRESHNESS_POLICY:
+  CompetitionFreshnessPolicy =
+{
+  freshDays: 30,
+  staleDays: 90,
+};
+
+const COUNT_SIGNALS =
+  new Set([
+    "NICHE_PRODUCT_COUNT",
+    "TOP_CLICK_PRODUCT_COUNT",
+    "SELLER_COUNT",
+  ]);
+
+const PERCENT_SIGNALS =
+  new Set([
+    "SPONSORED_PRODUCT_SHARE",
+    "PRIME_OFFER_SHARE",
+    "OUT_OF_STOCK_RATE",
+  ]);
+
+function requireText(
+  value: string,
+  field: string,
+): void {
+  if (!value.trim()) {
+    throw new Error(
+      `${field} is required.`,
+    );
+  }
+}
+
+function parseDate(
+  value: string,
+  field: string,
+): number {
+  const match =
+    typeof value === "string"
+      ? ISO_DATE_TIME.exec(value)
+      : null;
+
+  const year =
+    Number(match?.[1]);
+
+  const month =
+    Number(match?.[2]);
+
+  const day =
+    Number(match?.[3]);
+
+  const hour =
+    Number(match?.[4]);
+
+  const minute =
+    Number(match?.[5]);
+
+  const second =
+    Number(match?.[6]);
+
+  const offsetHour =
+    Number(match?.[7] ?? 0);
+
+  const offsetMinute =
+    Number(match?.[8] ?? 0);
+
+  const leapYear =
+    year % 4 === 0 &&
+    (
+      year % 100 !== 0 ||
+      year % 400 === 0
+    );
+
+  const daysInMonth =
+    [
+      31,
+      leapYear ? 29 : 28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31,
+    ][month - 1] ?? 0;
+
+  const parsed =
+    Date.parse(value);
+
+  if (
+    !match ||
+    month < 1 ||
+    month > 12 ||
+    day < 1 ||
+    day > daysInMonth ||
+    hour > 23 ||
+    minute > 59 ||
+    second > 59 ||
+    offsetHour > 23 ||
+    offsetMinute > 59 ||
+    !Number.isFinite(parsed)
+  ) {
+    throw new Error(
+      `${field} must be a valid ISO date.`,
+    );
+  }
+
+  return parsed;
+}
+
+function requireAllowed(
+  value: unknown,
+  allowed: ReadonlySet<string>,
+  field: string,
+): void {
+  if (
+    typeof value !== "string" ||
+    !allowed.has(value)
+  ) {
+    throw new Error(
+      `${field} must be one of the supported values.`,
+    );
+  }
+}
+
+export function validateCompetitionMarketObservation(
+  observation:
+    CompetitionMarketObservation,
+): CompetitionMarketObservation {
+  requireText(
+    observation.id,
+    "id",
+  );
+
+  requireText(
+    observation.candidateId,
+    "candidateId",
+  );
+
+  requireText(
+    observation.sourceId,
+    "sourceId",
+  );
+
+  requireText(
+    observation.geography,
+    "geography",
+  );
+
+  requireAllowed(
+    observation.sourceType,
+    COMPETITION_SOURCE_TYPES,
+    "sourceType",
+  );
+
+  requireAllowed(
+    observation.acquisitionMethod,
+    COMPETITION_ACQUISITION_METHODS,
+    "acquisitionMethod",
+  );
+
+  requireAllowed(
+    observation.signal,
+    COMPETITION_SIGNALS,
+    "signal",
+  );
+
+  requireAllowed(
+    observation.unit,
+    COMPETITION_UNITS,
+    "unit",
+  );
+
+  if (
+    typeof observation.verified !==
+    "boolean"
+  ) {
+    throw new Error(
+      "verified must be a boolean.",
+    );
+  }
+
+  if (
+    !Number.isFinite(
+      observation.value,
+    ) ||
+    observation.value < 0
+  ) {
+    throw new Error(
+      "Competition value must be a non-negative finite number.",
+    );
+  }
+
+  if (
+    COUNT_SIGNALS.has(
+      observation.signal,
+    )
+  ) {
+    if (
+      observation.unit !==
+      "COUNT"
+    ) {
+      throw new Error(
+        "Competition count signals must use COUNT.",
+      );
+    }
+
+    if (
+      !Number.isInteger(
+        observation.value,
+      )
+    ) {
+      throw new Error(
+        "Competition count signals must contain an integer.",
+      );
+    }
+  }
+
+  if (
+    PERCENT_SIGNALS.has(
+      observation.signal,
+    )
+  ) {
+    if (
+      observation.unit !==
+      "PERCENT"
+    ) {
+      throw new Error(
+        "Competition percentage signals must use PERCENT.",
+      );
+    }
+
+    if (
+      observation.value >
+      100
+    ) {
+      throw new Error(
+        "Competition percentage must be between 0 and 100.",
+      );
+    }
+  }
+
+  let url: URL;
+
+  try {
+    url =
+      new URL(
+        observation.sourceUrl,
+      );
+  } catch {
+    throw new Error(
+      "sourceUrl must be a valid URL.",
+    );
+  }
+
+  if (
+    url.protocol !== "https:"
+  ) {
+    throw new Error(
+      "sourceUrl must use HTTPS.",
+    );
+  }
+
+  const start =
+    parseDate(
+      observation.periodStart,
+      "periodStart",
+    );
+
+  const end =
+    parseDate(
+      observation.periodEnd,
+      "periodEnd",
+    );
+
+  const captured =
+    parseDate(
+      observation.capturedAt,
+      "capturedAt",
+    );
+
+  if (start > end) {
+    throw new Error(
+      "periodStart cannot be after periodEnd.",
+    );
+  }
+
+  if (captured < end) {
+    throw new Error(
+      "capturedAt cannot be before periodEnd.",
+    );
+  }
+
+  return observation;
+}
+
+export function assessCompetitionMarketObservation(
+  observation:
+    CompetitionMarketObservation,
+
+  asOf: string,
+
+  policy:
+    CompetitionFreshnessPolicy =
+      DEFAULT_COMPETITION_FRESHNESS_POLICY,
+): CompetitionObservationAssessment {
+  validateCompetitionMarketObservation(
+    observation,
+  );
+
+  if (
+    !Number.isInteger(
+      policy.freshDays,
+    ) ||
+    policy.freshDays < 0
+  ) {
+    throw new Error(
+      "freshDays must be a non-negative integer.",
+    );
+  }
+
+  if (
+    !Number.isInteger(
+      policy.staleDays,
+    ) ||
+    policy.staleDays <=
+      policy.freshDays
+  ) {
+    throw new Error(
+      "staleDays must be greater than freshDays.",
+    );
+  }
+
+  const asOfTime =
+    parseDate(
+      asOf,
+      "asOf",
+    );
+
+  const periodEnd =
+    parseDate(
+      observation.periodEnd,
+      "periodEnd",
+    );
+
+  if (
+    periodEnd >
+    asOfTime
+  ) {
+    throw new Error(
+      "Competition observation period cannot end in the future.",
+    );
+  }
+
+  const ageDays =
+    Math.floor(
+      (
+        asOfTime -
+        periodEnd
+      ) /
+      DAY_MS,
+    );
+
+  let freshness:
+    CompetitionFreshness;
+
+  if (
+    ageDays <=
+    policy.freshDays
+  ) {
+    freshness =
+      "FRESH";
+  } else if (
+    ageDays <
+    policy.staleDays
+  ) {
+    freshness =
+      "AGING";
+  } else {
+    freshness =
+      "STALE";
+  }
+
+  return {
+    observation,
+    freshness,
+    ageDays,
+  };
+}

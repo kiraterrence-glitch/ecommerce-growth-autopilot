@@ -3,7 +3,7 @@
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 311 tests, 6 n8n exports.
+- Deterministic verification target: 421 tests, 6 n8n exports. The current full Node run reports 429 executed tests including file-level harness entries.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -91,7 +91,7 @@ Open:
 
 `http://127.0.0.1:3002/products`
 
-Deterministic verification target: 311 tests, 6 n8n exports.
+Deterministic verification target: 421 tests, 6 n8n exports. The current full Node run reports 429 executed tests including file-level harness entries.
 
 Next gate: optional cloud database research and Supabase/PostgreSQL adapter planning.
 
@@ -124,3 +124,13 @@ Next gate: Phase 12A-2 CSV evidence import, conflict detection and claim gating.
 Marketplace evidence now persists transactionally in the Product Intelligence SQLite database and produces a Product Library marketplace view-model.
 
 Next gate: Phase 12A-3B browser Product Library + local API integration.
+
+## Phase 14B Product Opportunity Market Validation
+
+The canonical Product Opportunity flow now builds verified demand and competition profiles, interprets sufficiency conservatively, combines them into market validation and passes that result to contract 1.1 fail-closed decision gates.
+
+Legacy contract 1.0 remains available only as a compatibility path. Phase 14B does not enable external writes, live marketplace extraction, publishing or autonomous commercial decisions.
+
+Deterministic verification target: 421 tests, 6 n8n exports. The current full Node run reports 429 executed tests including file-level harness entries.
+
+Next gate: complete the post-Phase 14B ecommerce-management gap audit and approve the next bounded design before implementation.

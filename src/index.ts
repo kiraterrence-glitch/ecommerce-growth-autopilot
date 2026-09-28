@@ -332,3 +332,41 @@ export {
 export type {
   ContentIntelligenceProductBrainContext,
 } from "./content-intelligence/index.js";
+
+export {
+  buildCompetitionProfile,
+  buildProductOpportunityInput,
+  buildProductOpportunityReport,
+  evaluateProductOpportunity,
+  interpretCompetitionProfile,
+  runProductOpportunityEvidencePipeline,
+  validateMarketEvidence,
+} from "./product-opportunity/index.js";
+
+export type {
+  CompetitionInterpretation,
+  CompetitionMarketSnapshot,
+  CompetitionProfile,
+  CompetitionSourceDisagreement,
+  CompetitionSufficiency,
+  CompetitionEvidence,
+  CustomerEvidence,
+  DemandEvidence,
+  EconomicsEvidence,
+  MarketValidation,
+  MarketValidationStatus,
+  OpportunityDecision,
+  OpportunityEvidenceConfidence,
+  OpportunityEvidenceQuality,
+  OpportunityGate,
+  OpportunityGateCode,
+  OpportunityGateStatus,
+  OpportunityMarketValidationEvidence,
+  ProductOpportunityDecision,
+  ProductOpportunityEvidencePipelineContext,
+  ProductOpportunityEvidencePipelineResult,
+  ProductOpportunityInput,
+  ProductOpportunityReport,
+  ResearchOpportunityBridge,
+  SupplierEvidence,
+} from "./product-opportunity/index.js";

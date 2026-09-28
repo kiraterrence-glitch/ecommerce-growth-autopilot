@@ -12,7 +12,7 @@ test("public repository state and CI permissions are explicit", async () => {
 
   assert.match(workflow, /^permissions:\s*\n\s+contents: read$/m);
   assert.match(state.currentPhase, /github source repository published/i);
-  assert.equal(state.verification.verifiedOn, "2026-09-23");
+  assert.equal(state.verification.verifiedOn, "2026-09-28");
   assert.ok(!state.next.some((item) => /publish .*github|github publication/i.test(item)));
   for (const completed of [
     "`npm run verify` is green",

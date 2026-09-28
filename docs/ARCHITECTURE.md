@@ -95,3 +95,16 @@ JSONL is intentionally an implementation detail behind a small project-history s
 ## Handoff boundary
 
 `PROJECT-STATE.json` is the machine-readable source of truth for current version, verified test count, safety invariants, completed phases, last user-confirmed Windows/Ollama gate, and next priorities. `docs/WORK-HANDOFF.md` tells a future coding agent what to read and what not to redo.
+
+## Product Opportunity evidence flow
+
+The canonical Phase 14B path is:
+
+`observations → freshness/provenance profiles → demand and competition interpretations → combined market validation → independent opportunity gates → report`
+
+- Demand and competition interpretations classify evidence as `SUPPORTED`, `PARTIAL`, or `INSUFFICIENT` without an opaque score.
+- Only two supported interpretations produce `READY_FOR_COMMERCIAL_REVIEW`; partial or insufficient evidence holds the opportunity.
+- The decision engine separately evaluates economics, customer evidence, suppliers, provenance, conflicts, and unsupported claims. Supported market evidence cannot override those gates.
+- `VALIDATE` authorizes only low-cost further testing. It does not authorize launch, inventory commitment, advertising spend, or publishing.
+- The canonical pipeline rejects caller-supplied demand or market conclusions. The legacy manual Research bridge is retained for compatibility and is not the production ingestion path.
+- Relative interest indexes remain relative; competitor-sample percentages remain sample descriptions; independent sources are retained rather than averaged into invented certainty.
