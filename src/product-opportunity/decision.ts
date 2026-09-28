@@ -5,6 +5,10 @@
   ProductOpportunityInput,
 } from "./types.js";
 
+import {
+  deriveMarketValidationStatus,
+} from "./market-validation.js";
+
 function requireCount(
   value: number,
   field: string,
@@ -125,6 +129,57 @@ function validateInput(
       "normalizedTrendIndex must be between 0 and 100.",
     );
   }
+
+  if (input.marketValidation) {
+    const sufficiencies =
+      new Set([
+        "SUPPORTED",
+        "PARTIAL",
+        "INSUFFICIENT",
+      ]);
+
+    const statuses =
+      new Set([
+        "READY_FOR_COMMERCIAL_REVIEW",
+        "PARTIAL_EVIDENCE",
+        "INSUFFICIENT_EVIDENCE",
+      ]);
+
+    if (
+      !sufficiencies.has(
+        input.marketValidation
+          .demandSufficiency,
+      ) ||
+      !sufficiencies.has(
+        input.marketValidation
+          .competitionSufficiency,
+      ) ||
+      !statuses.has(
+        input.marketValidation.status,
+      )
+    ) {
+      throw new Error(
+        "Market validation contains an invalid status or sufficiency value.",
+      );
+    }
+
+    const expectedStatus =
+      deriveMarketValidationStatus(
+        input.marketValidation
+          .demandSufficiency,
+        input.marketValidation
+          .competitionSufficiency,
+      );
+
+    if (
+      input.marketValidation.status !==
+      expectedStatus
+    ) {
+      throw new Error(
+        "Market validation status is inconsistent with its underlying sufficiency values.",
+      );
+    }
+  }
 }
 
 function gate(
@@ -170,34 +225,55 @@ export function evaluateProductOpportunity(
 
   const gates: OpportunityGate[] = [];
 
-  gates.push(
-    input.demand.verified &&
-      input.demand.independentSourceCount > 0
-      ? gate(
-          "DEMAND_VERIFIED",
-          "PASS",
-          "Independent demand evidence is present.",
-        )
-      : gate(
-          "DEMAND_VERIFIED",
-          "HOLD",
-          "Independent demand evidence is missing or unverified.",
-        ),
-  );
+  if (input.marketValidation) {
+    gates.push(
+      input.marketValidation.status ===
+        "READY_FOR_COMMERCIAL_REVIEW"
+        ? gate(
+            "MARKET_VALIDATION",
+            "PASS",
+            "Demand and competition evidence are supported for commercial review.",
+          )
+        : gate(
+            "MARKET_VALIDATION",
+            "HOLD",
+            input.marketValidation
+              .status ===
+              "INSUFFICIENT_EVIDENCE"
+              ? "Demand or competition evidence is insufficient for commercial review."
+              : "Demand or competition evidence is partial and requires further validation.",
+          ),
+    );
+  } else {
+    gates.push(
+      input.demand.verified &&
+        input.demand.independentSourceCount > 0
+        ? gate(
+            "DEMAND_VERIFIED",
+            "PASS",
+            "Independent demand evidence is present.",
+          )
+        : gate(
+            "DEMAND_VERIFIED",
+            "HOLD",
+            "Independent demand evidence is missing or unverified.",
+          ),
+    );
 
-  gates.push(
-    input.competition.comparableCompetitorCount >= 5
-      ? gate(
-          "COMPETITOR_SAMPLE",
-          "PASS",
-          "At least five comparable competitors are available.",
-        )
-      : gate(
-          "COMPETITOR_SAMPLE",
-          "HOLD",
-          "Fewer than five comparable competitors are available.",
-        ),
-  );
+    gates.push(
+      input.competition.comparableCompetitorCount >= 5
+        ? gate(
+            "COMPETITOR_SAMPLE",
+            "PASS",
+            "At least five comparable competitors are available.",
+          )
+        : gate(
+            "COMPETITOR_SAMPLE",
+            "HOLD",
+            "Fewer than five comparable competitors are available.",
+          ),
+    );
+  }
 
   gates.push(
     input.customer.reviewCount >= 10
@@ -326,7 +402,9 @@ export function evaluateProductOpportunity(
       input.candidateId,
 
     contractVersion:
-      "1.0.0",
+      input.marketValidation
+        ? "1.1.0"
+        : "1.0.0",
 
     decision:
       deriveDecision(gates),

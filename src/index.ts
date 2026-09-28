@@ -360,6 +360,7 @@ export type {
   OpportunityGate,
   OpportunityGateCode,
   OpportunityGateStatus,
+  OpportunityMarketValidationEvidence,
   ProductOpportunityDecision,
   ProductOpportunityInput,
   ProductOpportunityReport,

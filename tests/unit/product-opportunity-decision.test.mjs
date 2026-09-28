@@ -54,6 +54,24 @@ function strongCandidate() {
   };
 }
 
+function evidenceBackedCandidate(
+  status =
+    "READY_FOR_COMMERCIAL_REVIEW",
+  demandSufficiency =
+    "SUPPORTED",
+  competitionSufficiency =
+    "SUPPORTED",
+) {
+  return {
+    ...strongCandidate(),
+    marketValidation: {
+      status,
+      demandSufficiency,
+      competitionSufficiency,
+    },
+  };
+}
+
 test(
   "strong evidence and viable economics produce VALIDATE",
   () => {
@@ -320,6 +338,171 @@ test(
           candidate,
         ),
       /between 0 and 100/,
+    );
+  },
+);
+
+test(
+  "ready market evidence uses contract 1.1 and passes the market gate",
+  () => {
+    const result =
+      evaluateProductOpportunity(
+        evidenceBackedCandidate(),
+      );
+
+    assert.equal(
+      result.contractVersion,
+      "1.1.0",
+    );
+
+    assert.equal(
+      result.decision,
+      "VALIDATE",
+    );
+
+    assert.equal(
+      result.gates.find(
+        (gate) =>
+          gate.code ===
+          "MARKET_VALIDATION",
+      )?.status,
+      "PASS",
+    );
+
+    assert.equal(
+      result.gates.some(
+        (gate) =>
+          gate.code ===
+            "DEMAND_VERIFIED" ||
+          gate.code ===
+            "COMPETITOR_SAMPLE",
+      ),
+      false,
+    );
+  },
+);
+
+test(
+  "partial market evidence holds the opportunity",
+  () => {
+    const result =
+      evaluateProductOpportunity(
+        evidenceBackedCandidate(
+          "PARTIAL_EVIDENCE",
+          "SUPPORTED",
+          "PARTIAL",
+        ),
+      );
+
+    assert.equal(
+      result.decision,
+      "HOLD",
+    );
+  },
+);
+
+test(
+  "insufficient market evidence holds the opportunity",
+  () => {
+    const result =
+      evaluateProductOpportunity(
+        evidenceBackedCandidate(
+          "INSUFFICIENT_EVIDENCE",
+          "INSUFFICIENT",
+          "SUPPORTED",
+        ),
+      );
+
+    assert.equal(
+      result.decision,
+      "HOLD",
+    );
+  },
+);
+
+test(
+  "ready market evidence cannot rescue negative economics",
+  () => {
+    const candidate =
+      evidenceBackedCandidate();
+
+    candidate.economics
+      .contributionAfterAds = -4;
+    candidate.economics
+      .contributionMarginPercent =
+      -5.7;
+
+    const result =
+      evaluateProductOpportunity(
+        candidate,
+      );
+
+    assert.equal(
+      result.decision,
+      "REJECT",
+    );
+  },
+);
+
+test(
+  "ready market evidence cannot bypass supplier evidence or claim safety gates",
+  () => {
+    const candidate =
+      evidenceBackedCandidate();
+
+    candidate.supplier
+      .criticalConflictCount = 1;
+    candidate.evidence
+      .criticalConflictCount = 1;
+    candidate.evidence
+      .unsupportedClaimCount = 1;
+
+    const result =
+      evaluateProductOpportunity(
+        candidate,
+      );
+
+    assert.equal(
+      result.decision,
+      "HOLD",
+    );
+
+    assert.deepEqual(
+      result.gates
+        .filter(
+          (gate) =>
+            [
+              "SUPPLIER_CONFLICT",
+              "EVIDENCE_CONFLICT",
+              "UNSUPPORTED_CLAIMS",
+            ].includes(gate.code),
+        )
+        .map(
+          (gate) =>
+            gate.status,
+        ),
+      [
+        "HOLD",
+        "HOLD",
+        "HOLD",
+      ],
+    );
+  },
+);
+
+test(
+  "market readiness cannot contradict underlying sufficiency",
+  () => {
+    assert.throws(
+      () =>
+        evaluateProductOpportunity(
+          evidenceBackedCandidate(
+            "READY_FOR_COMMERCIAL_REVIEW",
+            "PARTIAL",
+            "SUPPORTED",
+          ),
+        ),
+      /inconsistent/i,
     );
   },
 );

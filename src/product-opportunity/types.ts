@@ -3,6 +3,18 @@
   | "HOLD"
   | "REJECT";
 
+import type {
+  CompetitionSufficiency,
+} from "./competition-interpretation.js";
+
+import type {
+  DemandSufficiency,
+} from "./demand-interpretation.js";
+
+import type {
+  MarketValidationStatus,
+} from "./market-validation.js";
+
 export type OpportunityGateStatus =
   | "PASS"
   | "WARN"
@@ -12,6 +24,7 @@ export type OpportunityGateStatus =
 export type OpportunityGateCode =
   | "DEMAND_VERIFIED"
   | "COMPETITOR_SAMPLE"
+  | "MARKET_VALIDATION"
   | "CUSTOMER_EVIDENCE"
   | "ECONOMICS"
   | "SUPPLIER_VERIFIED"
@@ -111,6 +124,18 @@ export type OpportunityEvidenceQuality =
       number;
   }>;
 
+export type OpportunityMarketValidationEvidence =
+  Readonly<{
+    status:
+      MarketValidationStatus;
+
+    demandSufficiency:
+      DemandSufficiency;
+
+    competitionSufficiency:
+      CompetitionSufficiency;
+  }>;
+
 export type ProductOpportunityInput =
   Readonly<{
     candidateId:
@@ -133,6 +158,9 @@ export type ProductOpportunityInput =
 
     evidence:
       OpportunityEvidenceQuality;
+
+    marketValidation?:
+      OpportunityMarketValidationEvidence;
   }>;
 
 export type OpportunityGate =
@@ -153,7 +181,7 @@ export type ProductOpportunityDecision =
       string;
 
     contractVersion:
-      "1.0.0";
+      "1.0.0" | "1.1.0";
 
     decision:
       OpportunityDecision;

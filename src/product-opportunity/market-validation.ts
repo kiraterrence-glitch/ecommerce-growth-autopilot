@@ -1,9 +1,11 @@
 import type {
   CompetitionInterpretation,
+  CompetitionSufficiency,
 } from "./competition-interpretation.js";
 
 import type {
   DemandInterpretation,
+  DemandSufficiency,
 } from "./demand-interpretation.js";
 
 export type MarketValidationStatus =
@@ -54,6 +56,33 @@ function unique(
   return [...new Set(values)];
 }
 
+export function deriveMarketValidationStatus(
+  demandSufficiency:
+    DemandSufficiency,
+  competitionSufficiency:
+    CompetitionSufficiency,
+): MarketValidationStatus {
+  if (
+    demandSufficiency ===
+      "INSUFFICIENT" ||
+    competitionSufficiency ===
+      "INSUFFICIENT"
+  ) {
+    return "INSUFFICIENT_EVIDENCE";
+  }
+
+  if (
+    demandSufficiency ===
+      "SUPPORTED" &&
+    competitionSufficiency ===
+      "SUPPORTED"
+  ) {
+    return "READY_FOR_COMMERCIAL_REVIEW";
+  }
+
+  return "PARTIAL_EVIDENCE";
+}
+
 export function validateMarketEvidence(
   demand: DemandInterpretation,
   competition:
@@ -68,29 +97,11 @@ export function validateMarketEvidence(
     );
   }
 
-  let status:
-    MarketValidationStatus;
-
-  if (
-    demand.sufficiency ===
-      "INSUFFICIENT" ||
-    competition.sufficiency ===
-      "INSUFFICIENT"
-  ) {
-    status =
-      "INSUFFICIENT_EVIDENCE";
-  } else if (
-    demand.sufficiency ===
-      "SUPPORTED" &&
-    competition.sufficiency ===
-      "SUPPORTED"
-  ) {
-    status =
-      "READY_FOR_COMMERCIAL_REVIEW";
-  } else {
-    status =
-      "PARTIAL_EVIDENCE";
-  }
+  const status =
+    deriveMarketValidationStatus(
+      demand.sufficiency,
+      competition.sufficiency,
+    );
 
   return {
     candidateId:

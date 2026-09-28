@@ -12,6 +12,7 @@ export type {
   OpportunityGate,
   OpportunityGateCode,
   OpportunityGateStatus,
+  OpportunityMarketValidationEvidence,
   ProductOpportunityDecision,
   ProductOpportunityInput,
   SupplierEvidence,
@@ -109,6 +110,7 @@ export type {
 } from "./competition-interpretation.js";
 
 export {
+  deriveMarketValidationStatus,
   validateMarketEvidence,
 } from "./market-validation.js";
 

@@ -1,5 +1,6 @@
 ﻿import type {
   OpportunityGate,
+  OpportunityMarketValidationEvidence,
   ProductOpportunityDecision,
   ProductOpportunityInput,
 } from "./types.js";
@@ -86,6 +87,15 @@ export type ProductOpportunityReport =
 
       unsupportedClaimCount:
         number;
+
+      marketValidationStatus:
+        OpportunityMarketValidationEvidence["status"] | null;
+
+      demandSufficiency:
+        OpportunityMarketValidationEvidence["demandSufficiency"] | null;
+
+      competitionSufficiency:
+        OpportunityMarketValidationEvidence["competitionSufficiency"] | null;
     }>;
 
     positiveReasons:
@@ -208,6 +218,9 @@ function actionForGate(
 
     case "COMPETITOR_SAMPLE":
       return "Confirm at least five genuinely comparable competitor products.";
+
+    case "MARKET_VALIDATION":
+      return "Collect the missing demand or competition evidence required for commercial review.";
 
     case "CUSTOMER_EVIDENCE":
       return "Expand the customer-review sample before relying heavily on review themes.";
@@ -423,6 +436,20 @@ export function buildProductOpportunityReport(
       unsupportedClaimCount:
         input.evidence
           .unsupportedClaimCount,
+
+      marketValidationStatus:
+        input.marketValidation
+          ?.status ?? null,
+
+      demandSufficiency:
+        input.marketValidation
+          ?.demandSufficiency ??
+        null,
+
+      competitionSufficiency:
+        input.marketValidation
+          ?.competitionSufficiency ??
+        null,
     },
 
     positiveReasons,

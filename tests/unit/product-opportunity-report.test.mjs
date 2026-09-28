@@ -69,6 +69,24 @@ function reportFor(
   );
 }
 
+function evidenceBackedCandidate(
+  status =
+    "READY_FOR_COMMERCIAL_REVIEW",
+  demandSufficiency =
+    "SUPPORTED",
+  competitionSufficiency =
+    "SUPPORTED",
+) {
+  return {
+    ...candidate(),
+    marketValidation: {
+      status,
+      demandSufficiency,
+      competitionSufficiency,
+    },
+  };
+}
+
 test(
   "strong evidence produces HIGH evidence confidence",
   () => {
@@ -327,6 +345,96 @@ test(
       Object.prototype.hasOwnProperty.call(
         report.metrics,
         "marketSharePercent",
+      ),
+      false,
+    );
+  },
+);
+
+test(
+  "contract 1.1 report exposes the evidence-backed market classifications",
+  () => {
+    const report =
+      reportFor(
+        evidenceBackedCandidate(),
+      );
+
+    assert.equal(
+      report.contractVersion,
+      "1.1.0",
+    );
+
+    assert.equal(
+      report.metrics
+        .marketValidationStatus,
+      "READY_FOR_COMMERCIAL_REVIEW",
+    );
+
+    assert.equal(
+      report.metrics
+        .demandSufficiency,
+      "SUPPORTED",
+    );
+
+    assert.equal(
+      report.metrics
+        .competitionSufficiency,
+      "SUPPORTED",
+    );
+
+    assert.equal(
+      report.positiveReasons.some(
+        (reason) =>
+          /supported for commercial review/i.test(
+            reason,
+          ),
+      ),
+      true,
+    );
+  },
+);
+
+test(
+  "partial market evidence produces blocking guidance without launch approval",
+  () => {
+    const report =
+      reportFor(
+        evidenceBackedCandidate(
+          "PARTIAL_EVIDENCE",
+          "SUPPORTED",
+          "PARTIAL",
+        ),
+      );
+
+    assert.equal(
+      report.decision,
+      "HOLD",
+    );
+
+    assert.equal(
+      report.blockingReasons.some(
+        (reason) =>
+          /partial/i.test(reason),
+      ),
+      true,
+    );
+
+    assert.equal(
+      report.nextActions.some(
+        (action) =>
+          /collect.*competition evidence/i.test(
+            action,
+          ),
+      ),
+      true,
+    );
+
+    assert.equal(
+      report.nextActions.some(
+        (action) =>
+          /launch approved/i.test(
+            action,
+          ),
       ),
       false,
     );
