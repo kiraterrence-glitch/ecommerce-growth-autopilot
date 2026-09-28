@@ -107,3 +107,12 @@ export type {
   CompetitionInterpretation,
   CompetitionSufficiency,
 } from "./competition-interpretation.js";
+
+export {
+  validateMarketEvidence,
+} from "./market-validation.js";
+
+export type {
+  MarketValidation,
+  MarketValidationStatus,
+} from "./market-validation.js";

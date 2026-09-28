@@ -339,6 +339,7 @@ export {
   buildProductOpportunityReport,
   evaluateProductOpportunity,
   interpretCompetitionProfile,
+  validateMarketEvidence,
 } from "./product-opportunity/index.js";
 
 export type {
@@ -351,6 +352,8 @@ export type {
   CustomerEvidence,
   DemandEvidence,
   EconomicsEvidence,
+  MarketValidation,
+  MarketValidationStatus,
   OpportunityDecision,
   OpportunityEvidenceConfidence,
   OpportunityEvidenceQuality,
