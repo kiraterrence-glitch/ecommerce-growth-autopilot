@@ -8,6 +8,47 @@
 const DAY_MS =
   24 * 60 * 60 * 1000;
 
+const ISO_DATE_TIME =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/u;
+
+const DEMAND_SOURCE_TYPES =
+  new Set([
+    "GOOGLE_TRENDS",
+    "MARKETPLACE",
+    "FIRST_PARTY",
+    "SOCIAL_PLATFORM",
+    "OTHER",
+  ]);
+
+const DEMAND_ACQUISITION_METHODS =
+  new Set([
+    "AUTHORIZED_API",
+    "AUTHORIZED_EXPORT",
+    "CSV_IMPORT",
+    "HTML_SNAPSHOT",
+    "MANUAL_CAPTURE",
+  ]);
+
+const DEMAND_SIGNALS =
+  new Set([
+    "SEARCH_INTEREST_RELATIVE",
+    "SEARCH_VOLUME_ABSOLUTE",
+    "PURCHASE_COUNT",
+    "UNITS_SOLD",
+    "REVENUE",
+    "CONVERSION_RATE",
+    "RETURN_RATE",
+    "SOCIAL_INTEREST_RELATIVE",
+  ]);
+
+const DEMAND_UNITS =
+  new Set([
+    "INDEX_0_100",
+    "COUNT",
+    "CURRENCY",
+    "PERCENT",
+  ]);
+
 export const DEFAULT_DEMAND_FRESHNESS_POLICY:
   DemandFreshnessPolicy =
 {
@@ -33,13 +74,31 @@ function parseDate(
   const parsed =
     Date.parse(value);
 
-  if (!Number.isFinite(parsed)) {
+  if (
+    !ISO_DATE_TIME.test(value) ||
+    !Number.isFinite(parsed)
+  ) {
     throw new Error(
       `${field} must be a valid ISO date.`,
     );
   }
 
   return parsed;
+}
+
+function requireAllowed(
+  value: unknown,
+  allowed: ReadonlySet<string>,
+  field: string,
+): void {
+  if (
+    typeof value !== "string" ||
+    !allowed.has(value)
+  ) {
+    throw new Error(
+      `${field} must be one of the supported values.`,
+    );
+  }
 }
 
 function validateValueAndUnit(
@@ -197,6 +256,39 @@ export function validateDemandObservation(
     observation.geography,
     "geography",
   );
+
+  requireAllowed(
+    observation.sourceType,
+    DEMAND_SOURCE_TYPES,
+    "sourceType",
+  );
+
+  requireAllowed(
+    observation.acquisitionMethod,
+    DEMAND_ACQUISITION_METHODS,
+    "acquisitionMethod",
+  );
+
+  requireAllowed(
+    observation.signal,
+    DEMAND_SIGNALS,
+    "signal",
+  );
+
+  requireAllowed(
+    observation.unit,
+    DEMAND_UNITS,
+    "unit",
+  );
+
+  if (
+    typeof observation.verified !==
+    "boolean"
+  ) {
+    throw new Error(
+      "verified must be a boolean.",
+    );
+  }
 
   let url: URL;
 

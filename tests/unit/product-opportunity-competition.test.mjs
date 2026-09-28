@@ -654,3 +654,55 @@ test(
     );
   },
 );
+
+test(
+  "competition observations reject runtime-invalid enums and verification flags",
+  () => {
+    for (
+      const [field, value]
+      of [
+        ["sourceType", "UNVERIFIED_VENDOR"],
+        ["acquisitionMethod", "SCRAPED"],
+        ["signal", "MARKET_SCORE"],
+        ["unit", "SCORE"],
+        ["verified", "false"],
+      ]
+    ) {
+      assert.throws(
+        () =>
+          buildCompetitionProfile(
+            project,
+            analysis,
+            [
+              marketObservation({
+                [field]: value,
+              }),
+            ],
+            AS_OF,
+          ),
+        new RegExp(`${field} must be`),
+      );
+    }
+  },
+);
+
+test(
+  "competition observations reject parseable non-ISO dates",
+  () => {
+    assert.throws(
+      () =>
+        buildCompetitionProfile(
+          project,
+          analysis,
+          [
+            marketObservation({
+              periodEnd:
+                "September 20, 2026",
+            }),
+          ],
+          AS_OF,
+        ),
+      /periodEnd must be a valid ISO date/,
+    );
+  },
+);

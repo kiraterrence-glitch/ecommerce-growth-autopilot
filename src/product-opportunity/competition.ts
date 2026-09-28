@@ -8,6 +8,41 @@
 const DAY_MS =
   24 * 60 * 60 * 1000;
 
+const ISO_DATE_TIME =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/u;
+
+const COMPETITION_SOURCE_TYPES =
+  new Set([
+    "MARKETPLACE",
+    "FIRST_PARTY",
+    "OTHER",
+  ]);
+
+const COMPETITION_ACQUISITION_METHODS =
+  new Set([
+    "AUTHORIZED_API",
+    "AUTHORIZED_EXPORT",
+    "CSV_IMPORT",
+    "HTML_SNAPSHOT",
+    "MANUAL_CAPTURE",
+  ]);
+
+const COMPETITION_SIGNALS =
+  new Set([
+    "NICHE_PRODUCT_COUNT",
+    "TOP_CLICK_PRODUCT_COUNT",
+    "SELLER_COUNT",
+    "SPONSORED_PRODUCT_SHARE",
+    "PRIME_OFFER_SHARE",
+    "OUT_OF_STOCK_RATE",
+  ]);
+
+const COMPETITION_UNITS =
+  new Set([
+    "COUNT",
+    "PERCENT",
+  ]);
+
 export const DEFAULT_COMPETITION_FRESHNESS_POLICY:
   CompetitionFreshnessPolicy =
 {
@@ -47,13 +82,31 @@ function parseDate(
   const parsed =
     Date.parse(value);
 
-  if (!Number.isFinite(parsed)) {
+  if (
+    !ISO_DATE_TIME.test(value) ||
+    !Number.isFinite(parsed)
+  ) {
     throw new Error(
       `${field} must be a valid ISO date.`,
     );
   }
 
   return parsed;
+}
+
+function requireAllowed(
+  value: unknown,
+  allowed: ReadonlySet<string>,
+  field: string,
+): void {
+  if (
+    typeof value !== "string" ||
+    !allowed.has(value)
+  ) {
+    throw new Error(
+      `${field} must be one of the supported values.`,
+    );
+  }
 }
 
 export function validateCompetitionMarketObservation(
@@ -79,6 +132,39 @@ export function validateCompetitionMarketObservation(
     observation.geography,
     "geography",
   );
+
+  requireAllowed(
+    observation.sourceType,
+    COMPETITION_SOURCE_TYPES,
+    "sourceType",
+  );
+
+  requireAllowed(
+    observation.acquisitionMethod,
+    COMPETITION_ACQUISITION_METHODS,
+    "acquisitionMethod",
+  );
+
+  requireAllowed(
+    observation.signal,
+    COMPETITION_SIGNALS,
+    "signal",
+  );
+
+  requireAllowed(
+    observation.unit,
+    COMPETITION_UNITS,
+    "unit",
+  );
+
+  if (
+    typeof observation.verified !==
+    "boolean"
+  ) {
+    throw new Error(
+      "verified must be a boolean.",
+    );
+  }
 
   if (
     !Number.isFinite(

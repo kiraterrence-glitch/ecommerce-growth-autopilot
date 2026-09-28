@@ -3,7 +3,7 @@
 ## Current state
 
 - Project version: v0.9.3
-- Deterministic verification target: 415 tests, 6 n8n exports. The current full Node run reports 423 executed tests including file-level harness entries.
+- Deterministic verification target: 419 tests, 6 n8n exports. The current full Node run reports 427 executed tests including file-level harness entries.
 - Local n8n Community Edition 2.39.8 is installed on the Windows machine and the owner account setup is complete.
 - The actual local n8n engine proof **passed** on Windows.
 - `release:preflight` **passed** against the saved runtime receipt.
@@ -91,7 +91,7 @@ Open:
 
 `http://127.0.0.1:3002/products`
 
-Deterministic verification target: 415 tests, 6 n8n exports. The current full Node run reports 423 executed tests including file-level harness entries.
+Deterministic verification target: 419 tests, 6 n8n exports. The current full Node run reports 427 executed tests including file-level harness entries.
 
 Next gate: optional cloud database research and Supabase/PostgreSQL adapter planning.
 
@@ -131,6 +131,6 @@ The canonical Product Opportunity flow now builds verified demand and competitio
 
 Legacy contract 1.0 remains available only as a compatibility path. Phase 14B does not enable external writes, live marketplace extraction, publishing or autonomous commercial decisions.
 
-Deterministic verification target: 415 tests, 6 n8n exports. The current full Node run reports 423 executed tests including file-level harness entries.
+Deterministic verification target: 419 tests, 6 n8n exports. The current full Node run reports 427 executed tests including file-level harness entries.
 
 Next gate: complete the post-Phase 14B ecommerce-management gap audit and approve the next bounded design before implementation.

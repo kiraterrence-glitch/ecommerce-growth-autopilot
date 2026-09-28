@@ -393,7 +393,7 @@ Real browser proof remains under:
 
 The product-page workflow now includes encoding regression checks, static accessibility checks, security/injection regression tests, asset-size budgets and an eight-viewport real Chrome stress matrix.
 
-Current deterministic suite: 415 tests declared; the full Node run reports 423 executed tests including file-level harness entries.
+Current deterministic suite: 419 tests declared; the full Node run reports 427 executed tests including file-level harness entries.
 
 The next architecture phase introduces the local-first Product Intelligence Database.
 
@@ -412,7 +412,7 @@ Then open:
 
 The library exposes product sources, evidence, revision history, competitors, comparison history, visual assets, page drafts, QA results and approval state.
 
-Current deterministic suite: 415 tests declared; the full Node run reports 423 executed tests including file-level harness entries.
+Current deterministic suite: 419 tests declared; the full Node run reports 427 executed tests including file-level harness entries.
 
 ### Cloud Sync Foundation
 
@@ -438,19 +438,19 @@ Phase 11B-1 deterministic verification target: 194 tests.
 
 Marketplace research now uses a fail-closed source policy layer with user-provided capture, deterministic provenance, authorization-gated official APIs and UNKNOWN_RIGHTS media defaults.
 
-Current deterministic suite: 415 tests declared; the full Node run reports 423 executed tests including file-level harness entries.
+Current deterministic suite: 419 tests declared; the full Node run reports 427 executed tests including file-level harness entries.
 
 ### Marketplace Evidence Safety
 
 Strict CSV evidence intake, duplicate-source protection, normalized cross-source conflict detection and claim gating are verified.
 
-Current deterministic suite: 415 tests declared; the full Node run reports 423 executed tests including file-level harness entries.
+Current deterministic suite: 419 tests declared; the full Node run reports 427 executed tests including file-level harness entries.
 
 ### Marketplace Database Integration
 
 Marketplace provenance and evidence now persist in the Product Intelligence SQLite database with transactional imports, conflict state and a Product Library view-model.
 
-Current deterministic suite: 415 tests declared; the full Node run reports 423 executed tests including file-level harness entries.
+Current deterministic suite: 419 tests declared; the full Node run reports 427 executed tests including file-level harness entries.
 
 ### Product Opportunity Market Validation
 

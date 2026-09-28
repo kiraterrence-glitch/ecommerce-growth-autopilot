@@ -7,8 +7,8 @@
     "verification":  {
                          "deterministicCommand":  "npm run verify",
                          "deterministicStatus":  "passed",
-                         "deterministicTestCount":  415,
-                         "executedTestCount":  423,
+                         "deterministicTestCount":  419,
+                         "executedTestCount":  427,
                          "testCountMeaning":  "deterministicTestCount is the repository scanner's declared test-case count; executedTestCount is Node's full-suite result including file-level harness entries",
                          "verifiedOn":  "2026-09-28",
                          "windowsLiveLastPassedVersion":  "0.8.0",

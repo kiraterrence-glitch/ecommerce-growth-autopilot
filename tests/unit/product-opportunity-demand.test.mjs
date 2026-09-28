@@ -298,3 +298,43 @@ test(
     );
   },
 );
+
+test(
+  "demand observations reject runtime-invalid enums and verification flags",
+  () => {
+    for (
+      const [field, value]
+      of [
+        ["sourceType", "SEARCH_VENDOR"],
+        ["acquisitionMethod", "SCRAPED"],
+        ["signal", "CLAIMED_DEMAND"],
+        ["unit", "SCORE"],
+        ["verified", "false"],
+      ]
+    ) {
+      assert.throws(
+        () =>
+          validateDemandObservation({
+            ...relativeObservation(),
+            [field]: value,
+          }),
+        new RegExp(`${field} must be`),
+      );
+    }
+  },
+);
+
+test(
+  "demand observations reject parseable non-ISO dates",
+  () => {
+    assert.throws(
+      () =>
+        validateDemandObservation({
+          ...relativeObservation(),
+          periodEnd:
+            "August 31, 2026",
+        }),
+      /periodEnd must be a valid ISO date/,
+    );
+  },
+);
