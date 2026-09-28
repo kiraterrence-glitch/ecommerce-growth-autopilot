@@ -706,3 +706,24 @@ test(
     );
   },
 );
+
+test(
+  "competition observations reject impossible ISO calendar dates",
+  () => {
+    assert.throws(
+      () =>
+        buildCompetitionProfile(
+          project,
+          analysis,
+          [
+            marketObservation({
+              periodEnd:
+                "2026-02-30T00:00:00Z",
+            }),
+          ],
+          AS_OF,
+        ),
+      /periodEnd must be a valid ISO date/,
+    );
+  },
+);

@@ -338,3 +338,18 @@ test(
     );
   },
 );
+
+test(
+  "demand observations reject impossible ISO calendar dates",
+  () => {
+    assert.throws(
+      () =>
+        validateDemandObservation({
+          ...relativeObservation(),
+          periodEnd:
+            "2026-02-30T00:00:00Z",
+        }),
+      /periodEnd must be a valid ISO date/,
+    );
+  },
+);
